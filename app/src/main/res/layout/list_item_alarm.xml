@@ -1,0 +1,58 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="alarm"
+            type="com.example.alarmclock.dataclasses.Alarm" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/alarmItemBackground">
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/is_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:alarmIsActive="@{alarm}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            app:alarmTime="@{alarm}"
+            app:layout_constraintEnd_toStartOf="@+id/is_active"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TIME" />
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            app:alarmDays="@{alarm}"
+            app:layout_constraintBottom_toTopOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="@+id/time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time"
+            tools:text="DAYS" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            app:alarmName="@{alarm}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/days"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/days"
+            tools:text="NAME" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
