@@ -9,7 +9,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/alarm_list_fragment"
-            android:name="com.example.alarmclock.alarm.alarmlist.AlarmListFragment"
+            android:name="com.example.alarmclock.screens.alarm.alarmlist.AlarmListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_alarm_list" />
