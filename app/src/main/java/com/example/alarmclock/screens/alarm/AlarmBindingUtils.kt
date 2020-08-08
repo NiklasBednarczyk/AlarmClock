@@ -1,9 +1,9 @@
-package com.example.alarmclock.alarm
+package com.example.alarmclock.screens.alarm
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.alarmclock.R
-import com.example.alarmclock.dataclasses.Alarm
+import com.example.alarmclock.database.Alarm
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.*
@@ -39,8 +39,7 @@ fun TextView.setAlarmDays(alarm: Alarm?) {
         val weekend = listOf(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)
         val everyDay = weekdays + weekend
 
-        //FIXME: Make sure days are always sorted
-        text = when (alarm.days.sorted()) {
+        text = when (alarm.days) {
             weekdays -> "Weekdays"
             weekend -> "Weekend"
             everyDay -> "Every Day"
