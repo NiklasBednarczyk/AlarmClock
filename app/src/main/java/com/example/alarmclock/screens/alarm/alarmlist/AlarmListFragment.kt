@@ -36,9 +36,9 @@ class AlarmListFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
 
-        val dataSource = AlarmClockDatabase.getInstance(application).alarmDao
+        val dao = AlarmClockDatabase.getInstance(application).alarmDao
 
-        val viewModelFactory = AlarmListViewModelFactory(dataSource)
+        val viewModelFactory = AlarmListViewModelFactory(dao)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(AlarmListViewModel::class.java)
 

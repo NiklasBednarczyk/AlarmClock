@@ -17,16 +17,14 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
         override fun onActiveClick(alarm: Alarm) {
             uiScope.launch {
                 alarm.isActive = !alarm.isActive
-                update(alarm)
+                updateAlarm(alarm)
             }
         }
     }
 
-    private suspend fun update(alarm: Alarm) {
+    private suspend fun updateAlarm(alarm: Alarm) {
         withContext(Dispatchers.IO) {
             dao.update(alarm)
         }
     }
-
-    //TODO Change Database isActive
 }
