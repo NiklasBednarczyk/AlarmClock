@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_alarm"
+    app:startDestination="@id/alarmListFragment">
+
+
+    <fragment
+        android:id="@+id/alarmListFragment"
+        android:name="com.example.alarmclock.screens.alarm.alarmlist.AlarmListFragment"
+        android:label="AlarmListFragment"
+        tools:layout="@layout/fragment_alarm_list">
+        <action
+            android:id="@+id/action_alarmListFragment_to_alarmEditorFragment"
+            app:destination="@id/alarmEditorFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmEditorFragment"
+        android:name="com.example.alarmclock.screens.alarm.alarmeditor.AlarmEditorFragment"
+        android:label="AlarmEditorFragment"
+        tools:layout="@layout/fragment_alarm_editor">
+        <argument
+            android:name="alarmId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_alarmEditorFragment_to_alarmListFragment"
+            app:destination="@id/alarmListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
+    </fragment>
+</navigation>

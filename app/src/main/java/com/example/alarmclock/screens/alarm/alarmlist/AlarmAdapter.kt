@@ -1,6 +1,7 @@
 package com.example.alarmclock.screens.alarm.alarmlist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -28,9 +29,7 @@ class AlarmAdapter(private val alarmOnItemClickListener: AlarmOnItemClickListene
 
         fun bind(alarm: Alarm) {
             binding.alarm = alarm
-            binding.isActive.setOnClickListener {
-                alarmOnItemClickListener.onActiveClick(alarm)
-            }
+            binding.alarmOnItemClickListener = alarmOnItemClickListener
             binding.executePendingBindings()
         }
 
@@ -47,7 +46,11 @@ class AlarmAdapter(private val alarmOnItemClickListener: AlarmOnItemClickListene
     }
 
     interface AlarmOnItemClickListener {
+        fun onCardViewClick(alarmId: Long)
+
         fun onActiveClick(alarm: Alarm)
+
+        fun onPopUpMenuClick(view: View, alarm: Alarm)
     }
 }
 

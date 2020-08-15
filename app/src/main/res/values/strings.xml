@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">AlarmClock</string>
     <string name="time_hours_minutes_format">%02d:%02d</string>
+    <string name="alarm_name">Alarm name</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="descr_popup_button">Popup Button</string>
 </resources>
