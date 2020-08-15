@@ -21,5 +21,5 @@ data class Alarm(
     var timeMinutes: Int,
 
     @ColumnInfo(name = "days")
-    var days: List<DayOfWeek>
+    var days: MutableList<DayOfWeek>
 )

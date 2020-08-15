@@ -1,6 +1,7 @@
 package com.example.alarmclock.screens.alarm
 
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.databinding.BindingAdapter
 import com.example.alarmclock.R
 import com.example.alarmclock.database.Alarm
@@ -15,17 +16,16 @@ fun com.google.android.material.switchmaterial.SwitchMaterial.setAlarmIsActive(a
     }
 }
 
-@BindingAdapter("alarmTime")
+@BindingAdapter("bind_alarmTime")
 fun TextView.setAlarmTime(alarm: Alarm?) {
     alarm?.let {
-        val hours = alarm.timeMinutes.div(60)
-        val minutes = alarm.timeMinutes.rem(60)
+        val (hours, minutes) = calcFromTimeMinutes(alarm.timeMinutes)
         text =
             String.format(resources.getString(R.string.time_hours_minutes_format), hours, minutes)
     }
 }
 
-@BindingAdapter("alarmDays")
+@BindingAdapter("bind_alarmDays")
 fun TextView.setAlarmDays(alarm: Alarm?) {
     alarm?.let {
 
@@ -50,9 +50,21 @@ fun TextView.setAlarmDays(alarm: Alarm?) {
     }
 }
 
-@BindingAdapter("alarmName")
+@BindingAdapter("bind_alarmName")
 fun TextView.setAlarmName(alarm: Alarm?) {
     alarm?.let {
         text = alarm.name
+    }
+}
+
+@BindingAdapter("bind_alarmDayAlarm", "bind_alarmDayDayOfWeek")
+fun ToggleButton.setAlarmDay(alarm: Alarm?, dayOfWeek: DayOfWeek?) {
+    dayOfWeek?.let {
+        val dayOfWeekString = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        textOn = dayOfWeekString
+        textOff = dayOfWeekString
+        alarm?.let {
+            isChecked = alarm.days.contains(dayOfWeek)
+        }
     }
 }

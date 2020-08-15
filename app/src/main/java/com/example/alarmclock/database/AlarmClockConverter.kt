@@ -10,11 +10,17 @@ class AlarmClockConverter {
     }
 
     @TypeConverter
-    fun daysOfWeekToString(daysOfWeek: List<DayOfWeek>): String =
+    fun daysOfWeekToString(daysOfWeek: MutableList<DayOfWeek>): String =
         daysOfWeek.map { it.value }.joinToString(separator = SEPARATOR)
 
     @TypeConverter
-    fun stringToDaysOfWeek(daysOfWeek: String): List<DayOfWeek> =
-        daysOfWeek.split(SEPARATOR).map { DayOfWeek.of(it.toInt()) }.toList().sorted()
+    fun stringToDaysOfWeek(daysOfWeek: String): MutableList<DayOfWeek> {
+        return if (daysOfWeek != "") {
+            daysOfWeek.split(SEPARATOR).map { DayOfWeek.of(it.toInt()) }.sorted()
+                .toMutableList()
+        } else {
+            mutableListOf()
+        }
+    }
 
 }
