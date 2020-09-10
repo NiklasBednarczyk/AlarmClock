@@ -5,7 +5,6 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.alarmclock.R
@@ -13,6 +12,7 @@ import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmEditorBinding
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorTimeDialogFragment
+import com.example.alarmclock.utils.setAlarm
 
 class AlarmEditorFragment : Fragment() {
 
@@ -49,8 +49,9 @@ class AlarmEditorFragment : Fragment() {
 
         supportFragmentManager = application.supportFragmentManager
 
-        viewModel.navigateToAlarmList.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
+        viewModel.navigateToAlarmList.observe(viewLifecycleOwner, { alarm ->
+            if (alarm != null) {
+                setAlarm(context, alarm)
                 findNavController().navigate(
                     AlarmEditorFragmentDirections.actionAlarmEditorFragmentToAlarmListFragment()
                 )

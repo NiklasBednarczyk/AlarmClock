@@ -7,7 +7,7 @@ import androidx.room.*
 interface AlarmDao {
 
     @Insert
-    fun insertAlarm(alarm: Alarm)
+    fun insertAlarm(alarm: Alarm): Long
 
     @Update
     fun updateAlarm(alarm: Alarm)

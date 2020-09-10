@@ -3,14 +3,13 @@ package com.example.alarmclock.screens.alarm.alarmlist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.databinding.ListItemAlarmBinding
 
-class AlarmAdapter(private val alarmOnItemClickListener: AlarmOnItemClickListener) :
-    ListAdapter<Alarm, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
+class AlarmListAdapter(private val alarmOnItemClickListener: AlarmOnItemClickListener) :
+    ListAdapter<Alarm, AlarmListAdapter.AlarmViewHolder>(AlarmListDiffCallback()) {
 
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         val item = getItem(position)
@@ -51,15 +50,5 @@ class AlarmAdapter(private val alarmOnItemClickListener: AlarmOnItemClickListene
         fun onActiveClick(alarm: Alarm)
 
         fun onPopUpMenuClick(view: View, alarm: Alarm)
-    }
-}
-
-class AlarmDiffCallback : DiffUtil.ItemCallback<Alarm>() {
-    override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-        return oldItem.alarmId == newItem.alarmId
-    }
-
-    override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-        return oldItem == newItem
     }
 }

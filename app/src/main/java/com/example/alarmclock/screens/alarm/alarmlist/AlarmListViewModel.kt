@@ -26,10 +26,19 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     val showItemPopUpMenu: LiveData<Pair<View?, Alarm?>>
         get() = _showItemPopUpMenu
 
-    val alarmOnItemClickListener = object : AlarmAdapter.AlarmOnItemClickListener {
+    private val _eventIsActiveChanged = MutableLiveData<Alarm?>()
+    val eventIsActiveChanged: LiveData<Alarm?>
+        get() = _eventIsActiveChanged
+
+    private val _eventDeleteAlarm = MutableLiveData<Alarm?>()
+    val eventDeleteAlarm: LiveData<Alarm?>
+        get() = _eventDeleteAlarm
+
+    val alarmOnItemClickListener = object : AlarmListAdapter.AlarmOnItemClickListener {
         override fun onActiveClick(alarm: Alarm) {
             uiScope.launch {
                 alarm.isActive = !alarm.isActive
+                _eventIsActiveChanged.value = alarm
                 updateAlarm(alarm)
             }
         }
@@ -55,6 +64,7 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
             R.id.action_delete -> {
                 val alarm = showItemPopUpMenu.value?.second
                 alarm?.let {
+                    _eventDeleteAlarm.value = alarm
                     uiScope.launch {
                         deleteAlarm(it)
                     }
@@ -96,5 +106,13 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
 
     fun doneShowingItemPopUpMenu() {
         _showItemPopUpMenu.value = Pair(null, showItemPopUpMenu.value?.second)
+    }
+
+    fun doneIsActive() {
+        _eventIsActiveChanged.value = null
+    }
+
+    fun doneDeleteAlarm() {
+        _eventDeleteAlarm.value = null
     }
 }

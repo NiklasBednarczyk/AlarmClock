@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alarmclock.R
 import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmListBinding
+import com.example.alarmclock.utils.cancelAlarm
+import com.example.alarmclock.utils.setAlarm
 
 class AlarmListFragment : Fragment() {
 
@@ -51,16 +52,16 @@ class AlarmListFragment : Fragment() {
         binding.alarmList.addItemDecoration(dividerItemDecoration)
 
         val onItemClickListener = viewModel.alarmOnItemClickListener
-        val adapter = AlarmAdapter(onItemClickListener)
+        val adapter = AlarmListAdapter(onItemClickListener)
         binding.alarmList.adapter = adapter
 
-        viewModel.alarms.observe(viewLifecycleOwner, Observer {
+        viewModel.alarms.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
             }
         })
 
-        viewModel.navigateToAlarmEditor.observe(viewLifecycleOwner, Observer { alarmId ->
+        viewModel.navigateToAlarmEditor.observe(viewLifecycleOwner, { alarmId ->
             alarmId?.let {
                 this.findNavController().navigate(
                     AlarmListFragmentDirections.actionAlarmListFragmentToAlarmEditorFragment(it)
@@ -69,7 +70,7 @@ class AlarmListFragment : Fragment() {
             }
         })
 
-        viewModel.showItemPopUpMenu.observe(viewLifecycleOwner, Observer { (view, _) ->
+        viewModel.showItemPopUpMenu.observe(viewLifecycleOwner, { (view, _) ->
             view?.let { v ->
                 PopupMenu(context, v).apply {
                     setOnMenuItemClickListener(viewModel.alarmItemPopupMenuListener)
@@ -77,6 +78,24 @@ class AlarmListFragment : Fragment() {
                     show()
                 }
                 viewModel.doneShowingItemPopUpMenu()
+            }
+        })
+
+        viewModel.eventIsActiveChanged.observe(viewLifecycleOwner, { alarm ->
+            alarm?.let {
+                if (alarm.isActive) {
+                    setAlarm(context, alarm)
+                } else {
+                    cancelAlarm(context, alarm)
+                }
+                viewModel.doneIsActive()
+            }
+        })
+
+        viewModel.eventDeleteAlarm.observe(viewLifecycleOwner, { alarm ->
+            alarm?.let {
+                cancelAlarm(context, alarm)
+                viewModel.doneDeleteAlarm()
             }
         })
 
