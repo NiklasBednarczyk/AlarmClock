@@ -3,11 +3,11 @@ package com.example.alarmclock.screens.alarm.alarmeditor
 import androidx.lifecycle.*
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.database.AlarmDao
-import com.example.alarmclock.screens.alarm.calcTimeMinutes
+import com.example.alarmclock.utils.hoursAndMinutesToTimeMinutes
 import kotlinx.coroutines.*
 import java.time.DayOfWeek
 
-class AlarmEditorViewModel(private val dao: AlarmDao, private val alarmId: Long) : ViewModel() {
+class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel() {
 
     private val viewModelJob = Job()
 
@@ -16,8 +16,8 @@ class AlarmEditorViewModel(private val dao: AlarmDao, private val alarmId: Long)
     private val alarm = MediatorLiveData<Alarm>()
     fun getAlarm() = alarm
 
-    private val _navigateToAlarmList = MutableLiveData<Boolean?>()
-    val navigateToAlarmList: LiveData<Boolean?>
+    private val _navigateToAlarmList = MutableLiveData<Alarm?>()
+    val navigateToAlarmList: LiveData<Alarm?>
         get() = _navigateToAlarmList
 
     val alarmEditorListener = object : AlarmEditorListener {
@@ -37,7 +37,7 @@ class AlarmEditorViewModel(private val dao: AlarmDao, private val alarmId: Long)
         }
 
         override fun onTimeDialogTimeSet(hours: Int, minutes: Int) {
-            alarm.value?.timeMinutes = calcTimeMinutes(hours, minutes)
+            alarm.value?.timeMinutes = hoursAndMinutesToTimeMinutes(hours, minutes)
             alarm.postValue(alarm.value)
         }
     }
@@ -55,33 +55,33 @@ class AlarmEditorViewModel(private val dao: AlarmDao, private val alarmId: Long)
     }
 
     fun onActionSave() {
-        alarm.value?.let {
+        alarm.value?.let { alarm ->
             uiScope.launch {
-                it.isActive = true
-                if (it.alarmId == 0L) {
-                    insertAlarm(it)
+                alarm.isActive = true
+                if (alarm.alarmId == 0L) {
+                    alarm.alarmId = insertAlarm(alarm)
                 } else {
-                    updateAlarm(it)
+                    updateAlarm(alarm)
                 }
-                withContext(Dispatchers.Main) {
-                    startNavigatingToAlarmList()
-                }
+                startNavigatingToAlarmList(alarm)
             }
         }
     }
 
-    private fun startNavigatingToAlarmList() {
-        _navigateToAlarmList.value = true
+    private fun startNavigatingToAlarmList(alarm: Alarm) {
+        _navigateToAlarmList.value = alarm
     }
 
     fun doneNavigatingToAlarmList() {
         _navigateToAlarmList.value = null
     }
 
-    private suspend fun insertAlarm(alarm: Alarm) {
+    private suspend fun insertAlarm(alarm: Alarm): Long {
+        var alarmId = -100L
         withContext(Dispatchers.IO) {
-            dao.insertAlarm(alarm)
+            alarmId = dao.insertAlarm(alarm)
         }
+        return alarmId
     }
 
     private suspend fun updateAlarm(alarm: Alarm) {

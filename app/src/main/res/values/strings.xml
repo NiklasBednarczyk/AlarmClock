@@ -7,5 +7,12 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
-    <string name="descr_popup_button">Popup Button</string>
+    <string name="description_popup_button">Popup Button</string>
+    <string name="snooze">Snooze</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="every_day">Every Day</string>
+    <string name="weekdays">Weekdays</string>
+    <string name="weekend">Weekend</string>
 </resources>

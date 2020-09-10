@@ -10,7 +10,7 @@
 
         <variable
             name="alarmOnItemClickListener"
-            type="com.example.alarmclock.screens.alarm.alarmlist.AlarmAdapter.AlarmOnItemClickListener" />
+            type="com.example.alarmclock.screens.alarm.alarmlist.AlarmListAdapter.AlarmOnItemClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
-                android:contentDescription="@string/descr_popup_button"
+                android:contentDescription="@string/description_popup_button"
                 android:onClick="@{view -> alarmOnItemClickListener.onPopUpMenuClick(view, alarm)}"
                 android:src="@drawable/ic_baseline_more_vert_24"
                 app:layout_constraintBottom_toBottomOf="parent"
