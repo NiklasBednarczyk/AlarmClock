@@ -46,10 +46,7 @@ fun TextView.setAlarmDays(alarm: Alarm?) {
             EVERY_DAY -> resources.getString(R.string.every_day)
             mutableListOf<DayOfWeek>() -> {
                 val calendar = Calendar.getInstance()
-                val calendarTimeMinutes = hoursAndMinutesToTimeMinutes(
-                    calendar.get(Calendar.HOUR_OF_DAY),
-                    calendar.get(Calendar.MINUTE)
-                )
+                val calendarTimeMinutes = calendarToCalendarTimeMinutes(calendar)
                 if (calendarTimeMinutes < alarm.timeMinutes) {
                     resources.getString(R.string.today)
                 } else {

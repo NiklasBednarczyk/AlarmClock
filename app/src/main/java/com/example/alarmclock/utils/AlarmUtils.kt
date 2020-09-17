@@ -19,6 +19,14 @@ fun timeMinutesToHoursAndMinutes(timeMinutes: Int): Pair<Int, Int> {
     return Pair(hours, minutes)
 }
 
+fun calendarToCalendarTimeMinutes(calendar: Calendar): Int =
+    hoursAndMinutesToTimeMinutes(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
+
+fun calendarToCalendarHoursAndMinutes(calendar: Calendar): Pair<Int, Int> {
+    val calendarTimeMinutes = calendarToCalendarTimeMinutes(calendar)
+    return timeMinutesToHoursAndMinutes(calendarTimeMinutes)
+}
+
 fun setAlarm(context: Context?, alarm: Alarm) {
     val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val pendingIntentReceiver = createPendingIntentReceiver(context, alarm)
@@ -26,8 +34,7 @@ fun setAlarm(context: Context?, alarm: Alarm) {
     val (hours, minutes) = timeMinutesToHoursAndMinutes(alarm.timeMinutes)
     val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
-        val calendarTimeMinutes =
-            hoursAndMinutesToTimeMinutes(get(Calendar.HOUR_OF_DAY), get(Calendar.MINUTE))
+        val calendarTimeMinutes = calendarToCalendarTimeMinutes(this)
         if (get(Calendar.DAY_OF_WEEK) > day || get(Calendar.DAY_OF_WEEK) == day && calendarTimeMinutes == alarm.timeMinutes) {
             add(Calendar.DAY_OF_MONTH, 7)
         }
@@ -76,11 +83,9 @@ private fun createPendingIntentActivity(context: Context?, alarm: Alarm): Pendin
 
 private fun timeMinutesAndDaysToNextDay(timeMinutes: Int, days: MutableList<DayOfWeek>): Int {
     val calendar = Calendar.getInstance()
-    val calendarDayOfWeek = calendarDayToDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK))
-    val calendarTimeMinutes = hoursAndMinutesToTimeMinutes(
-        calendar.get(Calendar.HOUR_OF_DAY),
-        calendar.get(Calendar.MINUTE)
-    )
+    val calendarDayOfWeek = calendarToDayOfWeek(calendar)
+    val calendarTimeMinutes = calendarToCalendarTimeMinutes(calendar)
+
 
     var dayOfWeek = calendarDayOfWeek
     if (days.isNotEmpty()) {
@@ -104,7 +109,8 @@ private fun timeMinutesAndDaysToNextDay(timeMinutes: Int, days: MutableList<DayO
 
 private fun dayOfWeekToCalendarDay(dayOfWeek: DayOfWeek): Int = (dayOfWeek.value % 7) + 1
 
-private fun calendarDayToDayOfWeek(calendarDay: Int): DayOfWeek {
+private fun calendarToDayOfWeek(calendar: Calendar): DayOfWeek {
+    val calendarDay = calendar.get(Calendar.DAY_OF_WEEK)
     val t = (calendarDay + 6) % 7
     return if (t == 0) {
         DayOfWeek.SUNDAY

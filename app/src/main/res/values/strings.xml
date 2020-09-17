@@ -15,4 +15,5 @@
     <string name="every_day">Every Day</string>
     <string name="weekdays">Weekdays</string>
     <string name="weekend">Weekend</string>
+    <string name="now">Now</string>
 </resources>

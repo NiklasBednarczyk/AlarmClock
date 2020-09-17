@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.dialog_alarm_name.view.*
 
 class AlarmEditorNameDialogFragment(
     private val alarmEditorListener: AlarmEditorListener,
-    private val oldName: String?
+    private val alarmName: String
 ) : DialogFragment() {
 
     @SuppressLint("InflateParams")
@@ -23,7 +23,7 @@ class AlarmEditorNameDialogFragment(
             val inflater = requireActivity().layoutInflater
 
             val view = inflater.inflate(R.layout.dialog_alarm_name, null)
-            view.name.setText(oldName)
+            view.name.setText(alarmName)
 
             builder
                 .setView(view)

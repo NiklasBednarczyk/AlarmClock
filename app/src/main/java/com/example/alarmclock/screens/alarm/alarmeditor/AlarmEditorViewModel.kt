@@ -77,7 +77,7 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
     }
 
     private suspend fun insertAlarm(alarm: Alarm): Long {
-        var alarmId = -100L
+        var alarmId: Long
         withContext(Dispatchers.IO) {
             alarmId = dao.insertAlarm(alarm)
         }
