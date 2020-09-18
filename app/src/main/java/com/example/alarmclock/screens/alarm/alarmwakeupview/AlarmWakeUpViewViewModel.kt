@@ -19,8 +19,9 @@ class AlarmWakeUpViewViewModel(dao: AlarmDao, alarmId: Long) : ViewModel() {
         private const val COUNTDOWN_TIME = 10000L
     }
 
-    private val alarm = MediatorLiveData<Alarm>()
-    fun getAlarm() = alarm
+    private val _alarm = MediatorLiveData<Alarm>()
+    val alarm: LiveData<Alarm>
+        get() = _alarm
 
     private val _snoozeTime = MutableLiveData<Long>()
     val snoozeTime: LiveData<Long>
@@ -45,7 +46,7 @@ class AlarmWakeUpViewViewModel(dao: AlarmDao, alarmId: Long) : ViewModel() {
     private val snoozeTimer: CountDownTimer
 
     init {
-        alarm.addSource(dao.getAlarm(alarmId), alarm::setValue)
+        _alarm.addSource(dao.getAlarm(alarmId), _alarm::setValue)
 
         _snoozeCount.value = 0
 

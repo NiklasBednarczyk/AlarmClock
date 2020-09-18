@@ -56,7 +56,7 @@ class AlarmWakeUpViewFragment : Fragment() {
 
         viewModel.eventDismissed.observe(viewLifecycleOwner, { dismissed ->
             if (dismissed) {
-                viewModel.getAlarm().value?.let { alarm ->
+                viewModel.alarm.value?.let { alarm ->
                     if (alarm.days.isNotEmpty()) {
                         setAlarm(context, alarm)
                     }

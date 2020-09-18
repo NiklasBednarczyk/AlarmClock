@@ -26,12 +26,12 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     val showItemPopUpMenu: LiveData<Pair<View?, Alarm?>>
         get() = _showItemPopUpMenu
 
-    private val _eventIsActiveChanged = MutableLiveData<Alarm?>()
-    val eventIsActiveChanged: LiveData<Alarm?>
+    private val _eventIsActiveChanged = MutableLiveData<Alarm>()
+    val eventIsActiveChanged: LiveData<Alarm>
         get() = _eventIsActiveChanged
 
-    private val _eventDeleteAlarm = MutableLiveData<Alarm?>()
-    val eventDeleteAlarm: LiveData<Alarm?>
+    private val _eventDeleteAlarm = MutableLiveData<Alarm>()
+    val eventDeleteAlarm: LiveData<Alarm>
         get() = _eventDeleteAlarm
 
     val alarmOnItemClickListener = object : AlarmListAdapter.AlarmOnItemClickListener {
