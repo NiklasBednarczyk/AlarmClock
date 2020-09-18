@@ -78,7 +78,7 @@ class AlarmEditorFragment : Fragment() {
     }
 
     fun showTimeDialog() {
-        viewModel.getAlarm().value?.let { alarm ->
+        viewModel.alarm.value?.let { alarm ->
             AlarmEditorTimeDialogFragment(viewModel.alarmEditorListener, alarm.timeMinutes).show(
                 supportFragmentManager,
                 "timeDialog"
@@ -87,7 +87,7 @@ class AlarmEditorFragment : Fragment() {
     }
 
     fun showNameDialog() {
-        viewModel.getAlarm().value?.let { alarm ->
+        viewModel.alarm.value?.let { alarm ->
             AlarmEditorNameDialogFragment(viewModel.alarmEditorListener, alarm.name).show(
                 supportFragmentManager,
                 "nameDialog"

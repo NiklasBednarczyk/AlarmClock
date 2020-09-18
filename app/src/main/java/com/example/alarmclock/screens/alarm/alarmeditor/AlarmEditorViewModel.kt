@@ -13,16 +13,17 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private val alarm = MediatorLiveData<Alarm>()
-    fun getAlarm() = alarm
+    private val _alarm = MediatorLiveData<Alarm>()
+    val alarm: LiveData<Alarm>
+        get() = _alarm
 
-    private val _navigateToAlarmList = MutableLiveData<Alarm?>()
-    val navigateToAlarmList: LiveData<Alarm?>
+    private val _navigateToAlarmList = MutableLiveData<Alarm>()
+    val navigateToAlarmList: LiveData<Alarm>
         get() = _navigateToAlarmList
 
     val alarmEditorListener = object : AlarmEditorListener {
         override fun onDayButtonClick(dayOfWeek: DayOfWeek) {
-            alarm.value?.let {
+            _alarm.value?.let {
                 if (it.days.contains(dayOfWeek)) {
                     it.days.remove(dayOfWeek)
                 } else {
@@ -32,13 +33,13 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
         }
 
         override fun onNameDialogPositiveButton(name: String) {
-            alarm.value?.name = name
-            alarm.postValue(alarm.value)
+            _alarm.value?.name = name
+            _alarm.postValue(_alarm.value)
         }
 
         override fun onTimeDialogTimeSet(hours: Int, minutes: Int) {
-            alarm.value?.timeMinutes = hoursAndMinutesToTimeMinutes(hours, minutes)
-            alarm.postValue(alarm.value)
+            _alarm.value?.timeMinutes = hoursAndMinutesToTimeMinutes(hours, minutes)
+            _alarm.postValue(_alarm.value)
         }
     }
 
@@ -46,7 +47,7 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
         val alarmLiveData = Transformations.map(dao.getAlarm(alarmId)) {
             return@map it ?: getDefaultAlarm()
         }
-        alarm.addSource(alarmLiveData, alarm::setValue)
+        _alarm.addSource(alarmLiveData, _alarm::setValue)
     }
 
     override fun onCleared() {
@@ -55,7 +56,7 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
     }
 
     fun onActionSave() {
-        alarm.value?.let { alarm ->
+        _alarm.value?.let { alarm ->
             uiScope.launch {
                 alarm.isActive = true
                 if (alarm.alarmId == 0L) {
