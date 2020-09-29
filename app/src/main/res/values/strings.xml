@@ -16,4 +16,7 @@
     <string name="weekdays">Weekdays</string>
     <string name="weekend">Weekend</string>
     <string name="now">Now</string>
+    <string name="undo">Undo</string>
+    <string name="snackbar_delete_text">Removed: %s</string>
+    <string name="alarm">Alarm</string>
 </resources>

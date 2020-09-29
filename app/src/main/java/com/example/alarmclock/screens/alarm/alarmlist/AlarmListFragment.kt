@@ -16,6 +16,7 @@ import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmListBinding
 import com.example.alarmclock.utils.cancelAlarm
 import com.example.alarmclock.utils.setAlarm
+import com.google.android.material.snackbar.Snackbar
 
 class AlarmListFragment : Fragment() {
 
@@ -95,6 +96,19 @@ class AlarmListFragment : Fragment() {
         viewModel.eventDeleteAlarm.observe(viewLifecycleOwner, { alarm ->
             alarm?.let {
                 cancelAlarm(context, alarm)
+
+                view?.let { view ->
+                    val alarmName =
+                        if (!alarm.name.isBlank()) alarm.name else resources.getString(R.string.alarm)
+                    val text =
+                        String.format(resources.getString(R.string.snackbar_delete_text), alarmName)
+                    Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.undo) {
+                            viewModel.addAlarm(alarm)
+                            setAlarm(context, alarm)
+                        }.show()
+                }
+
                 viewModel.doneDeleteAlarm()
             }
         })

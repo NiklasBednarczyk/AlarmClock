@@ -80,6 +80,14 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
         viewModelJob.cancel()
     }
 
+    fun addAlarm(alarm: Alarm) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                dao.insertAlarm(alarm)
+            }
+        }
+    }
+
     private suspend fun updateAlarm(alarm: Alarm) {
         withContext(Dispatchers.IO) {
             dao.updateAlarm(alarm)
