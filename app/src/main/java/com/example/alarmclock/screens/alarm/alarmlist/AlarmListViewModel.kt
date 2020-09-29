@@ -34,13 +34,15 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     val eventDeleteAlarm: LiveData<Alarm>
         get() = _eventDeleteAlarm
 
+    private val _eventInsertAlarm = MutableLiveData<Alarm>()
+    val eventInsertAlarm: LiveData<Alarm>
+        get() = _eventInsertAlarm
+
     val alarmOnItemClickListener = object : AlarmListAdapter.AlarmOnItemClickListener {
         override fun onActiveClick(alarm: Alarm) {
-            uiScope.launch {
-                alarm.isActive = !alarm.isActive
-                _eventIsActiveChanged.value = alarm
-                updateAlarm(alarm)
-            }
+            alarm.isActive = !alarm.isActive
+            _eventIsActiveChanged.value = alarm
+            updateAlarm(alarm)
         }
 
         override fun onCardViewClick(alarmId: Long) {
@@ -53,25 +55,26 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     }
 
     val alarmItemPopupMenuListener = PopupMenu.OnMenuItemClickListener { item ->
-        when (item?.itemId) {
-            R.id.action_edit -> {
-                val alarmId = showItemPopUpMenu.value?.second?.alarmId
-                alarmId?.let {
-                    startNavigatingToAlarmEditor(it)
+        val alarm = showItemPopUpMenu.value?.second
+        if (alarm != null) {
+            when (item?.itemId) {
+                R.id.action_edit -> {
+                    startNavigatingToAlarmEditor(alarm.alarmId)
+                    true
                 }
-                true
-            }
-            R.id.action_delete -> {
-                val alarm = showItemPopUpMenu.value?.second
-                alarm?.let {
-                    _eventDeleteAlarm.value = alarm
-                    uiScope.launch {
-                        deleteAlarm(it)
-                    }
+                R.id.action_duplicate -> {
+                    alarm.alarmId = 0L
+                    insertAlarm(alarm)
+                    true
                 }
-                true
+                R.id.action_delete -> {
+                    deleteAlarm(alarm)
+                    true
+                }
+                else -> false
             }
-            else -> false
+        } else {
+            false
         }
     }
 
@@ -80,24 +83,31 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
         viewModelJob.cancel()
     }
 
-    fun addAlarm(alarm: Alarm) {
+    fun insertAlarm(alarm: Alarm) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                dao.insertAlarm(alarm)
+                alarm.alarmId = dao.insertAlarm(alarm)
+            }
+            _eventInsertAlarm.value = alarm
+        }
+
+    }
+
+    private fun updateAlarm(alarm: Alarm) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                dao.updateAlarm(alarm)
             }
         }
     }
 
-    private suspend fun updateAlarm(alarm: Alarm) {
-        withContext(Dispatchers.IO) {
-            dao.updateAlarm(alarm)
+    private fun deleteAlarm(alarm: Alarm) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                dao.deleteAlarm(alarm)
+            }
         }
-    }
-
-    private suspend fun deleteAlarm(alarm: Alarm) {
-        withContext(Dispatchers.IO) {
-            dao.deleteAlarm(alarm)
-        }
+        _eventDeleteAlarm.value = alarm
     }
 
     fun startNavigatingToAlarmEditor(alarmId: Long) {
@@ -122,5 +132,9 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
 
     fun doneDeleteAlarm() {
         _eventDeleteAlarm.value = null
+    }
+
+    fun doneInsertAlarm() {
+        _eventInsertAlarm.value = null
     }
 }
