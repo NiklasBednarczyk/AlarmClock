@@ -19,4 +19,5 @@
     <string name="undo">Undo</string>
     <string name="snackbar_delete_text">Removed: %s</string>
     <string name="alarm">Alarm</string>
+    <string name="duplicate">Duplicate</string>
 </resources>

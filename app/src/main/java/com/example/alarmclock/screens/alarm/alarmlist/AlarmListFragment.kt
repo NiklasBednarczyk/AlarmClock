@@ -104,12 +104,20 @@ class AlarmListFragment : Fragment() {
                         String.format(resources.getString(R.string.snackbar_delete_text), alarmName)
                     Snackbar.make(view, text, Snackbar.LENGTH_LONG)
                         .setAction(R.string.undo) {
-                            viewModel.addAlarm(alarm)
-                            setAlarm(context, alarm)
+                            viewModel.insertAlarm(alarm)
                         }.show()
                 }
 
                 viewModel.doneDeleteAlarm()
+            }
+        })
+
+        viewModel.eventInsertAlarm.observe(viewLifecycleOwner, { alarm ->
+            alarm?.let {
+                if (alarm.isActive) {
+                    setAlarm(context, alarm)
+                }
+                viewModel.doneInsertAlarm()
             }
         })
 
