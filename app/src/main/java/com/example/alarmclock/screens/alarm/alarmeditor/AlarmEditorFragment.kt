@@ -12,7 +12,7 @@ import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmEditorBinding
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorTimeDialogFragment
-import com.example.alarmclock.utils.setAlarm
+import com.example.alarmclock.utils.setNormalAlarm
 
 class AlarmEditorFragment : Fragment() {
 
@@ -51,7 +51,7 @@ class AlarmEditorFragment : Fragment() {
 
         viewModel.navigateToAlarmList.observe(viewLifecycleOwner, { alarm ->
             if (alarm != null) {
-                setAlarm(context, alarm)
+                setNormalAlarm(context, alarm)
                 findNavController().navigate(
                     AlarmEditorFragmentDirections.actionAlarmEditorFragmentToAlarmListFragment()
                 )

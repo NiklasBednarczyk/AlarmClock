@@ -26,22 +26,30 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     val showItemPopUpMenu: LiveData<Pair<View?, Alarm?>>
         get() = _showItemPopUpMenu
 
-    private val _eventIsActiveChanged = MutableLiveData<Alarm>()
-    val eventIsActiveChanged: LiveData<Alarm>
-        get() = _eventIsActiveChanged
-
     private val _eventDeleteAlarm = MutableLiveData<Alarm>()
     val eventDeleteAlarm: LiveData<Alarm>
         get() = _eventDeleteAlarm
 
-    private val _eventInsertAlarm = MutableLiveData<Alarm>()
-    val eventInsertAlarm: LiveData<Alarm>
-        get() = _eventInsertAlarm
+    private val _eventSetNormalAlarm = MutableLiveData<Alarm>()
+    val eventSetNormalAlarm: LiveData<Alarm>
+        get() = _eventSetNormalAlarm
+
+    private val _eventSetPreviewAlarm = MutableLiveData<Alarm>()
+    val eventSetPreviewAlarm: LiveData<Alarm>
+        get() = _eventSetPreviewAlarm
+
+    private val _eventCancelAlarm = MutableLiveData<Alarm>()
+    val eventCancelAlarm: LiveData<Alarm>
+        get() = _eventCancelAlarm
 
     val alarmOnItemClickListener = object : AlarmListAdapter.AlarmOnItemClickListener {
         override fun onActiveClick(alarm: Alarm) {
             alarm.isActive = !alarm.isActive
-            _eventIsActiveChanged.value = alarm
+            if (alarm.isActive) {
+                startSettingNormalAlarm(alarm)
+            } else {
+                startCancellingAlarm(alarm)
+            }
             updateAlarm(alarm)
         }
 
@@ -67,6 +75,10 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
                     insertAlarm(alarm)
                     true
                 }
+                R.id.action_preview -> {
+                    startSettingPreviewAlarm(alarm)
+                    true
+                }
                 R.id.action_delete -> {
                     deleteAlarm(alarm)
                     true
@@ -88,7 +100,7 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
             withContext(Dispatchers.IO) {
                 alarm.alarmId = dao.insertAlarm(alarm)
             }
-            _eventInsertAlarm.value = alarm
+            startSettingNormalAlarm(alarm)
         }
 
     }
@@ -107,7 +119,7 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
                 dao.deleteAlarm(alarm)
             }
         }
-        _eventDeleteAlarm.value = alarm
+        startDeletingAlarm(alarm)
     }
 
     fun startNavigatingToAlarmEditor(alarmId: Long) {
@@ -126,15 +138,36 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
         _showItemPopUpMenu.value = Pair(null, showItemPopUpMenu.value?.second)
     }
 
-    fun doneIsActive() {
-        _eventIsActiveChanged.value = null
+    private fun startDeletingAlarm(alarm: Alarm) {
+        _eventDeleteAlarm.value = alarm
     }
 
-    fun doneDeleteAlarm() {
+    fun doneDeletingAlarm() {
         _eventDeleteAlarm.value = null
     }
 
-    fun doneInsertAlarm() {
-        _eventInsertAlarm.value = null
+    fun startSettingNormalAlarm(alarm: Alarm) {
+        _eventSetNormalAlarm.value = alarm
     }
+
+    fun doneSettingNormalAlarm() {
+        _eventSetNormalAlarm.value = null
+    }
+
+    private fun startSettingPreviewAlarm(alarm: Alarm) {
+        _eventSetPreviewAlarm.value = alarm
+    }
+
+    fun doneSettingPreviewAlarm() {
+        _eventSetPreviewAlarm.value = null
+    }
+
+    fun startCancellingAlarm(alarm: Alarm) {
+        _eventCancelAlarm.value = alarm
+    }
+
+    fun doneCancellingAlarm() {
+        _eventCancelAlarm.value = null
+    }
+
 }
