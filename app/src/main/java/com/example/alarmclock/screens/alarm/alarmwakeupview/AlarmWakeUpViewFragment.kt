@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.alarmclock.R
 import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmWakeUpViewBinding
-import com.example.alarmclock.utils.setAlarm
+import com.example.alarmclock.utils.setNormalAlarm
 
 
 class AlarmWakeUpViewFragment : Fragment() {
@@ -58,7 +58,7 @@ class AlarmWakeUpViewFragment : Fragment() {
             if (dismissed) {
                 viewModel.alarm.value?.let { alarm ->
                     if (alarm.days.isNotEmpty()) {
-                        setAlarm(context, alarm)
+                        setNormalAlarm(context, alarm)
                     }
                 }
                 requireActivity().finish()

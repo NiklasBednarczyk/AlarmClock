@@ -27,9 +27,7 @@ fun calendarToCalendarHoursAndMinutes(calendar: Calendar): Pair<Int, Int> {
     return timeMinutesToHoursAndMinutes(calendarTimeMinutes)
 }
 
-fun setAlarm(context: Context?, alarm: Alarm) {
-    val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val pendingIntentReceiver = createPendingIntentReceiver(context, alarm)
+fun setNormalAlarm(context: Context?, alarm: Alarm) {
     val day = timeMinutesAndDaysToNextDay(alarm.timeMinutes, alarm.days)
     val (hours, minutes) = timeMinutesToHoursAndMinutes(alarm.timeMinutes)
     val calendar = Calendar.getInstance().apply {
@@ -43,43 +41,64 @@ fun setAlarm(context: Context?, alarm: Alarm) {
         set(Calendar.MINUTE, minutes)
         set(Calendar.SECOND, 0)
     }
-    val pendingIntentActivity = createPendingIntentActivity(context, alarm)
+    setAlarm(context, alarm, calendar, true)
+}
+
+fun setPreviewAlarm(context: Context?, alarm: Alarm) {
+    val calendar = Calendar.getInstance()
+    setAlarm(context, alarm, calendar, false)
+}
+
+private fun setAlarm(context: Context?, alarm: Alarm, calendar: Calendar, isNormalAlarm: Boolean) {
+    val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    val pendingIntentReceiver = createPendingIntentReceiver(context, alarm, isNormalAlarm)
+    val pendingIntentActivity = createPendingIntentActivity(context, alarm, isNormalAlarm)
     val alarmClockInfo =
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntentActivity)
-
     alarmManager.setAlarmClock(alarmClockInfo, pendingIntentReceiver)
 }
 
 fun cancelAlarm(context: Context?, alarm: Alarm) {
     val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val pendingIntent = createPendingIntentReceiver(context, alarm)
+    val pendingIntent = createPendingIntentReceiver(context, alarm, true)
     alarmManager.cancel(pendingIntent)
 }
 
-private fun createPendingIntentReceiver(context: Context?, alarm: Alarm): PendingIntent =
-    Intent(context, AlarmReceiver::class.java).apply {
+private fun createPendingIntentReceiver(
+    context: Context?,
+    alarm: Alarm,
+    isNormalAlarm: Boolean
+): PendingIntent {
+    val alarmId = if (isNormalAlarm) alarm.alarmId.toInt() else 0
+    return Intent(context, AlarmReceiver::class.java).apply {
         putExtra(ALARM_INTENT_KEY_ALARM_ID, alarm.alarmId)
     }.let { intent ->
         PendingIntent.getBroadcast(
             context,
-            alarm.alarmId.toInt(),
+            alarmId,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
+}
 
-
-private fun createPendingIntentActivity(context: Context?, alarm: Alarm): PendingIntent =
-    Intent(context, MainActivity::class.java).apply {
+private fun createPendingIntentActivity(
+    context: Context?,
+    alarm: Alarm,
+    isNormalAlarm: Boolean
+): PendingIntent {
+    val alarmId = if (isNormalAlarm) alarm.alarmId.toInt() else 0
+    return Intent(context, MainActivity::class.java).apply {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }.let { intent ->
         PendingIntent.getActivity(
             context,
-            alarm.alarmId.toInt(),
+            alarmId,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
+}
 
 private fun timeMinutesAndDaysToNextDay(timeMinutes: Int, days: MutableList<DayOfWeek>): Int {
     val calendar = Calendar.getInstance()

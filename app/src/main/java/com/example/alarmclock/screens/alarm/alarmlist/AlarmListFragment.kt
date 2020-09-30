@@ -15,7 +15,8 @@ import com.example.alarmclock.R
 import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmListBinding
 import com.example.alarmclock.utils.cancelAlarm
-import com.example.alarmclock.utils.setAlarm
+import com.example.alarmclock.utils.setNormalAlarm
+import com.example.alarmclock.utils.setPreviewAlarm
 import com.google.android.material.snackbar.Snackbar
 
 class AlarmListFragment : Fragment() {
@@ -82,20 +83,9 @@ class AlarmListFragment : Fragment() {
             }
         })
 
-        viewModel.eventIsActiveChanged.observe(viewLifecycleOwner, { alarm ->
-            alarm?.let {
-                if (alarm.isActive) {
-                    setAlarm(context, alarm)
-                } else {
-                    cancelAlarm(context, alarm)
-                }
-                viewModel.doneIsActive()
-            }
-        })
-
         viewModel.eventDeleteAlarm.observe(viewLifecycleOwner, { alarm ->
             alarm?.let {
-                cancelAlarm(context, alarm)
+                viewModel.startCancellingAlarm(alarm)
 
                 view?.let { view ->
                     val alarmName =
@@ -108,16 +98,30 @@ class AlarmListFragment : Fragment() {
                         }.show()
                 }
 
-                viewModel.doneDeleteAlarm()
+                viewModel.doneDeletingAlarm()
             }
         })
 
-        viewModel.eventInsertAlarm.observe(viewLifecycleOwner, { alarm ->
+        viewModel.eventSetNormalAlarm.observe(viewLifecycleOwner, { alarm ->
             alarm?.let {
                 if (alarm.isActive) {
-                    setAlarm(context, alarm)
+                    setNormalAlarm(context, alarm)
                 }
-                viewModel.doneInsertAlarm()
+                viewModel.doneSettingNormalAlarm()
+            }
+        })
+
+        viewModel.eventSetPreviewAlarm.observe(viewLifecycleOwner, { alarm ->
+            alarm?.let {
+                setPreviewAlarm(context, alarm)
+                viewModel.doneSettingPreviewAlarm()
+            }
+        })
+
+        viewModel.eventCancelAlarm.observe(viewLifecycleOwner, { alarm ->
+            alarm?.let {
+                cancelAlarm(context, alarm)
+                viewModel.doneCancellingAlarm()
             }
         })
 
