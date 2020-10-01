@@ -21,4 +21,6 @@
     <string name="alarm">Alarm</string>
     <string name="duplicate">Duplicate</string>
     <string name="preview">Preview</string>
+    <string name="settings">Settings</string>
+    <string name="theme_title">Theme</string>
 </resources>

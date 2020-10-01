@@ -22,6 +22,10 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     val navigateToAlarmEditor: LiveData<Long>
         get() = _navigateToAlarmEditor
 
+    private val _navigateToSettings = MutableLiveData<Boolean>()
+    val navigateToSettings: LiveData<Boolean>
+        get() = _navigateToSettings
+
     private val _showItemPopUpMenu = MutableLiveData<Pair<View?, Alarm?>>()
     val showItemPopUpMenu: LiveData<Pair<View?, Alarm?>>
         get() = _showItemPopUpMenu
@@ -128,6 +132,14 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
 
     fun doneNavigatingToAlarmEditor() {
         _navigateToAlarmEditor.value = null
+    }
+
+    fun startNavigatingToSettings() {
+        _navigateToSettings.value = true
+    }
+
+    fun doneNavigatingToSettings() {
+        _navigateToSettings.value = null
     }
 
     fun startShowingItemPopUpMenu(view: View, alarm: Alarm) {

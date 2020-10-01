@@ -1,0 +1,13 @@
+<resources>
+    <string-array name="theme_entries">
+        <item>Use System Setting</item>
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>use_system_setting</item>
+        <item>light_theme</item>
+        <item>dark_theme</item>
+    </string-array>
+</resources>

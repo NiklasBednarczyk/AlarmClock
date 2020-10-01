@@ -8,19 +8,24 @@
 
     <fragment
         android:id="@+id/alarmListFragment"
-        android:name="com.example.alarmclock.screens.alarm.alarmlist.AlarmListFragment"
         android:label="AlarmListFragment"
+        android:name="com.example.alarmclock.screens.alarm.alarmlist.AlarmListFragment"
         tools:layout="@layout/fragment_alarm_list">
         <action
             android:id="@+id/action_alarmListFragment_to_alarmEditorFragment"
             app:destination="@id/alarmEditorFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popEnterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_alarmListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/alarmEditorFragment"
-        android:name="com.example.alarmclock.screens.alarm.alarmeditor.AlarmEditorFragment"
         android:label="AlarmEditorFragment"
+        android:name="com.example.alarmclock.screens.alarm.alarmeditor.AlarmEditorFragment"
         tools:layout="@layout/fragment_alarm_editor">
         <argument
             android:name="alarmId"
@@ -31,4 +36,8 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:label="SettingsFragment"
+        android:name="com.example.alarmclock.screens.settings.SettingsFragment" />
 </navigation>
