@@ -13,6 +13,7 @@ buildscript {
         lifecycle_extensions_version = "2.2.0"
         material_version = "1.2.1"
         navigation_version = "1.0.0"
+        preference_version = "1.1.1"
         recycler_view_version = "1.1.0"
         room_version = "2.2.5"
     }

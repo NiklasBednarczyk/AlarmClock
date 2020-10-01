@@ -1,9 +1,7 @@
 package com.example.alarmclock.screens.alarm.alarmlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,6 +32,8 @@ class AlarmListFragment : Fragment() {
             container,
             false
         )
+
+        setHasOptionsMenu(true)
 
         binding.lifecycleOwner = this
 
@@ -69,6 +69,15 @@ class AlarmListFragment : Fragment() {
                     AlarmListFragmentDirections.actionAlarmListFragmentToAlarmEditorFragment(it)
                 )
                 viewModel.doneNavigatingToAlarmEditor()
+            }
+        })
+
+        viewModel.navigateToSettings.observe(viewLifecycleOwner, { navigate ->
+            navigate?.let {
+                this.findNavController().navigate(
+                    AlarmListFragmentDirections.actionAlarmListFragmentToSettingsFragment()
+                )
+                viewModel.doneNavigatingToSettings()
             }
         })
 
@@ -128,4 +137,18 @@ class AlarmListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_alarm_list, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_settings -> {
+            viewModel.startNavigatingToSettings()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
 }
