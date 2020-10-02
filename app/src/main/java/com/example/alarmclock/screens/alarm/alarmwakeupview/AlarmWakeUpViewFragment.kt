@@ -33,7 +33,7 @@ class AlarmWakeUpViewFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        val args = AlarmWakeUpViewFragmentArgs.fromBundle(arguments!!)
+        val args = AlarmWakeUpViewFragmentArgs.fromBundle(requireArguments())
         val alarmId = args.alarmId
 
         val application = requireActivity()
@@ -59,6 +59,8 @@ class AlarmWakeUpViewFragment : Fragment() {
                 viewModel.alarm.value?.let { alarm ->
                     if (alarm.days.isNotEmpty()) {
                         setNormalAlarm(context, alarm)
+                    } else {
+                        viewModel.dismissOneShotAlarm(alarm)
                     }
                 }
                 requireActivity().finish()

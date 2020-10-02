@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.database.AlarmDao
+import kotlinx.coroutines.*
 
-class AlarmWakeUpViewViewModel(dao: AlarmDao, alarmId: Long) : ViewModel() {
+class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long) : ViewModel() {
 
     companion object {
 
@@ -18,6 +19,10 @@ class AlarmWakeUpViewViewModel(dao: AlarmDao, alarmId: Long) : ViewModel() {
 
         private const val COUNTDOWN_TIME = 10000L
     }
+
+    private val viewModelJob = Job()
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _alarm = MediatorLiveData<Alarm>()
     val alarm: LiveData<Alarm>
@@ -61,6 +66,15 @@ class AlarmWakeUpViewViewModel(dao: AlarmDao, alarmId: Long) : ViewModel() {
                 _snoozeTime.value = DONE
                 _eventSnoozed.value = false
                 _eventVibration.value = AlarmWakeUpViewVibrationType.ALARM
+            }
+        }
+    }
+
+    fun dismissOneShotAlarm(alarm: Alarm) {
+        alarm.isActive = false
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                dao.updateAlarm(alarm)
             }
         }
     }

@@ -41,7 +41,7 @@ class AlarmEditorFragment : Fragment() {
 
         val dao = AlarmClockDatabase.getInstance(application).alarmDao
 
-        val args = AlarmEditorFragmentArgs.fromBundle(arguments!!)
+        val args = AlarmEditorFragmentArgs.fromBundle(requireArguments())
         val viewModelFactory = AlarmEditorViewModelFactory(dao, args.alarmId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(AlarmEditorViewModel::class.java)
         binding.alarmEditorViewModel = viewModel
