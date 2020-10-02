@@ -7,13 +7,20 @@ import android.widget.ToggleButton
 import androidx.databinding.BindingAdapter
 import com.example.alarmclock.R
 import com.example.alarmclock.database.Alarm
-import com.example.alarmclock.values.EVERY_DAY
-import com.example.alarmclock.values.WEEKDAYS
-import com.example.alarmclock.values.WEEKEND
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.*
+
+val WEEKDAYS = listOf(
+    DayOfWeek.MONDAY,
+    DayOfWeek.TUESDAY,
+    DayOfWeek.WEDNESDAY,
+    DayOfWeek.THURSDAY,
+    DayOfWeek.FRIDAY
+)
+val WEEKEND = listOf(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)
+val EVERY_DAY = WEEKDAYS + WEEKEND
 
 @BindingAdapter("alarmIsActive")
 fun com.google.android.material.switchmaterial.SwitchMaterial.setAlarmIsActive(alarm: Alarm?) {

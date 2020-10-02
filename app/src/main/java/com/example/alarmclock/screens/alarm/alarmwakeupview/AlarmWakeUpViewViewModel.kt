@@ -9,7 +9,7 @@ import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.database.AlarmDao
 import kotlinx.coroutines.*
 
-class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long) : ViewModel() {
+class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: Int) : ViewModel() {
 
     companion object {
 
@@ -17,7 +17,7 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long) : ViewModel() {
 
         private const val ONE_SECOND = 1000L
 
-        private const val COUNTDOWN_TIME = 10000L
+        const val SNOOZE_TIME = 10000L
     }
 
     private val viewModelJob = Job()
@@ -53,19 +53,17 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long) : ViewModel() {
     init {
         _alarm.addSource(dao.getAlarm(alarmId), _alarm::setValue)
 
-        _snoozeCount.value = 0
+        _snoozeCount.value = snoozeCount
 
         _eventVibration.value = AlarmWakeUpViewVibrationType.ALARM
 
-        snoozeTimer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
+        snoozeTimer = object : CountDownTimer(SNOOZE_TIME, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
                 _snoozeTime.value = (millisUntilFinished / ONE_SECOND)
             }
 
             override fun onFinish() {
                 _snoozeTime.value = DONE
-                _eventSnoozed.value = false
-                _eventVibration.value = AlarmWakeUpViewVibrationType.ALARM
             }
         }
     }
@@ -80,6 +78,7 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long) : ViewModel() {
     }
 
     fun onActionSnooze() {
+        val t = snoozeCount.value
         _snoozeCount.value = _snoozeCount.value?.plus(1)
         _eventSnoozed.value = true
         _eventVibration.value = AlarmWakeUpViewVibrationType.NO_VIBRATION
