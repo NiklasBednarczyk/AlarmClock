@@ -14,9 +14,9 @@
         android:theme="@style/AppTheme">
 
         <receiver
-            android:name=".receivers.AlarmReceiver"
             android:enabled="true"
             android:exported="false"
+            android:name=".receivers.AlarmReceiver"
             android:process=":remote" />
 
         <activity android:name=".activities.AlarmWakeUpActivity" />

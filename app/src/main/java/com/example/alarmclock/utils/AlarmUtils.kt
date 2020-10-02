@@ -7,7 +7,9 @@ import android.content.Intent
 import com.example.alarmclock.activities.MainActivity
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.receivers.AlarmReceiver
-import com.example.alarmclock.values.ALARM_INTENT_KEY_ALARM_ID
+import com.example.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_ALARM_ID
+import com.example.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_SNOOZE_COUNT
+import com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewViewModel.Companion.SNOOZE_TIME
 import java.time.DayOfWeek
 import java.util.*
 
@@ -49,9 +51,23 @@ fun setPreviewAlarm(context: Context?, alarm: Alarm) {
     setAlarm(context, alarm, calendar, false)
 }
 
-private fun setAlarm(context: Context?, alarm: Alarm, calendar: Calendar, isNormalAlarm: Boolean) {
+fun snoozeAlarm(context: Context?, alarm: Alarm, snoozeCount: Int) {
+    val calendar = Calendar.getInstance().apply {
+        add(Calendar.MILLISECOND, SNOOZE_TIME.toInt())
+    }
+    setAlarm(context, alarm, calendar, true, snoozeCount)
+}
+
+private fun setAlarm(
+    context: Context?,
+    alarm: Alarm,
+    calendar: Calendar,
+    isNormalAlarm: Boolean,
+    snoozeCount: Int = 0
+) {
     val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val pendingIntentReceiver = createPendingIntentReceiver(context, alarm, isNormalAlarm)
+    val pendingIntentReceiver =
+        createPendingIntentReceiver(context, alarm, isNormalAlarm, snoozeCount)
     val pendingIntentActivity = createPendingIntentActivity(context, alarm, isNormalAlarm)
     val alarmClockInfo =
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntentActivity)
@@ -67,11 +83,13 @@ fun cancelAlarm(context: Context?, alarm: Alarm) {
 private fun createPendingIntentReceiver(
     context: Context?,
     alarm: Alarm,
-    isNormalAlarm: Boolean
+    isNormalAlarm: Boolean,
+    snoozeCount: Int = 0,
 ): PendingIntent {
     val alarmId = if (isNormalAlarm) alarm.alarmId.toInt() else 0
     return Intent(context, AlarmReceiver::class.java).apply {
         putExtra(ALARM_INTENT_KEY_ALARM_ID, alarm.alarmId)
+        putExtra(ALARM_INTENT_KEY_SNOOZE_COUNT, snoozeCount)
     }.let { intent ->
         PendingIntent.getBroadcast(
             context,

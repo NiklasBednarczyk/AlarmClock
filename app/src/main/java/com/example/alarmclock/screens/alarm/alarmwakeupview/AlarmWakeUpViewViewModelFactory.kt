@@ -4,12 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.alarmclock.database.AlarmDao
 
-class AlarmWakeUpViewViewModelFactory(private val dao: AlarmDao, private val alarmId: Long) :
+class AlarmWakeUpViewViewModelFactory(
+    private val dao: AlarmDao,
+    private val alarmId: Long,
+    private val snoozeCount: Int
+) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AlarmWakeUpViewViewModel::class.java)) {
-            return AlarmWakeUpViewViewModel(dao, alarmId) as T
+            return AlarmWakeUpViewViewModel(dao, alarmId, snoozeCount) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

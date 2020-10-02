@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.alarmclock.R
 import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmWakeUpViewBinding
+import com.example.alarmclock.utils.cancelAlarm
 import com.example.alarmclock.utils.setNormalAlarm
+import com.example.alarmclock.utils.snoozeAlarm
 
 
 class AlarmWakeUpViewFragment : Fragment() {
@@ -35,10 +37,11 @@ class AlarmWakeUpViewFragment : Fragment() {
 
         val args = AlarmWakeUpViewFragmentArgs.fromBundle(requireArguments())
         val alarmId = args.alarmId
+        val snoozeCount = args.snoozeCount
 
         val application = requireActivity()
         val dao = AlarmClockDatabase.getInstance(application).alarmDao
-        val viewModelFactory = AlarmWakeUpViewViewModelFactory(dao, alarmId)
+        val viewModelFactory = AlarmWakeUpViewViewModelFactory(dao, alarmId, snoozeCount)
         val viewModel =
             ViewModelProvider(this, viewModelFactory).get(AlarmWakeUpViewViewModel::class.java)
         binding.alarmWakeUpViewViewModel = viewModel
@@ -57,6 +60,7 @@ class AlarmWakeUpViewFragment : Fragment() {
         viewModel.eventDismissed.observe(viewLifecycleOwner, { dismissed ->
             if (dismissed) {
                 viewModel.alarm.value?.let { alarm ->
+                    cancelAlarm(context, alarm)
                     if (alarm.days.isNotEmpty()) {
                         setNormalAlarm(context, alarm)
                     } else {
@@ -64,6 +68,16 @@ class AlarmWakeUpViewFragment : Fragment() {
                     }
                 }
                 requireActivity().finish()
+            }
+        })
+
+        viewModel.eventSnoozed.observe(viewLifecycleOwner, { snoozed ->
+            if (snoozed) {
+                viewModel.alarm.value?.let { alarm ->
+                    viewModel.snoozeCount.value?.let { snoozeCount ->
+                        snoozeAlarm(context, alarm, snoozeCount)
+                    }
+                }
             }
         })
 

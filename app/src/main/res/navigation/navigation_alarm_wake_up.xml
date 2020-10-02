@@ -7,11 +7,14 @@
 
     <fragment
         android:id="@+id/alarmWakeUpViewFragment"
-        android:name="com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewFragment"
         android:label="AlarmWakeUpViewFragment"
+        android:name="com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewFragment"
         tools:layout="@layout/fragment_alarm_wake_up_view">
         <argument
             android:name="alarmId"
             app:argType="long" />
+        <argument
+            android:name="snoozeCount"
+            app:argType="integer" />
     </fragment>
 </navigation>
