@@ -54,8 +54,6 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
         _alarm.addSource(dao.getAlarm(alarmId), _alarm::setValue)
 
         _snoozeCount.value = snoozeCount
-
-        _eventVibration.value = AlarmWakeUpViewVibrationType.ALARM
     }
 
     fun dismissOneShotAlarm(alarm: Alarm) {
@@ -91,6 +89,10 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
     fun onActionDismiss() {
         _eventVibration.value = AlarmWakeUpViewVibrationType.NO_VIBRATION
         _eventDismissed.value = true
+    }
+
+    fun startVibration() {
+        _eventVibration.value = AlarmWakeUpViewVibrationType.VIBRATION
     }
 }
 
