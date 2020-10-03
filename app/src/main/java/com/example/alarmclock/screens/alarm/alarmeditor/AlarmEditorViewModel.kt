@@ -23,28 +23,36 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
 
     val alarmEditorListener = object : AlarmEditorListener {
         override fun onDayButtonClick(dayOfWeek: DayOfWeek) {
-            _alarm.value?.let {
-                if (it.days.contains(dayOfWeek)) {
-                    it.days.remove(dayOfWeek)
+            _alarm.value?.let { alarm ->
+                if (alarm.days.contains(dayOfWeek)) {
+                    alarm.days.remove(dayOfWeek)
                 } else {
-                    it.days.add(dayOfWeek)
+                    alarm.days.add(dayOfWeek)
                 }
+                _alarm.postValue(alarm)
             }
         }
 
         override fun onNameDialogPositiveButton(name: String) {
-            _alarm.value?.name = name
-            _alarm.postValue(_alarm.value)
+            _alarm.value?.let { alarm ->
+                alarm.name = name
+                _alarm.postValue(alarm)
+            }
+
         }
 
         override fun onTimeDialogTimeSet(hours: Int, minutes: Int) {
-            _alarm.value?.timeMinutes = hoursAndMinutesToTimeMinutes(hours, minutes)
-            _alarm.postValue(_alarm.value)
+            _alarm.value?.let { alarm ->
+                alarm.timeMinutes = hoursAndMinutesToTimeMinutes(hours, minutes)
+                _alarm.postValue(alarm)
+            }
         }
 
         override fun onSnoozeLengthDialogPositiveButton(snoozeLengthMinutes: Int) {
-            _alarm.value?.snoozeLengthMinutes = snoozeLengthMinutes
-            _alarm.postValue(_alarm.value)
+            _alarm.value?.let { alarm ->
+                alarm.snoozeLengthMinutes = snoozeLengthMinutes
+                _alarm.postValue(alarm)
+            }
         }
     }
 
@@ -102,12 +110,14 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
         val defaultTimeMinutes = 420
         val defaultDays = mutableListOf<DayOfWeek>()
         val defaultSnoozeLengthMinutes = 5
+        val defaultVibrate = true
         return Alarm(
             isActive = defaultIsActive,
             name = defaultName,
             timeMinutes = defaultTimeMinutes,
             days = defaultDays,
-            snoozeLengthMinutes = defaultSnoozeLengthMinutes
+            snoozeLengthMinutes = defaultSnoozeLengthMinutes,
+            vibrate = defaultVibrate
         )
     }
 }

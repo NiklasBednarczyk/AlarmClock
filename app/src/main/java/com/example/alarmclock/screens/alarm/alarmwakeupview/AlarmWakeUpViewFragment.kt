@@ -81,6 +81,15 @@ class AlarmWakeUpViewFragment : Fragment() {
             }
         })
 
+        viewModel.alarm.observe(viewLifecycleOwner, { alarm ->
+            alarm?.let {
+                if (alarm.vibrate) {
+                    viewModel.startVibration()
+                }
+                viewModel.alarm.removeObservers(viewLifecycleOwner)
+            }
+        })
+
         return binding.root
     }
 

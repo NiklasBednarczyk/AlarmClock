@@ -125,5 +125,12 @@
             app:bind_alarmSnoozeLength="@{alarmEditorViewModel.alarm}"
             tools:text="SNOOZE_LENGTH" />
 
+        <CheckBox
+            android:checked="@={alarmEditorViewModel.alarm.vibrate}"
+            android:id="@+id/vibrate"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/vibrate" />
+
     </LinearLayout>
 </layout>
