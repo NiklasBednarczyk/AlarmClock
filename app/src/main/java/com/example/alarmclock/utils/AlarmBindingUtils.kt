@@ -105,3 +105,16 @@ fun TextView.setSnoozeCount(snoozeCount: Int?) {
         )
     }
 }
+
+@BindingAdapter("bind_alarmSnoozeLength")
+fun TextView.setSnoozeLength(alarm: Alarm?) {
+    alarm?.let {
+        text = String.format(
+            resources.getQuantityString(
+                R.plurals.snooze_length_minutes,
+                alarm.snoozeLengthMinutes,
+                alarm.snoozeLengthMinutes
+            )
+        )
+    }
+}

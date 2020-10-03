@@ -17,93 +17,93 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:onClick="@{() -> alarmEditorFragment.showTimeDialog()}"
             app:bind_alarmTime="@{alarmEditorViewModel.alarm}"
             tools:text="TIME" />
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:orientation="horizontal">
 
             <include
-                android:id="@+id/day_button_monday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_monday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.MONDAY}" />
 
             <Space
-                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_width="0dp" />
 
             <include
-                android:id="@+id/day_button_tuesday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_tuesday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.TUESDAY}" />
 
             <Space
-                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_width="0dp" />
 
             <include
-                android:id="@+id/day_button_wednesday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_wednesday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.WEDNESDAY}" />
 
             <Space
-                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_width="0dp" />
 
             <include
-                android:id="@+id/day_button_thursday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_thursday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.THURSDAY}" />
 
             <Space
-                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_width="0dp" />
 
             <include
-                android:id="@+id/day_button_friday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_friday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.FRIDAY}" />
 
             <Space
-                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_width="0dp" />
 
             <include
-                android:id="@+id/day_button_saturday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_saturday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.SATURDAY}" />
 
             <Space
-                android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_width="0dp" />
 
             <include
-                android:id="@+id/day_button_sunday"
                 layout="@layout/item_alarm_day_button"
+                android:id="@+id/day_button_sunday"
                 app:alarmEditorViewModel="@{alarmEditorViewModel}"
                 app:dayOfWeek="@{DayOfWeek.SUNDAY}" />
 
@@ -111,11 +111,19 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:onClick="@{() -> alarmEditorFragment.showNameDialog()}"
             app:bind_alarmName="@{alarmEditorViewModel.alarm}"
             tools:text="NAME" />
+
+        <TextView
+            android:id="@+id/snooze_length"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:onClick="@{() -> alarmEditorFragment.showSnoozeLengthDialog()}"
+            app:bind_alarmSnoozeLength="@{alarmEditorViewModel.alarm}"
+            tools:text="SNOOZE_LENGTH" />
 
     </LinearLayout>
 </layout>

@@ -41,6 +41,11 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
             _alarm.value?.timeMinutes = hoursAndMinutesToTimeMinutes(hours, minutes)
             _alarm.postValue(_alarm.value)
         }
+
+        override fun onSnoozeLengthDialogPositiveButton(snoozeLengthMinutes: Int) {
+            _alarm.value?.snoozeLengthMinutes = snoozeLengthMinutes
+            _alarm.postValue(_alarm.value)
+        }
     }
 
     init {
@@ -96,11 +101,13 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
         val defaultName = "Default Name"
         val defaultTimeMinutes = 420
         val defaultDays = mutableListOf<DayOfWeek>()
+        val defaultSnoozeLengthMinutes = 5
         return Alarm(
             isActive = defaultIsActive,
             name = defaultName,
             timeMinutes = defaultTimeMinutes,
-            days = defaultDays
+            days = defaultDays,
+            snoozeLengthMinutes = defaultSnoozeLengthMinutes
         )
     }
 }

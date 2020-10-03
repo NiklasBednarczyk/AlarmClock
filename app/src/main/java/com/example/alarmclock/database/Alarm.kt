@@ -21,5 +21,8 @@ data class Alarm(
     var timeMinutes: Int,
 
     @ColumnInfo(name = "days")
-    var days: MutableList<DayOfWeek>
+    var days: MutableList<DayOfWeek>,
+
+    @ColumnInfo(name = "snooze_length_minutes")
+    var snoozeLengthMinutes: Int
 )
