@@ -9,7 +9,6 @@ import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.receivers.AlarmReceiver
 import com.example.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_ALARM_ID
 import com.example.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_SNOOZE_COUNT
-import com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewViewModel.Companion.SNOOZE_TIME
 import java.time.DayOfWeek
 import java.util.*
 
@@ -53,7 +52,7 @@ fun setPreviewAlarm(context: Context?, alarm: Alarm) {
 
 fun snoozeAlarm(context: Context?, alarm: Alarm, snoozeCount: Int) {
     val calendar = Calendar.getInstance().apply {
-        add(Calendar.MILLISECOND, SNOOZE_TIME.toInt())
+        add(Calendar.MINUTE, alarm.snoozeLengthMinutes)
     }
     setAlarm(context, alarm, calendar, true, snoozeCount)
 }
@@ -155,3 +154,6 @@ private fun calendarToDayOfWeek(calendar: Calendar): DayOfWeek {
         DayOfWeek.of(t)
     }
 }
+
+fun snoozeLengthMinutesToTimeMilliseconds(snoozeLengthMinutes: Int): Long =
+    snoozeLengthMinutes.times(1000).times(60).toLong()

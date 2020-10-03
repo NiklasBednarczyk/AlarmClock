@@ -9,4 +9,6 @@ interface AlarmEditorListener {
     fun onNameDialogPositiveButton(name: String)
 
     fun onTimeDialogTimeSet(hours: Int, minutes: Int)
+
+    fun onSnoozeLengthDialogPositiveButton(snoozeLengthMinutes: Int)
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.database.AlarmDao
+import com.example.alarmclock.utils.snoozeLengthMinutesToTimeMilliseconds
 import kotlinx.coroutines.*
 
 class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: Int) : ViewModel() {
@@ -17,7 +18,6 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
 
         private const val ONE_SECOND = 1000L
 
-        const val SNOOZE_TIME = 10000L
     }
 
     private val viewModelJob = Job()
@@ -48,7 +48,7 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
     val eventDismissed: LiveData<Boolean>
         get() = _eventDismissed
 
-    private val snoozeTimer: CountDownTimer
+    private lateinit var snoozeTimer: CountDownTimer
 
     init {
         _alarm.addSource(dao.getAlarm(alarmId), _alarm::setValue)
@@ -56,16 +56,6 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
         _snoozeCount.value = snoozeCount
 
         _eventVibration.value = AlarmWakeUpViewVibrationType.ALARM
-
-        snoozeTimer = object : CountDownTimer(SNOOZE_TIME, ONE_SECOND) {
-            override fun onTick(millisUntilFinished: Long) {
-                _snoozeTime.value = (millisUntilFinished / ONE_SECOND)
-            }
-
-            override fun onFinish() {
-                _snoozeTime.value = DONE
-            }
-        }
     }
 
     fun dismissOneShotAlarm(alarm: Alarm) {
@@ -78,11 +68,24 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
     }
 
     fun onActionSnooze() {
-        val t = snoozeCount.value
-        _snoozeCount.value = _snoozeCount.value?.plus(1)
-        _eventSnoozed.value = true
-        _eventVibration.value = AlarmWakeUpViewVibrationType.NO_VIBRATION
-        snoozeTimer.start()
+        alarm.value?.let { alarm ->
+            val snoozeLengthMilliseconds =
+                snoozeLengthMinutesToTimeMilliseconds(alarm.snoozeLengthMinutes)
+            snoozeTimer = object : CountDownTimer(snoozeLengthMilliseconds, ONE_SECOND) {
+                override fun onTick(millisUntilFinished: Long) {
+                    _snoozeTime.value = (millisUntilFinished / ONE_SECOND)
+                }
+
+                override fun onFinish() {
+                    _snoozeTime.value = DONE
+                }
+            }
+
+            _snoozeCount.value = _snoozeCount.value?.plus(1)
+            _eventSnoozed.value = true
+            _eventVibration.value = AlarmWakeUpViewVibrationType.NO_VIBRATION
+            snoozeTimer.start()
+        }
     }
 
     fun onActionDismiss() {

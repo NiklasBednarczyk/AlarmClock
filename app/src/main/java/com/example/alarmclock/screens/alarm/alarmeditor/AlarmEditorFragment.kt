@@ -11,6 +11,7 @@ import com.example.alarmclock.R
 import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmEditorBinding
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
+import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorSnoozeLengthDialogFragment
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorTimeDialogFragment
 import com.example.alarmclock.utils.setNormalAlarm
 
@@ -92,6 +93,15 @@ class AlarmEditorFragment : Fragment() {
                 supportFragmentManager,
                 "nameDialog"
             )
+        }
+    }
+
+    fun showSnoozeLengthDialog() {
+        viewModel.alarm.value?.let { alarm ->
+            AlarmEditorSnoozeLengthDialogFragment(
+                viewModel.alarmEditorListener,
+                alarm.snoozeLengthMinutes
+            ).show(supportFragmentManager, "snoozeLengthDialog")
         }
     }
 
