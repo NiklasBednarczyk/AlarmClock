@@ -125,6 +125,14 @@
             app:bind_alarmSnoozeLength="@{alarmEditorViewModel.alarm}"
             tools:text="SNOOZE_LENGTH" />
 
+        <TextView
+            android:id="@+id/sound"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:onClick="@{() -> alarmEditorFragment.showRingtonePicker()}"
+            app:bind_alarmSoundAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmSoundContext="@{alarmEditorFragment.context}" />
+
         <CheckBox
             android:checked="@={alarmEditorViewModel.alarm.vibrate}"
             android:id="@+id/vibrate"

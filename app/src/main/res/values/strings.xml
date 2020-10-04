@@ -25,4 +25,6 @@
     <string name="theme_title">Theme</string>
     <string name="alarm_snooze_length">Alarm Snooze Length</string>
     <string name="vibrate">Vibrate</string>
+    <string name="choose_alarm_sound">Choose Alarm Sound</string>
+    <string name="no_sound">No Sound</string>
 </resources>

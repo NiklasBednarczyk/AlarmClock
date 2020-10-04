@@ -1,5 +1,6 @@
 package com.example.alarmclock.screens.alarm.alarmeditor
 
+import android.net.Uri
 import java.time.DayOfWeek
 
 
@@ -11,4 +12,6 @@ interface AlarmEditorListener {
     fun onTimeDialogTimeSet(hours: Int, minutes: Int)
 
     fun onSnoozeLengthDialogPositiveButton(snoozeLengthMinutes: Int)
+
+    fun onRingtonePickerSaved(soundUri: Uri)
 }

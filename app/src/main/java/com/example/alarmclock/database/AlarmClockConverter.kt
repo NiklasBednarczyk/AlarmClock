@@ -1,5 +1,7 @@
 package com.example.alarmclock.database
 
+import android.net.Uri
+import androidx.core.net.toUri
 import androidx.room.TypeConverter
 import java.time.DayOfWeek
 
@@ -22,5 +24,11 @@ class AlarmClockConverter {
             mutableListOf()
         }
     }
+
+    @TypeConverter
+    fun uriToString(uri: Uri): String = uri.toString()
+
+    @TypeConverter
+    fun stringToUri(string: String): Uri = string.toUri()
 
 }

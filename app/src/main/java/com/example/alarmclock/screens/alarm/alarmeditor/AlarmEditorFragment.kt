@@ -1,7 +1,12 @@
 package com.example.alarmclock.screens.alarm.alarmeditor
 
+import android.app.Activity
+import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,6 +21,10 @@ import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorTimeD
 import com.example.alarmclock.utils.setNormalAlarm
 
 class AlarmEditorFragment : Fragment() {
+
+    companion object {
+        const val INTENT_RINGTONE_PICKER_REQUEST_CODE = 999
+    }
 
     private lateinit var viewModel: AlarmEditorViewModel
 
@@ -105,4 +114,38 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
+    fun showRingtonePicker() {
+        val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+            putExtra(
+                RingtoneManager.EXTRA_RINGTONE_TITLE,
+                resources.getString(R.string.choose_alarm_sound)
+            )
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM)
+            if (Uri.EMPTY != viewModel.alarm.value?.soundUri) {
+                putExtra(
+                    RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,
+                    viewModel.alarm.value?.soundUri
+                )
+            }
+
+        }
+        startActivityForResult(intent, INTENT_RINGTONE_PICKER_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                INTENT_RINGTONE_PICKER_REQUEST_CODE -> {
+                    data?.let {
+                        val uri =
+                            data.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+                        viewModel.alarmEditorListener.onRingtonePickerSaved(uri ?: "".toUri())
+                    }
+                }
+            }
+        }
+    }
 }
