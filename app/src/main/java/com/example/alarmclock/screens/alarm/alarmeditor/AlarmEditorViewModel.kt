@@ -1,5 +1,7 @@
 package com.example.alarmclock.screens.alarm.alarmeditor
 
+import android.media.RingtoneManager
+import android.net.Uri
 import androidx.lifecycle.*
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.database.AlarmDao
@@ -39,6 +41,13 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
                 _alarm.postValue(alarm)
             }
 
+        }
+
+        override fun onRingtonePickerSaved(soundUri: Uri) {
+            _alarm.value?.let { alarm ->
+                alarm.soundUri = soundUri
+                _alarm.postValue(alarm)
+            }
         }
 
         override fun onTimeDialogTimeSet(hours: Int, minutes: Int) {
@@ -111,13 +120,15 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
         val defaultDays = mutableListOf<DayOfWeek>()
         val defaultSnoozeLengthMinutes = 5
         val defaultVibrate = true
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         return Alarm(
             isActive = defaultIsActive,
             name = defaultName,
             timeMinutes = defaultTimeMinutes,
             days = defaultDays,
             snoozeLengthMinutes = defaultSnoozeLengthMinutes,
-            vibrate = defaultVibrate
+            vibrate = defaultVibrate,
+            soundUri = defaultSoundUri
         )
     }
 }

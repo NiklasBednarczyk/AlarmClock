@@ -1,5 +1,8 @@
 package com.example.alarmclock.utils
 
+import android.content.Context
+import android.media.RingtoneManager
+import android.net.Uri
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.widget.TextView
@@ -116,5 +119,21 @@ fun TextView.setSnoozeLength(alarm: Alarm?) {
                 alarm.snoozeLengthMinutes
             )
         )
+    }
+}
+
+@BindingAdapter("bind_alarmSoundAlarm", "bind_alarmSoundContext")
+fun TextView.setSound(alarm: Alarm?, context: Context?) {
+    alarm?.let {
+        context?.let {
+            text = if (Uri.EMPTY != alarm.soundUri) {
+                val ringtone = RingtoneManager.getRingtone(context, alarm.soundUri)
+                ringtone.getTitle(context)
+            } else {
+                resources.getString(R.string.no_sound)
+            }
+
+        }
+
     }
 }

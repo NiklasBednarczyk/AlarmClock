@@ -1,5 +1,8 @@
 package com.example.alarmclock.screens.alarm.alarmwakeupview
 
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -61,6 +64,9 @@ class AlarmWakeUpViewFragment : Fragment() {
             if (dismissed) {
                 viewModel.alarm.value?.let { alarm ->
                     cancelAlarm(context, alarm)
+                    if (Uri.EMPTY != alarm.soundUri) {
+                        viewModel.stopSound()
+                    }
                     if (alarm.days.isNotEmpty()) {
                         setNormalAlarm(context, alarm)
                     } else {
@@ -75,6 +81,9 @@ class AlarmWakeUpViewFragment : Fragment() {
             if (snoozed) {
                 viewModel.alarm.value?.let { alarm ->
                     viewModel.snoozeCount.value?.let { snoozeCount ->
+                        if (Uri.EMPTY != alarm.soundUri) {
+                            viewModel.stopSound()
+                        }
                         snoozeAlarm(context, alarm, snoozeCount)
                     }
                 }
@@ -86,6 +95,10 @@ class AlarmWakeUpViewFragment : Fragment() {
                 if (alarm.vibrate) {
                     viewModel.startVibration()
                 }
+                if (Uri.EMPTY != alarm.soundUri) {
+                    val player = createMediaPlayer(alarm.soundUri)
+                    viewModel.startSound(player)
+                }
                 viewModel.alarm.removeObservers(viewLifecycleOwner)
             }
         })
@@ -93,4 +106,12 @@ class AlarmWakeUpViewFragment : Fragment() {
         return binding.root
     }
 
+    private fun createMediaPlayer(uri: Uri): MediaPlayer = MediaPlayer().apply {
+        val audioAttributes =
+            AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
+        setAudioAttributes(audioAttributes)
+        isLooping = true
+        setDataSource(requireContext(), uri)
+        prepare()
+    }
 }

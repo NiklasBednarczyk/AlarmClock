@@ -1,5 +1,6 @@
 package com.example.alarmclock.screens.alarm.alarmwakeupview
 
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -19,6 +20,8 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
         private const val ONE_SECOND = 1000L
 
     }
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     private val viewModelJob = Job()
 
@@ -93,6 +96,15 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
 
     fun startVibration() {
         _eventVibration.value = AlarmWakeUpViewVibrationType.VIBRATION
+    }
+
+    fun startSound(player: MediaPlayer) {
+        mediaPlayer = player
+        mediaPlayer.start()
+    }
+
+    fun stopSound() {
+        mediaPlayer.stop()
     }
 }
 

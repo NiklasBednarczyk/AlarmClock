@@ -1,5 +1,6 @@
 package com.example.alarmclock.database
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -27,5 +28,10 @@ data class Alarm(
     var snoozeLengthMinutes: Int,
 
     @ColumnInfo(name = "vibrate")
-    var vibrate: Boolean
+    var vibrate: Boolean,
+
+    @ColumnInfo(name = "sound_uri")
+    var soundUri: Uri
+
+
 )
