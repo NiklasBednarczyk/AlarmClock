@@ -1,12 +1,31 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
-        app:defaultValue="use_system_setting"
-        app:entries="@array/theme_entries"
-        app:entryValues="@array/theme_values"
-        app:icon="@drawable/ic_baseline_wallpaper_24"
-        app:key="theme"
-        app:title="@string/theme_title"
-        app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="@string/preference_category_title_general">
+        <ListPreference
+            app:defaultValue="use_system_setting"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:icon="@drawable/ic_baseline_wallpaper_24"
+            app:key="theme"
+            app:title="@string/preference_title_theme"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/preference_category_title_alarm_default">
+        <ListPreference
+            app:defaultValue="5"
+            app:entries="@array/alarm_snooze_length_entries"
+            app:entryValues="@array/alarm_snooze_length_values"
+            app:icon="@drawable/ic_baseline_snooze_24"
+            app:key="alarm_snooze_length"
+            app:title="@string/preference_title_snooze_length"
+            app:useSimpleSummaryProvider="true" />
+        <CheckBoxPreference
+            app:defaultValue="true"
+            app:icon="@drawable/ic_baseline_vibration_24"
+            app:key="alarm_vibrate"
+            app:title="@string/preference_title_vibrate" />
+    </PreferenceCategory>
+
 
 </PreferenceScreen>

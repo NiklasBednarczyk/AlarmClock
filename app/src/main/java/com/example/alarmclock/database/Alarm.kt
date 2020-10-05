@@ -13,16 +13,16 @@ data class Alarm(
     var alarmId: Long = 0L,
 
     @ColumnInfo(name = "is_active")
-    var isActive: Boolean,
+    var isActive: Boolean = true,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    var name: String = "",
 
     @ColumnInfo(name = "time_minutes")
-    var timeMinutes: Int,
+    var timeMinutes: Int = 7.times(60),
 
     @ColumnInfo(name = "days")
-    var days: MutableList<DayOfWeek>,
+    var days: MutableList<DayOfWeek> = mutableListOf(),
 
     @ColumnInfo(name = "snooze_length_minutes")
     var snoozeLengthMinutes: Int,

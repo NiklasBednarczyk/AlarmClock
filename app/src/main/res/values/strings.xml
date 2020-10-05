@@ -22,9 +22,13 @@
     <string name="duplicate">Duplicate</string>
     <string name="preview">Preview</string>
     <string name="settings">Settings</string>
-    <string name="theme_title">Theme</string>
+    <string name="preference_title_theme">Theme</string>
     <string name="alarm_snooze_length">Alarm Snooze Length</string>
     <string name="vibrate">Vibrate</string>
     <string name="choose_alarm_sound">Choose Alarm Sound</string>
     <string name="no_sound">No Sound</string>
+    <string name="preference_title_vibrate">Vibrate</string>
+    <string name="preference_category_title_general">General</string>
+    <string name="preference_category_title_alarm_default">Alarm Defaults</string>
+    <string name="preference_title_snooze_length">Snooze Length</string>
 </resources>

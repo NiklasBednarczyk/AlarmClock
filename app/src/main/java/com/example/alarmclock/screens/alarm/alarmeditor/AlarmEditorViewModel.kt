@@ -1,6 +1,5 @@
 package com.example.alarmclock.screens.alarm.alarmeditor
 
-import android.media.RingtoneManager
 import android.net.Uri
 import androidx.lifecycle.*
 import com.example.alarmclock.database.Alarm
@@ -9,7 +8,11 @@ import com.example.alarmclock.utils.hoursAndMinutesToTimeMinutes
 import kotlinx.coroutines.*
 import java.time.DayOfWeek
 
-class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel() {
+class AlarmEditorViewModel(
+    private val dao: AlarmDao,
+    alarmId: Long,
+    private val defaultAlarm: Alarm
+) : ViewModel() {
 
     private val viewModelJob = Job()
 
@@ -67,7 +70,7 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
 
     init {
         val alarmLiveData = Transformations.map(dao.getAlarm(alarmId)) {
-            return@map it ?: getDefaultAlarm()
+            return@map it ?: defaultAlarm
         }
         _alarm.addSource(alarmLiveData, _alarm::setValue)
     }
@@ -111,24 +114,5 @@ class AlarmEditorViewModel(private val dao: AlarmDao, alarmId: Long) : ViewModel
         withContext(Dispatchers.IO) {
             dao.updateAlarm(alarm)
         }
-    }
-
-    private fun getDefaultAlarm(): Alarm {
-        val defaultIsActive = true
-        val defaultName = "Default Name"
-        val defaultTimeMinutes = 420
-        val defaultDays = mutableListOf<DayOfWeek>()
-        val defaultSnoozeLengthMinutes = 5
-        val defaultVibrate = true
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        return Alarm(
-            isActive = defaultIsActive,
-            name = defaultName,
-            timeMinutes = defaultTimeMinutes,
-            days = defaultDays,
-            snoozeLengthMinutes = defaultSnoozeLengthMinutes,
-            vibrate = defaultVibrate,
-            soundUri = defaultSoundUri
-        )
     }
 }
