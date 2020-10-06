@@ -27,24 +27,23 @@ fun snoozeLengthMinutesToTimeMilliseconds(snoozeLengthMinutes: Int): Long =
     snoozeLengthMinutes.times(1000).times(60).toLong()
 
 fun timeMinutesAndDaysToNextDay(timeMinutes: Int, days: MutableList<DayOfWeek>): Int {
-    val calendar = Calendar.getInstance()
-    val calendarDayOfWeek = calendarToDayOfWeek(calendar)
-    val calendarTimeMinutes = calendarToCalendarTimeMinutes(calendar)
+    val calendarNow = Calendar.getInstance()
+    val calendarNowDayOfWeek = calendarToDayOfWeek(calendarNow)
+    val calendarNowTimeMinutes = calendarToCalendarTimeMinutes(calendarNow)
 
-
-    var dayOfWeek = calendarDayOfWeek
+    var dayOfWeek = calendarNowDayOfWeek
     if (days.isNotEmpty()) {
         while (!days.contains(dayOfWeek)) {
             dayOfWeek = dayOfWeek.plus(1)
         }
-        if (calendarTimeMinutes >= timeMinutes) {
+        if (dayOfWeek == calendarNowDayOfWeek && calendarNowTimeMinutes >= timeMinutes) {
             dayOfWeek = dayOfWeek.plus(1)
             while (!days.contains(dayOfWeek)) {
                 dayOfWeek = dayOfWeek.plus(1)
             }
         }
     } else {
-        if (calendarTimeMinutes >= timeMinutes) {
+        if (calendarNowTimeMinutes >= timeMinutes) {
             dayOfWeek = dayOfWeek.plus(1)
         }
     }

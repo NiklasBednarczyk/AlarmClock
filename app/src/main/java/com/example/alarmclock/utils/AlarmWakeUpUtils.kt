@@ -7,6 +7,7 @@ import android.content.Intent
 import com.example.alarmclock.activities.MainActivity
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.receivers.AlarmReceiver
+import com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType
 import java.util.*
 
 fun setNormalAlarm(context: Context?, alarm: Alarm) {
@@ -23,53 +24,59 @@ fun setNormalAlarm(context: Context?, alarm: Alarm) {
         set(Calendar.MINUTE, minutes)
         set(Calendar.SECOND, 0)
     }
-    setAlarm(context, alarm, calendar, true)
+    setAlarm(context, alarm, calendar, AlarmWakeUpViewAlarmType.NORMAL)
 }
 
 fun setPreviewAlarm(context: Context?, alarm: Alarm) {
     val calendar = Calendar.getInstance()
-    setAlarm(context, alarm, calendar, false)
+    setAlarm(context, alarm, calendar, AlarmWakeUpViewAlarmType.PREVIEW)
 }
 
-fun snoozeAlarm(context: Context?, alarm: Alarm, snoozeCount: Int) {
+fun snoozeAlarm(
+    context: Context?,
+    alarm: Alarm,
+    snoozeCount: Int,
+    alarmType: AlarmWakeUpViewAlarmType
+) {
     val calendar = Calendar.getInstance().apply {
         add(Calendar.MINUTE, alarm.snoozeLengthMinutes)
     }
-    setAlarm(context, alarm, calendar, true, snoozeCount)
+    setAlarm(context, alarm, calendar, alarmType, snoozeCount)
 }
 
 private fun setAlarm(
     context: Context?,
     alarm: Alarm,
     calendar: Calendar,
-    isNormalAlarm: Boolean,
+    alarmType: AlarmWakeUpViewAlarmType,
     snoozeCount: Int = 0
 ) {
     val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val pendingIntentReceiver =
-        createPendingIntentReceiver(context, alarm, isNormalAlarm, snoozeCount)
-    val pendingIntentActivity = createPendingIntentActivity(context, alarm, isNormalAlarm)
+        createPendingIntentReceiver(context, alarm, alarmType, snoozeCount)
+    val pendingIntentActivity = createPendingIntentActivity(context, alarm, alarmType)
     val alarmClockInfo =
         AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntentActivity)
     alarmManager.setAlarmClock(alarmClockInfo, pendingIntentReceiver)
 }
 
-fun cancelAlarm(context: Context?, alarm: Alarm) {
+fun cancelAlarm(context: Context?, alarm: Alarm, alarmType: AlarmWakeUpViewAlarmType) {
     val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val pendingIntent = createPendingIntentReceiver(context, alarm, true)
+    val pendingIntent = createPendingIntentReceiver(context, alarm, alarmType)
     alarmManager.cancel(pendingIntent)
 }
 
 private fun createPendingIntentReceiver(
     context: Context?,
     alarm: Alarm,
-    isNormalAlarm: Boolean,
+    alarmType: AlarmWakeUpViewAlarmType,
     snoozeCount: Int = 0,
 ): PendingIntent {
-    val alarmId = if (isNormalAlarm) alarm.alarmId.toInt() else 0
+    val alarmId = getAlarmIdIntFromAlarmType(alarm, alarmType)
     return Intent(context, AlarmReceiver::class.java).apply {
         putExtra(AlarmReceiver.ALARM_INTENT_KEY_ALARM_ID, alarm.alarmId)
         putExtra(AlarmReceiver.ALARM_INTENT_KEY_SNOOZE_COUNT, snoozeCount)
+        putExtra(AlarmReceiver.ALARM_INTENT_KEY_ALARM_TYPE, alarmType.toString())
     }.let { intent ->
         PendingIntent.getBroadcast(
             context,
@@ -83,9 +90,9 @@ private fun createPendingIntentReceiver(
 private fun createPendingIntentActivity(
     context: Context?,
     alarm: Alarm,
-    isNormalAlarm: Boolean
+    alarmType: AlarmWakeUpViewAlarmType
 ): PendingIntent {
-    val alarmId = if (isNormalAlarm) alarm.alarmId.toInt() else 0
+    val alarmId = getAlarmIdIntFromAlarmType(alarm, alarmType)
     return Intent(context, MainActivity::class.java).apply {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }.let { intent ->
@@ -98,3 +105,5 @@ private fun createPendingIntentActivity(
     }
 }
 
+private fun getAlarmIdIntFromAlarmType(alarm: Alarm, alarmType: AlarmWakeUpViewAlarmType): Int =
+    if (alarmType == AlarmWakeUpViewAlarmType.NORMAL) alarm.alarmId.toInt() else 0
