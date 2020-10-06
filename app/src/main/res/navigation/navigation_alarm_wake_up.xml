@@ -16,5 +16,8 @@
         <argument
             android:name="snoozeCount"
             app:argType="integer" />
+        <argument
+            android:name="alarmType"
+            app:argType="com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType" />
     </fragment>
 </navigation>

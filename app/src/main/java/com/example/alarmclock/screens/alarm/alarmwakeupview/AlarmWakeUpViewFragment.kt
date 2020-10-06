@@ -41,6 +41,7 @@ class AlarmWakeUpViewFragment : Fragment() {
         val args = AlarmWakeUpViewFragmentArgs.fromBundle(requireArguments())
         val alarmId = args.alarmId
         val snoozeCount = args.snoozeCount
+        val alarmType = args.alarmType
 
         val application = requireActivity()
         val dao = AlarmClockDatabase.getInstance(application).alarmDao
@@ -63,13 +64,13 @@ class AlarmWakeUpViewFragment : Fragment() {
         viewModel.eventDismissed.observe(viewLifecycleOwner, { dismissed ->
             if (dismissed) {
                 viewModel.alarm.value?.let { alarm ->
-                    cancelAlarm(context, alarm)
+                    cancelAlarm(context, alarm, alarmType)
                     if (Uri.EMPTY != alarm.soundUri) {
                         viewModel.stopSound()
                     }
-                    if (alarm.days.isNotEmpty()) {
+                    if (alarm.days.isNotEmpty() && alarmType == AlarmWakeUpViewAlarmType.NORMAL) {
                         setNormalAlarm(context, alarm)
-                    } else {
+                    } else if (alarm.days.isEmpty()) {
                         viewModel.dismissOneShotAlarm(alarm)
                     }
                 }
@@ -84,7 +85,7 @@ class AlarmWakeUpViewFragment : Fragment() {
                         if (Uri.EMPTY != alarm.soundUri) {
                             viewModel.stopSound()
                         }
-                        snoozeAlarm(context, alarm, snoozeCount)
+                        snoozeAlarm(context, alarm, snoozeCount, alarmType)
                     }
                 }
             }
