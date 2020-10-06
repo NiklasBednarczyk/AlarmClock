@@ -12,14 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import com.example.alarmclock.R
-import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.database.AlarmClockDatabase
 import com.example.alarmclock.databinding.FragmentAlarmEditorBinding
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorSnoozeLengthDialogFragment
 import com.example.alarmclock.screens.alarm.alarmeditor.dialogs.AlarmEditorTimeDialogFragment
+import com.example.alarmclock.utils.getDefaultAlarm
 import com.example.alarmclock.utils.setNormalAlarm
 
 class AlarmEditorFragment : Fragment() {
@@ -53,7 +52,7 @@ class AlarmEditorFragment : Fragment() {
 
         val dao = AlarmClockDatabase.getInstance(application).alarmDao
 
-        val defaultAlarm = getDefaultAlarm()
+        val defaultAlarm = getDefaultAlarm(context)
 
         val args = AlarmEditorFragmentArgs.fromBundle(requireArguments())
         val viewModelFactory = AlarmEditorViewModelFactory(dao, args.alarmId, defaultAlarm)
@@ -153,17 +152,5 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    private fun getDefaultAlarm(): Alarm {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val defaultSnoozeLengthMinutes =
-            (sharedPreferences.getString("alarm_snooze_length", "5")?.toInt()) ?: 5
-        val defaultVibrate = sharedPreferences.getBoolean("alarm_vibrate", true)
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        return Alarm(
-            snoozeLengthMinutes = defaultSnoozeLengthMinutes,
-            vibrate = defaultVibrate,
-            soundUri = defaultSoundUri
-        )
-    }
 
 }

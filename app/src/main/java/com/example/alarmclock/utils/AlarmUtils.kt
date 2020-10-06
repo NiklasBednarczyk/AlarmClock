@@ -4,6 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
+import androidx.preference.PreferenceManager
 import com.example.alarmclock.activities.MainActivity
 import com.example.alarmclock.database.Alarm
 import com.example.alarmclock.receivers.AlarmReceiver
@@ -157,3 +159,16 @@ private fun calendarToDayOfWeek(calendar: Calendar): DayOfWeek {
 
 fun snoozeLengthMinutesToTimeMilliseconds(snoozeLengthMinutes: Int): Long =
     snoozeLengthMinutes.times(1000).times(60).toLong()
+
+fun getDefaultAlarm(context: Context?): Alarm {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    val defaultSnoozeLengthMinutes =
+        (sharedPreferences.getString("alarm_snooze_length", "5")?.toInt()) ?: 5
+    val defaultVibrate = sharedPreferences.getBoolean("alarm_vibrate", true)
+    val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+    return Alarm(
+        snoozeLengthMinutes = defaultSnoozeLengthMinutes,
+        vibrate = defaultVibrate,
+        soundUri = defaultSoundUri
+    )
+}

@@ -13,7 +13,7 @@ data class Alarm(
     var alarmId: Long = 0L,
 
     @ColumnInfo(name = "is_active")
-    var isActive: Boolean = true,
+    var isActive: Boolean = false,
 
     @ColumnInfo(name = "name")
     var name: String = "",
@@ -32,6 +32,5 @@ data class Alarm(
 
     @ColumnInfo(name = "sound_uri")
     var soundUri: Uri
-
 
 )
