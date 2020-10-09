@@ -19,7 +19,9 @@
             android:name=".receivers.AlarmReceiver"
             android:process=":remote" />
 
-        <activity android:name=".activities.AlarmWakeUpActivity" />
+        <activity
+            android:name=".activities.AlarmWakeUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
