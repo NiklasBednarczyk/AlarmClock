@@ -7,7 +7,7 @@
 
         <variable
             name="alarmListViewModel"
-            type="com.example.alarmclock.screens.alarm.alarmlist.AlarmListViewModel" />
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist.AlarmListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

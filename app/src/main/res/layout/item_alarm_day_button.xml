@@ -7,7 +7,7 @@
 
         <variable
             name="alarmEditorViewModel"
-            type="com.example.alarmclock.screens.alarm.alarmeditor.AlarmEditorViewModel" />
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorViewModel" />
 
         <variable
             name="dayOfWeek"

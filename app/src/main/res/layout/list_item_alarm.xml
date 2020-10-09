@@ -6,11 +6,11 @@
 
         <variable
             name="alarm"
-            type="com.example.alarmclock.database.Alarm" />
+            type="de.niklasbednarczyk.alarmclock.database.Alarm" />
 
         <variable
             name="alarmOnItemClickListener"
-            type="com.example.alarmclock.screens.alarm.alarmlist.AlarmListAdapter.AlarmOnItemClickListener" />
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist.AlarmListAdapter.AlarmOnItemClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
