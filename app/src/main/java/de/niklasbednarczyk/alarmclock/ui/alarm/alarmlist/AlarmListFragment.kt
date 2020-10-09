@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmListBinding
@@ -16,7 +17,6 @@ import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.utils.cancelAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 import de.niklasbednarczyk.alarmclock.utils.setPreviewAlarm
-import com.google.android.material.snackbar.Snackbar
 
 class AlarmListFragment : Fragment() {
 
