@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
+import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.snoozeLengthMinutesToTimeMilliseconds
 import kotlinx.coroutines.*
 
@@ -43,8 +44,8 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
     val eventSnoozed: LiveData<Boolean>
         get() = _eventSnoozed
 
-    private val _eventVibration = MutableLiveData<AlarmWakeUpViewVibrationType>()
-    val eventVibration: LiveData<AlarmWakeUpViewVibrationType>
+    private val _eventVibration = MutableLiveData<VibrationType>()
+    val eventVibration: LiveData<VibrationType>
         get() = _eventVibration
 
     private val _eventDismissed = MutableLiveData<Boolean>()
@@ -84,18 +85,18 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
 
             _snoozeCount.value = _snoozeCount.value?.plus(1)
             _eventSnoozed.value = true
-            _eventVibration.value = AlarmWakeUpViewVibrationType.NO_VIBRATION
+            _eventVibration.value = VibrationType.NO_VIBRATION
             snoozeTimer.start()
         }
     }
 
     fun onActionDismiss() {
-        _eventVibration.value = AlarmWakeUpViewVibrationType.NO_VIBRATION
+        _eventVibration.value = VibrationType.NO_VIBRATION
         _eventDismissed.value = true
     }
 
     fun startVibration() {
-        _eventVibration.value = AlarmWakeUpViewVibrationType.VIBRATION
+        _eventVibration.value = VibrationType.VIBRATION
     }
 
     fun startSound(player: MediaPlayer) {
