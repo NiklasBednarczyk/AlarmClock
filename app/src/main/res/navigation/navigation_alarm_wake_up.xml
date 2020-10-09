@@ -18,6 +18,6 @@
             app:argType="integer" />
         <argument
             android:name="alarmType"
-            app:argType="de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType" />
+            app:argType="de.niklasbednarczyk.alarmclock.enums.AlarmType" />
     </fragment>
 </navigation>

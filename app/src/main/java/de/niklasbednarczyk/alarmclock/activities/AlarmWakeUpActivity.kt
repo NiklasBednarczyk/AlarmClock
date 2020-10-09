@@ -9,7 +9,7 @@ import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_ALARM_ID
 import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_ALARM_TYPE
 import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_SNOOZE_COUNT
-import de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType
+import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewFragmentArgs
 
 
@@ -26,9 +26,9 @@ class AlarmWakeUpActivity : AppCompatActivity() {
         val navController = findNavController(R.id.alarm_wake_up_nav_host_fragment)
         val alarmId = intent.getLongExtra(ALARM_INTENT_KEY_ALARM_ID, -1)
         val snoozeCount = intent.getIntExtra(ALARM_INTENT_KEY_SNOOZE_COUNT, -1)
-        val alarmType = enumValueOf<AlarmWakeUpViewAlarmType>(
+        val alarmType = enumValueOf<AlarmType>(
             intent.getStringExtra(ALARM_INTENT_KEY_ALARM_TYPE)
-                ?: AlarmWakeUpViewAlarmType.NONE.toString()
+                ?: AlarmType.NONE.toString()
         )
 
         navController.setGraph(

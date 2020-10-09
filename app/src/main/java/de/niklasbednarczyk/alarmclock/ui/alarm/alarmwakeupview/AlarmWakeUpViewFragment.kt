@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmWakeUpViewBinding
+import de.niklasbednarczyk.alarmclock.enums.AlarmType
+import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.cancelAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 import de.niklasbednarczyk.alarmclock.utils.snoozeAlarm
@@ -53,7 +55,7 @@ class AlarmWakeUpViewFragment : Fragment() {
         viewModel.eventVibration.observe(viewLifecycleOwner, { vibrationType ->
             val vibrator = requireActivity().getSystemService<Vibrator>()
             vibrator?.let {
-                if (vibrationType != AlarmWakeUpViewVibrationType.NO_VIBRATION) {
+                if (vibrationType != VibrationType.NO_VIBRATION) {
                     vibrator.vibrate(VibrationEffect.createWaveform(vibrationType.pattern, 1))
                 } else {
                     vibrator.cancel()
@@ -68,7 +70,7 @@ class AlarmWakeUpViewFragment : Fragment() {
                     if (Uri.EMPTY != alarm.soundUri) {
                         viewModel.stopSound()
                     }
-                    if (alarm.days.isNotEmpty() && alarmType == AlarmWakeUpViewAlarmType.NORMAL) {
+                    if (alarm.days.isNotEmpty() && alarmType == AlarmType.NORMAL) {
                         setNormalAlarm(context, alarm)
                     } else if (alarm.days.isEmpty()) {
                         viewModel.dismissOneShotAlarm(alarm)

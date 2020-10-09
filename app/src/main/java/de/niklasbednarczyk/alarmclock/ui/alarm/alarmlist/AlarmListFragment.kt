@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmListBinding
-import de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType
+import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.utils.cancelAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 import de.niklasbednarczyk.alarmclock.utils.setPreviewAlarm
@@ -130,8 +130,8 @@ class AlarmListFragment : Fragment() {
 
         viewModel.eventCancelAlarm.observe(viewLifecycleOwner, { alarm ->
             alarm?.let {
-                AlarmWakeUpViewAlarmType.values().forEach { type ->
-                    if (type != AlarmWakeUpViewAlarmType.NONE) {
+                AlarmType.values().forEach { type ->
+                    if (type != AlarmType.NONE) {
                         cancelAlarm(context, alarm, type)
                     }
                 }
