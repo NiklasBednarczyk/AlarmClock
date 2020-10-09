@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/alarmWakeUpViewFragment"
         android:label="AlarmWakeUpViewFragment"
-        android:name="com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewFragment"
+        android:name="de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewFragment"
         tools:layout="@layout/fragment_alarm_wake_up_view">
         <argument
             android:name="alarmId"
@@ -18,6 +18,6 @@
             app:argType="integer" />
         <argument
             android:name="alarmType"
-            app:argType="com.example.alarmclock.screens.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType" />
+            app:argType="de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewAlarmType" />
     </fragment>
 </navigation>

@@ -7,11 +7,11 @@
 
         <variable
             name="alarmEditorFragment"
-            type="com.example.alarmclock.screens.alarm.alarmeditor.AlarmEditorFragment" />
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorFragment" />
 
         <variable
             name="alarmEditorViewModel"
-            type="com.example.alarmclock.screens.alarm.alarmeditor.AlarmEditorViewModel" />
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorViewModel" />
 
         <import type="java.time.DayOfWeek" />
     </data>
