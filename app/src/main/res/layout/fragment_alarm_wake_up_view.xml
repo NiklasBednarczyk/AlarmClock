@@ -12,7 +12,7 @@
         <import type="android.view.View" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -21,42 +21,69 @@
         <TextClock
             android:id="@+id/current_time"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toTopOf="@id/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextClockStyle"/>
 
         <TextView
+            style="@style/TextViewStyle.Center"
             android:id="@+id/name"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:bind_alarmName="@{alarmWakeUpViewViewModel.alarm}" />
+            app:bind_alarmName="@{alarmWakeUpViewViewModel.alarm}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_time" />
 
         <Button
+            style="@style/ButtonStyle"
             android:id="@+id/snooze"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_width="match_parent"
             android:onClick="@{() -> alarmWakeUpViewViewModel.onActionSnooze()}"
             android:text="@string/snooze"
-            android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/dismiss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name" />
 
         <TextView
+            style="@style/TextViewStyle.Center"
             android:id="@+id/snooze_count"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.VISIBLE : View.GONE}"
-            app:bind_alarmSnoozeCount="@{alarmWakeUpViewViewModel.snoozeCount}" />
+            app:bind_alarmSnoozeCount="@{alarmWakeUpViewViewModel.snoozeCount}"
+            app:layout_constraintBottom_toTopOf="@id/snooze_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            style="@style/TextViewStyle.Center"
             android:id="@+id/snooze_time"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textSize="@dimen/text_size_big"
             android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.VISIBLE : View.GONE}"
-            app:bind_alarmSnoozeTime="@{alarmWakeUpViewViewModel.snoozeTime}" />
+            app:bind_alarmSnoozeTime="@{alarmWakeUpViewViewModel.snoozeTime}"
+            app:layout_constraintBottom_toTopOf="@id/dismiss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
+            style="@style/ButtonStyle"
             android:id="@+id/dismiss"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:onClick="@{() -> alarmWakeUpViewViewModel.onActionDismiss()}"
-            android:text="@string/dismiss" />
+            android:text="@string/dismiss"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
