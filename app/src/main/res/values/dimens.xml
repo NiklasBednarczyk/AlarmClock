@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_default">20sp</dimen>
     <dimen name="text_size_big">36sp</dimen>
     <dimen name="text_size_biggest">72sp</dimen>
+
+    <dimen name="margin_layout_small">8dp</dimen>
     <dimen name="margin_layout_default">16dp</dimen>
+
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_default">16dp</dimen>
+
+    <dimen name="card_elevation">10dp</dimen>
 </resources>

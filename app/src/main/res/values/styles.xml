@@ -14,10 +14,18 @@
 
     <style name="TextViewStyle">
         <item name="android:textSize">@dimen/text_size_default</item>
+    </style>
+
+    <style name="TextViewStyleBigAndBold">
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextViewStyle.PaddingSmall" parent="TextViewStyle">
         <item name="android:padding">@dimen/padding_small</item>
     </style>
 
-    <style name="TextViewStyle.Center" parent="TextViewStyle">
+    <style name="TextViewStyle.PaddingSmall.TextAlignmentCenter" parent="TextViewStyle.PaddingSmall">
         <item name="android:textAlignment">center</item>
     </style>
 
