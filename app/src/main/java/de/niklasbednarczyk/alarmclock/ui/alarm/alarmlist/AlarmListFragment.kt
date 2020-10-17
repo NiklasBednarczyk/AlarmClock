@@ -47,15 +47,15 @@ class AlarmListFragment : Fragment() {
         binding.alarmListViewModel = viewModel
 
         val linearLayoutManager = LinearLayoutManager(this.context)
-        binding.alarmList.layoutManager = linearLayoutManager
+        binding.alarmListRecyclerView.layoutManager = linearLayoutManager
 
         val onItemClickListener = viewModel.alarmOnItemClickListener
         val adapter = AlarmListAdapter(onItemClickListener)
-        binding.alarmList.adapter = adapter
+        binding.alarmListRecyclerView.adapter = adapter
 
         val spacesPixels = resources.getDimensionPixelSize(R.dimen.margin_layout_small)
         val spacesItemDecoration = SpacesItemDecoration(spacesPixels)
-        binding.alarmList.addItemDecoration(spacesItemDecoration)
+        binding.alarmListRecyclerView.addItemDecoration(spacesItemDecoration)
 
         viewModel.alarms.observe(viewLifecycleOwner, {
             it?.let {

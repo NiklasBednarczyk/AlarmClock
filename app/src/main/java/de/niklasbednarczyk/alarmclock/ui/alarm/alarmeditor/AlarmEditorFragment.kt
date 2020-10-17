@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmEditorBinding
+import de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorSnoozeLengthDialogFragment
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorTimeDialogFragment
@@ -99,7 +100,15 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun showNameDialog() {
+    fun onAlarmEditorPropertyClicked(alarmPropertyType: AlarmPropertyType) {
+        when (alarmPropertyType) {
+            AlarmPropertyType.NAME -> showNameDialog()
+            AlarmPropertyType.SNOOZE_LENGTH -> showSnoozeLengthDialog()
+            AlarmPropertyType.SOUND -> showRingtonePicker()
+        }
+    }
+
+    private fun showNameDialog() {
         viewModel.alarm.value?.let { alarm ->
             AlarmEditorNameDialogFragment(viewModel.alarmEditorListener, alarm.name).show(
                 supportFragmentManager,
@@ -108,7 +117,7 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun showSnoozeLengthDialog() {
+    private fun showSnoozeLengthDialog() {
         viewModel.alarm.value?.let { alarm ->
             AlarmEditorSnoozeLengthDialogFragment(
                 viewModel.alarmEditorListener,
@@ -117,7 +126,7 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun showRingtonePicker() {
+    private fun showRingtonePicker() {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
             putExtra(
                 RingtoneManager.EXTRA_RINGTONE_TITLE,

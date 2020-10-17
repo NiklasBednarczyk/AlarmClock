@@ -32,4 +32,10 @@
     <string name="preference_category_title_alarm_default">Alarm Defaults</string>
     <string name="preference_title_snooze_length">Snooze Length</string>
     <string name="set_alarm">Set Alarm</string>
+    <string name="description_property_name">Name of Alarm</string>
+    <string name="description_property_snooze_length">Snooze Length of Alarm</string>
+    <string name="description_property_sound">Sound of Alarm</string>
+    <string name="alarm_editor_property_title_name">Name</string>
+    <string name="alarm_editor_property_title_snooze_length">Snooze Length</string>
+    <string name="alarm_editor_property_title_sound">Sound</string>
 </resources>

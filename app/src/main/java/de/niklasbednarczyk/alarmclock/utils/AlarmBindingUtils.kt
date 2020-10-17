@@ -5,11 +5,14 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.text.format.DateFormat
 import android.text.format.DateUtils
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
+import de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.format.TextStyle
@@ -64,7 +67,7 @@ fun TextView.setAlarmDays(alarm: Alarm?) {
                 }
             }
             else -> alarm.days.joinToString(", ") { day ->
-                day.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                day.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault())
             }
         }
     }
@@ -73,14 +76,15 @@ fun TextView.setAlarmDays(alarm: Alarm?) {
 @BindingAdapter("bind_alarmName")
 fun TextView.setAlarmName(alarm: Alarm?) {
     alarm?.let {
-        text = alarm.name
+        text = getTextForPropertyName(alarm)
     }
 }
 
 @BindingAdapter("bind_alarmDayAlarm", "bind_alarmDayDayOfWeek")
 fun ToggleButton.setAlarmDay(alarm: Alarm?, dayOfWeek: DayOfWeek?) {
     dayOfWeek?.let {
-        val dayOfWeekString = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+        val dayOfWeekString =
+            dayOfWeek.getDisplayName(TextStyle.NARROW_STANDALONE, Locale.getDefault())
         textOn = dayOfWeekString
         textOff = dayOfWeekString
         alarm?.let {
@@ -109,31 +113,73 @@ fun TextView.setSnoozeCount(snoozeCount: Int?) {
     }
 }
 
-@BindingAdapter("bind_alarmSnoozeLength")
-fun TextView.setSnoozeLength(alarm: Alarm?) {
+@BindingAdapter("bind_alarmPropertyImageAlarm", "bind_alarmPropertyImageType")
+fun ImageView.setPropertyImage(
+    alarm: Alarm?,
+    alarmPropertyType: AlarmPropertyType?,
+) {
     alarm?.let {
-        text = String.format(
-            resources.getQuantityString(
-                R.plurals.snooze_length_minutes,
-                alarm.snoozeLengthMinutes,
-                alarm.snoozeLengthMinutes
-            )
-        )
+        alarmPropertyType?.let {
+            val drawableId = when (alarmPropertyType) {
+                AlarmPropertyType.NAME -> R.drawable.ic_baseline_label_24
+                AlarmPropertyType.SNOOZE_LENGTH -> R.drawable.ic_baseline_snooze_24
+                AlarmPropertyType.SOUND -> R.drawable.ic_baseline_music_note_24
+            }
+            val drawable = ContextCompat.getDrawable(context, drawableId)
+            setImageDrawable(drawable)
+
+            contentDescription = when (alarmPropertyType) {
+                AlarmPropertyType.NAME -> resources.getString(R.string.description_property_name)
+                AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.description_property_snooze_length)
+                AlarmPropertyType.SOUND -> resources.getString(R.string.description_property_sound)
+            }
+        }
     }
 }
 
-@BindingAdapter("bind_alarmSoundAlarm", "bind_alarmSoundContext")
-fun TextView.setSound(alarm: Alarm?, context: Context?) {
+@BindingAdapter("bind_alarmPropertyTitleAlarm", "bind_alarmPropertyTitleType")
+fun TextView.setPropertyTitle(alarm: Alarm?, alarmPropertyType: AlarmPropertyType?) {
     alarm?.let {
-        context?.let {
-            text = if (Uri.EMPTY != alarm.soundUri) {
-                val ringtone = RingtoneManager.getRingtone(context, alarm.soundUri)
-                ringtone.getTitle(context)
-            } else {
-                resources.getString(R.string.no_sound)
+        alarmPropertyType?.let {
+            text = when (alarmPropertyType) {
+                AlarmPropertyType.NAME -> resources.getString(R.string.alarm_editor_property_title_name)
+                AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.alarm_editor_property_title_snooze_length)
+                AlarmPropertyType.SOUND -> resources.getString(R.string.alarm_editor_property_title_sound)
             }
-
         }
+    }
+}
 
+@BindingAdapter("bind_alarmPropertyValueAlarm", "bind_alarmPropertyValueType")
+fun TextView.setPropertyValue(alarm: Alarm?, alarmPropertyType: AlarmPropertyType?) {
+    alarm?.let {
+        alarmPropertyType?.let {
+            text = when (alarmPropertyType) {
+                AlarmPropertyType.NAME -> getTextForPropertyName(alarm)
+                AlarmPropertyType.SNOOZE_LENGTH -> getTextForPropertySnoozeLength(alarm, context)
+                AlarmPropertyType.SOUND -> getTextForPropertySound(alarm, context)
+            }
+        }
+    }
+}
+
+
+private fun getTextForPropertyName(alarm: Alarm): String = alarm.name
+
+private fun getTextForPropertySnoozeLength(alarm: Alarm, context: Context): String =
+    String.format(
+        context.resources.getQuantityString(
+            R.plurals.snooze_length_minutes,
+            alarm.snoozeLengthMinutes,
+            alarm.snoozeLengthMinutes
+        )
+    )
+
+private fun getTextForPropertySound(alarm: Alarm, context: Context): String {
+    return if (Uri.EMPTY != alarm.soundUri) {
+        val ringtone = RingtoneManager.getRingtone(context, alarm.soundUri)
+        ringtone.getTitle(context)
+    } else {
+        context.resources.getString(R.string.no_sound)
     }
 }

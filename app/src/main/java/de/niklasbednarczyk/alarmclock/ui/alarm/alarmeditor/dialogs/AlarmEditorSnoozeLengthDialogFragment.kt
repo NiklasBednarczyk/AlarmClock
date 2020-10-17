@@ -31,20 +31,23 @@ class AlarmEditorSnoozeLengthDialogFragment(
                 false
             )
 
-            binding.minuteText.text = getMinuteText(alarmSnoozeLengthMinutes)
+            binding.alarmSnoozeLengthDialogMinuteText.text = getMinuteText(alarmSnoozeLengthMinutes)
 
-            binding.snoozeLengthMinutes.minValue = SNOOZE_LENGTH_MINUTES_MIN_VALUE
-            binding.snoozeLengthMinutes.maxValue = SNOOZE_LENGTH_MINUTES_MAX_VALUE
-            binding.snoozeLengthMinutes.value = alarmSnoozeLengthMinutes
-            binding.snoozeLengthMinutes.setOnValueChangedListener { _, _, newAlarmSnoozeLengthMinutes ->
-                binding.minuteText.text = getMinuteText(newAlarmSnoozeLengthMinutes)
+            binding.alarmSnoozeLengthDialogSnoozeLengthMinutes.minValue =
+                SNOOZE_LENGTH_MINUTES_MIN_VALUE
+            binding.alarmSnoozeLengthDialogSnoozeLengthMinutes.maxValue =
+                SNOOZE_LENGTH_MINUTES_MAX_VALUE
+            binding.alarmSnoozeLengthDialogSnoozeLengthMinutes.value = alarmSnoozeLengthMinutes
+            binding.alarmSnoozeLengthDialogSnoozeLengthMinutes.setOnValueChangedListener { _, _, newAlarmSnoozeLengthMinutes ->
+                binding.alarmSnoozeLengthDialogMinuteText.text =
+                    getMinuteText(newAlarmSnoozeLengthMinutes)
             }
 
             builder
                 .setView(binding.root)
                 .setTitle(R.string.alarm_snooze_length)
                 .setPositiveButton(R.string.confirm) { _, _ ->
-                    alarmEditorListener.onSnoozeLengthDialogPositiveButton(binding.snoozeLengthMinutes.value)
+                    alarmEditorListener.onSnoozeLengthDialogPositiveButton(binding.alarmSnoozeLengthDialogSnoozeLengthMinutes.value)
                 }
                 .setNegativeButton(R.string.cancel) { _, _ -> }
             builder.create()

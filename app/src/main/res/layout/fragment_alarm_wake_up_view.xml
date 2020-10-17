@@ -20,63 +20,63 @@
 
         <TextClock
             style="@style/TextClockStyle"
-            android:id="@+id/current_time"
+            android:id="@+id/alarm_wake_up_view_current_time"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:layout_constraintBottom_toTopOf="@id/name"
+            app:layout_constraintBottom_toTopOf="@id/alarm_wake_up_view_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            style="@style/TextViewStyle.PaddingSmall.TextAlignmentCenter"
-            android:id="@+id/name"
+            style="@style/TextViewStyle.PaddingSmallAndTextAlignmentCenter"
+            android:id="@+id/alarm_wake_up_view_name"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             app:bind_alarmName="@{alarmWakeUpViewViewModel.alarm}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/current_time" />
+            app:layout_constraintTop_toBottomOf="@id/alarm_wake_up_view_current_time" />
 
         <Button
             style="@style/ButtonStyle"
-            android:id="@+id/snooze"
+            android:id="@+id/alarm_wake_up_view_snooze"
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:onClick="@{() -> alarmWakeUpViewViewModel.onActionSnooze()}"
             android:text="@string/snooze"
             android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toTopOf="@id/dismiss"
+            app:layout_constraintBottom_toTopOf="@id/alarm_wake_up_view_dismiss"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            app:layout_constraintTop_toBottomOf="@id/alarm_wake_up_view_name" />
 
         <TextView
-            style="@style/TextViewStyle.PaddingSmall.TextAlignmentCenter"
-            android:id="@+id/snooze_count"
+            style="@style/TextViewStyle.PaddingSmallAndTextAlignmentCenter"
+            android:id="@+id/alarm_wake_up_view_snooze_count"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.VISIBLE : View.GONE}"
             app:bind_alarmSnoozeCount="@{alarmWakeUpViewViewModel.snoozeCount}"
-            app:layout_constraintBottom_toTopOf="@id/snooze_time"
+            app:layout_constraintBottom_toTopOf="@id/alarm_wake_up_view_snooze_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            style="@style/TextViewStyle.PaddingSmall.TextAlignmentCenter"
-            android:id="@+id/snooze_time"
+            style="@style/TextViewStyle.PaddingSmallAndTextAlignmentCenter"
+            android:id="@+id/alarm_wake_up_view_snooze_time"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:textSize="@dimen/text_size_big"
             android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.VISIBLE : View.GONE}"
             app:bind_alarmSnoozeTime="@{alarmWakeUpViewViewModel.snoozeTime}"
-            app:layout_constraintBottom_toTopOf="@id/dismiss"
+            app:layout_constraintBottom_toTopOf="@id/alarm_wake_up_view_dismiss"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             style="@style/ButtonStyle"
-            android:id="@+id/dismiss"
+            android:id="@+id/alarm_wake_up_view_dismiss"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:onClick="@{() -> alarmWakeUpViewViewModel.onActionDismiss()}"
