@@ -30,4 +30,18 @@
         <item>25</item>
         <item>30</item>
     </string-array>
+
+    <string-array name="alarm_vibration_type_entries">
+        <item>@string/vibration_type_none</item>
+        <item>@string/vibration_type_slow</item>
+        <item>@string/vibration_type_normal</item>
+        <item>@string/vibration_type_fast</item>
+    </string-array>
+
+    <string-array name="alarm_vibration_type_values">
+        <item>NONE</item>
+        <item>SLOW</item>
+        <item>NORMAL</item>
+        <item>FAST</item>
+    </string-array>
 </resources>

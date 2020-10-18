@@ -1,6 +1,8 @@
 package de.niklasbednarczyk.alarmclock.enums
 
 enum class VibrationType(val pattern: LongArray) {
-    VIBRATION(longArrayOf(0, 100)),
-    NO_VIBRATION(longArrayOf(0))
+    NONE(longArrayOf(0)),
+    SLOW(longArrayOf(0, 750, 750)),
+    NORMAL(longArrayOf(0, 500, 500)),
+    FAST(longArrayOf(0, 250, 250))
 }

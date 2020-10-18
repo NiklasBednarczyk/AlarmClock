@@ -26,13 +26,13 @@ class AlarmEditorNameDialogFragment(
                 null,
                 false
             )
-            binding.name.setText(alarmName)
+            binding.alarmNameDialogName.setText(alarmName)
 
             builder
                 .setView(binding.root)
                 .setTitle(R.string.alarm_name)
                 .setPositiveButton(R.string.confirm) { _, _ ->
-                    alarmEditorListener.onNameDialogPositiveButton(binding.name.text.toString())
+                    alarmEditorListener.onNameDialogPositiveButton(binding.alarmNameDialogName.text.toString())
                 }
                 .setNegativeButton(R.string.cancel) { _, _ -> }
             builder.create()

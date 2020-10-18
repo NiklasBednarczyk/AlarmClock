@@ -47,7 +47,7 @@ class AlarmListAdapter(private val alarmOnItemClickListener: AlarmOnItemClickLis
     interface AlarmOnItemClickListener {
         fun onCardViewClick(alarmId: Long)
 
-        fun onActiveClick(alarm: Alarm)
+        fun onActiveClick(oldAlarm: Alarm)
 
         fun onPopUpMenuClick(view: View, alarm: Alarm)
     }

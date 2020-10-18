@@ -14,70 +14,79 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
+        style="@style/CardViewStyle"
+        android:id="@+id/alarm_list_item_card_view"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:onClick="@{() -> alarmOnItemClickListener.onCardViewClick(alarm.alarmId)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_layout_default"
+            android:layout_width="match_parent">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/is_active"
-                android:layout_width="wrap_content"
+                android:id="@+id/alarm_list_item_is_active"
                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:onClick="@{() -> alarmOnItemClickListener.onActiveClick(alarm)}"
                 app:alarmIsActive="@{alarm}"
-                app:layout_constraintBottom_toBottomOf="@id/pop_up_menu"
-                app:layout_constraintEnd_toStartOf="@id/pop_up_menu"
-                app:layout_constraintStart_toEndOf="@id/time"
-                app:layout_constraintTop_toTopOf="@id/pop_up_menu" />
+                app:layout_constraintBottom_toBottomOf="@id/alarm_list_item_pop_up_menu"
+                app:layout_constraintEnd_toStartOf="@id/alarm_list_item_pop_up_menu"
+                app:layout_constraintStart_toEndOf="@id/alarm_list_item_time"
+                app:layout_constraintTop_toTopOf="@id/alarm_list_item_pop_up_menu" />
 
             <ImageButton
-                android:id="@+id/pop_up_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 android:contentDescription="@string/description_popup_button"
+                android:id="@+id/alarm_list_item_pop_up_menu"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:onClick="@{view -> alarmOnItemClickListener.onPopUpMenuClick(view, alarm)}"
                 android:src="@drawable/ic_baseline_more_vert_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/is_active"
+                app:layout_constraintStart_toEndOf="@+id/alarm_list_item_is_active"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/time"
+                style="@style/TextViewStyleBigAndBold"
+                android:enabled="@{alarm.isActive}"
+                android:id="@+id/alarm_list_item_time"
+                android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
                 app:bind_alarmTime="@{alarm}"
-                app:layout_constraintEnd_toStartOf="@+id/is_active"
+                app:layout_constraintEnd_toStartOf="@+id/alarm_list_item_is_active"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="TIME" />
 
             <TextView
-                android:id="@+id/days"
+                style="@style/TextViewStyle"
+                android:enabled="@{alarm.isActive}"
+                android:id="@+id/alarm_list_item_days"
+                android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
                 app:bind_alarmDays="@{alarm}"
-                app:layout_constraintBottom_toTopOf="@+id/name"
-                app:layout_constraintEnd_toEndOf="@+id/time"
+                app:layout_constraintBottom_toTopOf="@+id/alarm_list_item_name"
+                app:layout_constraintEnd_toEndOf="@+id/alarm_list_item_time"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time"
+                app:layout_constraintTop_toBottomOf="@+id/alarm_list_item_time"
                 tools:text="DAYS" />
 
             <TextView
-                android:id="@+id/name"
+                style="@style/TextViewStyle"
+                android:enabled="@{alarm.isActive}"
+                android:id="@+id/alarm_list_item_name"
+                android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
                 app:bind_alarmName="@{alarm}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/days"
+                app:layout_constraintEnd_toEndOf="@+id/alarm_list_item_days"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/days"
+                app:layout_constraintTop_toBottomOf="@+id/alarm_list_item_days"
                 tools:text="NAME" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

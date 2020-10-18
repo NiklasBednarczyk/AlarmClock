@@ -14,131 +14,170 @@
             type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorViewModel" />
 
         <import type="java.time.DayOfWeek" />
+
+        <import type="de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical">
-
+        android:padding="@dimen/padding_default">
 
         <TextView
-            android:id="@+id/time"
+            style="@style/TextViewStyleBigAndBold"
+            android:id="@+id/alarm_editor_time"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:onClick="@{() -> alarmEditorFragment.showTimeDialog()}"
             app:bind_alarmTime="@{alarmEditorViewModel.alarm}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="TIME" />
 
-        <LinearLayout
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_monday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.MONDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.MONDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/alarm_editor_day_tuesday"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_tuesday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.TUESDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.TUESDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/alarm_editor_day_wednesday"
+            app:layout_constraintStart_toEndOf="@id/alarm_editor_day_monday"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_wednesday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.WEDNESDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.WEDNESDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/alarm_editor_day_thursday"
+            app:layout_constraintStart_toEndOf="@id/alarm_editor_day_tuesday"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_thursday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.THURSDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.THURSDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/alarm_editor_day_friday"
+            app:layout_constraintStart_toEndOf="@id/alarm_editor_day_wednesday"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_friday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.FRIDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.FRIDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/alarm_editor_day_saturday"
+            app:layout_constraintStart_toEndOf="@id/alarm_editor_day_thursday"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_saturday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.SATURDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.SATURDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/alarm_editor_day_sunday"
+            app:layout_constraintStart_toEndOf="@id/alarm_editor_day_friday"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <ToggleButton
+            style="@style/AlarmEditorElementStyle"
+            android:id="@+id/alarm_editor_day_sunday"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:onClick="@{() -> alarmEditorViewModel.alarmEditorListener.onDayButtonClick(DayOfWeek.SUNDAY)}"
+            app:bind_alarmDayAlarm="@{alarmEditorViewModel.alarm}"
+            app:bind_alarmDayDayOfWeek="@{DayOfWeek.SUNDAY}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/alarm_editor_day_saturday"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_time" />
+
+        <include
+            style="@style/AlarmEditorElementStyle"
+            layout="@layout/item_alarm_editor_property"
+            android:id="@+id/alarm_editor_name"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="horizontal">
+            app:alarm="@{alarmEditorViewModel.alarm}"
+            app:alarmEditorFragment="@{alarmEditorFragment}"
+            app:alarmPropertyType="@{AlarmPropertyType.NAME}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_day_monday" />
 
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_monday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.MONDAY}" />
-
-            <Space
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
-
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_tuesday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.TUESDAY}" />
-
-            <Space
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
-
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_wednesday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.WEDNESDAY}" />
-
-            <Space
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
-
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_thursday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.THURSDAY}" />
-
-            <Space
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
-
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_friday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.FRIDAY}" />
-
-            <Space
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
-
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_saturday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.SATURDAY}" />
-
-            <Space
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
-
-            <include
-                layout="@layout/item_alarm_day_button"
-                android:id="@+id/day_button_sunday"
-                app:alarmEditorViewModel="@{alarmEditorViewModel}"
-                app:dayOfWeek="@{DayOfWeek.SUNDAY}" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/name"
+        <include
+            style="@style/AlarmEditorElementStyle"
+            layout="@layout/item_alarm_editor_property"
+            android:id="@+id/alarm_editor_snooze_length"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:onClick="@{() -> alarmEditorFragment.showNameDialog()}"
-            app:bind_alarmName="@{alarmEditorViewModel.alarm}"
-            tools:text="NAME" />
+            app:alarm="@{alarmEditorViewModel.alarm}"
+            app:alarmEditorFragment="@{alarmEditorFragment}"
+            app:alarmPropertyType="@{AlarmPropertyType.SNOOZE_LENGTH}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_name" />
 
-        <TextView
-            android:id="@+id/snooze_length"
+        <include
+            style="@style/AlarmEditorElementStyle"
+            layout="@layout/item_alarm_editor_property"
+            android:id="@+id/alarm_editor_sound"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:onClick="@{() -> alarmEditorFragment.showSnoozeLengthDialog()}"
-            app:bind_alarmSnoozeLength="@{alarmEditorViewModel.alarm}"
-            tools:text="SNOOZE_LENGTH" />
+            app:alarm="@{alarmEditorViewModel.alarm}"
+            app:alarmEditorFragment="@{alarmEditorFragment}"
+            app:alarmPropertyType="@{AlarmPropertyType.SOUND}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_snooze_length" />
 
-        <TextView
-            android:id="@+id/sound"
+        <include
+            style="@style/AlarmEditorElementStyle"
+            layout="@layout/item_alarm_editor_property"
+            android:id="@+id/alarm_editor_vibration_type"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:onClick="@{() -> alarmEditorFragment.showRingtonePicker()}"
-            app:bind_alarmSoundAlarm="@{alarmEditorViewModel.alarm}"
-            app:bind_alarmSoundContext="@{alarmEditorFragment.context}" />
+            app:alarm="@{alarmEditorViewModel.alarm}"
+            app:alarmEditorFragment="@{alarmEditorFragment}"
+            app:alarmPropertyType="@{AlarmPropertyType.VIBRATION_TYPE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/alarm_editor_sound" />
 
-        <CheckBox
-            android:checked="@={alarmEditorViewModel.alarm.vibrate}"
-            android:id="@+id/vibrate"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/vibrate" />
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,6 +6,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.PopupMenu
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmEditorBinding
+import de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorSnoozeLengthDialogFragment
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorTimeDialogFragment
@@ -99,7 +101,16 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun showNameDialog() {
+    fun onAlarmEditorPropertyClicked(view: View, alarmPropertyType: AlarmPropertyType) {
+        when (alarmPropertyType) {
+            AlarmPropertyType.NAME -> showNameDialog()
+            AlarmPropertyType.SNOOZE_LENGTH -> showSnoozeLengthDialog()
+            AlarmPropertyType.SOUND -> showRingtonePicker()
+            AlarmPropertyType.VIBRATION_TYPE -> showVibrationTypePopupMenu(view)
+        }
+    }
+
+    private fun showNameDialog() {
         viewModel.alarm.value?.let { alarm ->
             AlarmEditorNameDialogFragment(viewModel.alarmEditorListener, alarm.name).show(
                 supportFragmentManager,
@@ -108,7 +119,7 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun showSnoozeLengthDialog() {
+    private fun showSnoozeLengthDialog() {
         viewModel.alarm.value?.let { alarm ->
             AlarmEditorSnoozeLengthDialogFragment(
                 viewModel.alarmEditorListener,
@@ -117,7 +128,7 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun showRingtonePicker() {
+    private fun showRingtonePicker() {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
             putExtra(
                 RingtoneManager.EXTRA_RINGTONE_TITLE,
@@ -135,6 +146,15 @@ class AlarmEditorFragment : Fragment() {
 
         }
         startActivityForResult(intent, INTENT_RINGTONE_PICKER_REQUEST_CODE)
+    }
+
+    private fun showVibrationTypePopupMenu(view: View) {
+        PopupMenu(context, view).apply {
+            inflate(R.menu.menu_alarm_editor_property_vibration_type)
+            setOnMenuItemClickListener(viewModel.alarmPropertyTypeVibrationTypePopupMenuListener)
+            gravity = Gravity.END
+            show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

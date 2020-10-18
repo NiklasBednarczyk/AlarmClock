@@ -9,7 +9,7 @@
         android:orientation="horizontal">
 
         <NumberPicker
-            android:id="@+id/snooze_length_minutes"
+            android:id="@+id/alarm_snooze_length_dialog_snooze_length_minutes"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -18,13 +18,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/minute_text"
+            android:id="@+id/alarm_snooze_length_dialog_minute_text"
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/snooze_length_minutes"
-            app:layout_constraintStart_toEndOf="@id/snooze_length_minutes"
-            app:layout_constraintTop_toTopOf="@id/snooze_length_minutes" />
+            app:layout_constraintBottom_toBottomOf="@id/alarm_snooze_length_dialog_snooze_length_minutes"
+            app:layout_constraintStart_toEndOf="@id/alarm_snooze_length_dialog_snooze_length_minutes"
+            app:layout_constraintTop_toTopOf="@id/alarm_snooze_length_dialog_snooze_length_minutes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,8 +14,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Database(entities = [Alarm::class], version = 6, exportSchema = false)
-@TypeConverters(AlarmClockConverter::class)
+@Database(entities = [Alarm::class], version = 7, exportSchema = false)
+@TypeConverters(AlarmClockTypeConverter::class)
 abstract class AlarmClockDatabase : RoomDatabase() {
 
     abstract val alarmDao: AlarmDao

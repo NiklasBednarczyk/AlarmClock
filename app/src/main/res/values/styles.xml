@@ -1,14 +1,58 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="fontFamily">@font/roboto</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="TextViewStyle">
+        <item name="android:textSize">@dimen/text_size_default</item>
+    </style>
+
+    <style name="TextViewStyle.Bold" parent="TextViewStyle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextViewStyleBigAndBold">
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextViewStyle.PaddingSmallAndTextAlignmentCenter" parent="TextViewStyle">
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:textSize">@dimen/text_size_default</item>
+        <item name="android:layout_margin">@dimen/margin_layout_default</item>
+        <item name="android:padding">@dimen/padding_default</item>
+    </style>
+
+    <style name="AlarmEditorElementStyle">
+        <item name="android:layout_marginTop">@dimen/margin_layout_default</item>
+        <item name="android:layout_marginBottom">@dimen/margin_layout_default</item>
+    </style>
+
+    <style name="TextClockStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_size_biggest</item>
+    </style>
+
+    <style name="TextInputEditTextStyle">
+        <item name="android:layout_marginStart">@dimen/margin_layout_default</item>
+        <item name="android:layout_marginEnd">@dimen/margin_layout_default</item>
+    </style>
+
+    <style name="CardViewStyle">
+        <item name="cardElevation">@dimen/card_elevation</item>
     </style>
 
 </resources>

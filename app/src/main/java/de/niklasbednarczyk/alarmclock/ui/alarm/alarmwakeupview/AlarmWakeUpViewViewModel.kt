@@ -85,18 +85,22 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
 
             _snoozeCount.value = _snoozeCount.value?.plus(1)
             _eventSnoozed.value = true
-            _eventVibration.value = VibrationType.NO_VIBRATION
+            stopVibration()
             snoozeTimer.start()
         }
     }
 
     fun onActionDismiss() {
-        _eventVibration.value = VibrationType.NO_VIBRATION
+        stopVibration()
         _eventDismissed.value = true
     }
 
     fun startVibration() {
-        _eventVibration.value = VibrationType.VIBRATION
+        _eventVibration.value = _alarm.value?.vibrationType
+    }
+
+    private fun stopVibration() {
+        _eventVibration.value = VibrationType.NONE
     }
 
     fun startSound(player: MediaPlayer) {

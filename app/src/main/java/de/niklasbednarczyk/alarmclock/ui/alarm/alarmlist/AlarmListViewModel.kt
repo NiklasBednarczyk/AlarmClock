@@ -47,14 +47,16 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
         get() = _eventCancelAlarm
 
     val alarmOnItemClickListener = object : AlarmListAdapter.AlarmOnItemClickListener {
-        override fun onActiveClick(alarm: Alarm) {
-            alarm.isActive = !alarm.isActive
-            if (alarm.isActive) {
-                startSettingNormalAlarm(alarm)
-            } else {
-                startCancellingAlarm(alarm)
+        override fun onActiveClick(oldAlarm: Alarm) {
+            val newAlarm = oldAlarm.copy().apply {
+                this.isActive = !oldAlarm.isActive
             }
-            updateAlarm(alarm)
+            if (newAlarm.isActive) {
+                startSettingNormalAlarm(newAlarm)
+            } else {
+                startCancellingAlarm(newAlarm)
+            }
+            updateAlarm(newAlarm)
         }
 
         override fun onCardViewClick(alarmId: Long) {

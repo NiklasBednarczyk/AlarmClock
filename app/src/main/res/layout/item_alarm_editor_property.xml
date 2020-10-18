@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="alarmEditorFragment"
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorFragment" />
+
+        <variable
+            name="alarm"
+            type="de.niklasbednarczyk.alarmclock.database.Alarm" />
+
+        <variable
+            name="alarmPropertyType"
+            type="de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:onClick="@{(view) -> alarmEditorFragment.onAlarmEditorPropertyClicked(view, alarmPropertyType)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <ImageView
+                android:background="@color/colorAccent"
+                android:id="@+id/alarm_editor_property_image"
+                android:layout_height="0dp"
+                android:layout_width="0dp"
+                app:bind_alarmPropertyImageAlarm="@{alarm}"
+                app:bind_alarmPropertyImageType="@{alarmPropertyType}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_baseline_snooze_24" />
+
+            <TextView
+                style="@style/TextViewStyle.Bold"
+                android:id="@+id/alarm_editor_property_title"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_layout_small"
+                android:layout_width="0dp"
+                app:bind_alarmPropertyTitleAlarm="@{alarm}"
+                app:bind_alarmPropertyTitleType="@{alarmPropertyType}"
+                app:layout_constraintBottom_toTopOf="@id/alarm_editor_property_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/alarm_editor_property_image"
+                app:layout_constraintTop_toTopOf="@id/alarm_editor_property_image"
+                tools:text="TITLE" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:id="@+id/alarm_editor_property_value"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_layout_small"
+                android:layout_width="0dp"
+                app:bind_alarmPropertyValueAlarm="@{alarm}"
+                app:bind_alarmPropertyValueType="@{alarmPropertyType}"
+                app:layout_constraintBottom_toBottomOf="@id/alarm_editor_property_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/alarm_editor_property_image"
+                app:layout_constraintTop_toBottomOf="@id/alarm_editor_property_title"
+                tools:text="VALUE" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

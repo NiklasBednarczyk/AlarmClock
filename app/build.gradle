@@ -49,7 +49,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "androidx.legacy:legacy-support-v4:$legacy_support_v4_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions_version"
-    implementation "androidx.preference:preference:$preference_version"
+    implementation "androidx.preference:preference-ktx:$preference_version"
     implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
     implementation "com.google.android.material:material:$material_version"
 

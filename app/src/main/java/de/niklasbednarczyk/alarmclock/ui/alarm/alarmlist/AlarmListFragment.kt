@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import de.niklasbednarczyk.alarmclock.R
@@ -48,15 +47,15 @@ class AlarmListFragment : Fragment() {
         binding.alarmListViewModel = viewModel
 
         val linearLayoutManager = LinearLayoutManager(this.context)
-        binding.alarmList.layoutManager = linearLayoutManager
-
-        val dividerItemDecoration =
-            DividerItemDecoration(binding.alarmList.context, linearLayoutManager.orientation)
-        binding.alarmList.addItemDecoration(dividerItemDecoration)
+        binding.alarmListRecyclerView.layoutManager = linearLayoutManager
 
         val onItemClickListener = viewModel.alarmOnItemClickListener
         val adapter = AlarmListAdapter(onItemClickListener)
-        binding.alarmList.adapter = adapter
+        binding.alarmListRecyclerView.adapter = adapter
+
+        val spacesPixels = resources.getDimensionPixelSize(R.dimen.margin_layout_small)
+        val spacesItemDecoration = SpacesItemDecoration(spacesPixels)
+        binding.alarmListRecyclerView.addItemDecoration(spacesItemDecoration)
 
         viewModel.alarms.observe(viewLifecycleOwner, {
             it?.let {
