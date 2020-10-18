@@ -6,6 +6,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.PopupMenu
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -100,11 +101,12 @@ class AlarmEditorFragment : Fragment() {
         }
     }
 
-    fun onAlarmEditorPropertyClicked(alarmPropertyType: AlarmPropertyType) {
+    fun onAlarmEditorPropertyClicked(view: View, alarmPropertyType: AlarmPropertyType) {
         when (alarmPropertyType) {
             AlarmPropertyType.NAME -> showNameDialog()
             AlarmPropertyType.SNOOZE_LENGTH -> showSnoozeLengthDialog()
             AlarmPropertyType.SOUND -> showRingtonePicker()
+            AlarmPropertyType.VIBRATION_TYPE -> showVibrationTypePopupMenu(view)
         }
     }
 
@@ -144,6 +146,15 @@ class AlarmEditorFragment : Fragment() {
 
         }
         startActivityForResult(intent, INTENT_RINGTONE_PICKER_REQUEST_CODE)
+    }
+
+    private fun showVibrationTypePopupMenu(view: View) {
+        PopupMenu(context, view).apply {
+            inflate(R.menu.menu_alarm_editor_property_vibration_type)
+            setOnMenuItemClickListener(viewModel.alarmPropertyTypeVibrationTypePopupMenuListener)
+            gravity = Gravity.END
+            show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

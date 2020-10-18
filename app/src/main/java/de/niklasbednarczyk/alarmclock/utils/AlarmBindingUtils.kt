@@ -13,6 +13,7 @@ import androidx.databinding.BindingAdapter
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType
+import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.format.TextStyle
@@ -124,6 +125,7 @@ fun ImageView.setPropertyImage(
                 AlarmPropertyType.NAME -> R.drawable.ic_baseline_label_24
                 AlarmPropertyType.SNOOZE_LENGTH -> R.drawable.ic_baseline_snooze_24
                 AlarmPropertyType.SOUND -> R.drawable.ic_baseline_music_note_24
+                AlarmPropertyType.VIBRATION_TYPE -> R.drawable.ic_baseline_vibration_24
             }
             val drawable = ContextCompat.getDrawable(context, drawableId)
             setImageDrawable(drawable)
@@ -132,6 +134,7 @@ fun ImageView.setPropertyImage(
                 AlarmPropertyType.NAME -> resources.getString(R.string.description_property_name)
                 AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.description_property_snooze_length)
                 AlarmPropertyType.SOUND -> resources.getString(R.string.description_property_sound)
+                AlarmPropertyType.VIBRATION_TYPE -> resources.getString(R.string.description_property_vibration_type)
             }
         }
     }
@@ -145,6 +148,7 @@ fun TextView.setPropertyTitle(alarm: Alarm?, alarmPropertyType: AlarmPropertyTyp
                 AlarmPropertyType.NAME -> resources.getString(R.string.alarm_editor_property_title_name)
                 AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.alarm_editor_property_title_snooze_length)
                 AlarmPropertyType.SOUND -> resources.getString(R.string.alarm_editor_property_title_sound)
+                AlarmPropertyType.VIBRATION_TYPE -> resources.getString(R.string.alarm_editor_property_title_vibration_type)
             }
         }
     }
@@ -158,6 +162,7 @@ fun TextView.setPropertyValue(alarm: Alarm?, alarmPropertyType: AlarmPropertyTyp
                 AlarmPropertyType.NAME -> getTextForPropertyName(alarm)
                 AlarmPropertyType.SNOOZE_LENGTH -> getTextForPropertySnoozeLength(alarm, context)
                 AlarmPropertyType.SOUND -> getTextForPropertySound(alarm, context)
+                AlarmPropertyType.VIBRATION_TYPE -> getTextForPropertyVibrationType(alarm, context)
             }
         }
     }
@@ -183,3 +188,11 @@ private fun getTextForPropertySound(alarm: Alarm, context: Context): String {
         context.resources.getString(R.string.no_sound)
     }
 }
+
+private fun getTextForPropertyVibrationType(alarm: Alarm, context: Context): String =
+    when (alarm.vibrationType) {
+        VibrationType.NONE -> context.resources.getString(R.string.vibration_type_none)
+        VibrationType.SLOW -> context.resources.getString(R.string.vibration_type_slow)
+        VibrationType.NORMAL -> context.resources.getString(R.string.vibration_type_normal)
+        VibrationType.FAST -> context.resources.getString(R.string.vibration_type_fast)
+    }

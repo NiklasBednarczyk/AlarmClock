@@ -26,8 +26,8 @@
     <string name="alarm_snooze_length">Alarm Snooze Length</string>
     <string name="vibrate">Vibrate</string>
     <string name="choose_alarm_sound">Choose Alarm Sound</string>
-    <string name="no_sound">No Sound</string>
-    <string name="preference_title_vibrate">Vibrate</string>
+    <string name="no_sound">None</string>
+    <string name="preference_title_vibration_type">Vibration</string>
     <string name="preference_category_title_general">General</string>
     <string name="preference_category_title_alarm_default">Alarm Defaults</string>
     <string name="preference_title_snooze_length">Snooze Length</string>
@@ -35,7 +35,13 @@
     <string name="description_property_name">Name of Alarm</string>
     <string name="description_property_snooze_length">Snooze Length of Alarm</string>
     <string name="description_property_sound">Sound of Alarm</string>
+    <string name="description_property_vibration_type">Vibration of Alarm</string>
     <string name="alarm_editor_property_title_name">Name</string>
     <string name="alarm_editor_property_title_snooze_length">Snooze Length</string>
     <string name="alarm_editor_property_title_sound">Sound</string>
+    <string name="alarm_editor_property_title_vibration_type">Vibration</string>
+    <string name="vibration_type_none">None</string>
+    <string name="vibration_type_slow">Slow</string>
+    <string name="vibration_type_normal">Normal</string>
+    <string name="vibration_type_fast">Fast</string>
 </resources>

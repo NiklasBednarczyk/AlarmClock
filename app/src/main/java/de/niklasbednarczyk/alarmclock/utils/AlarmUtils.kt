@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.RingtoneManager
 import androidx.preference.PreferenceManager
 import de.niklasbednarczyk.alarmclock.database.Alarm
+import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import java.time.DayOfWeek
 import java.util.*
 
@@ -67,11 +68,14 @@ fun getDefaultAlarm(context: Context?): Alarm {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     val defaultSnoozeLengthMinutes =
         (sharedPreferences.getString("alarm_snooze_length", "5")?.toInt()) ?: 5
-    val defaultVibrate = sharedPreferences.getBoolean("alarm_vibrate", true)
+    val vibrationTypeString =
+        (sharedPreferences.getString("alarm_vibration_type", "NORMAL") ?: "NORMAL")
+    val defaultVibrationType =
+        enumValueOf<VibrationType>(vibrationTypeString)
     val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
     return Alarm(
         snoozeLengthMinutes = defaultSnoozeLengthMinutes,
-        vibrate = defaultVibrate,
+        vibrationType = defaultVibrationType,
         soundUri = defaultSoundUri
     )
 }

@@ -21,7 +21,7 @@
     <androidx.cardview.widget.CardView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:onClick="@{() -> alarmEditorFragment.onAlarmEditorPropertyClicked(alarmPropertyType)}">
+        android:onClick="@{(view) -> alarmEditorFragment.onAlarmEditorPropertyClicked(view, alarmPropertyType)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="wrap_content"

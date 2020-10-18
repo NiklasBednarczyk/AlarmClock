@@ -55,10 +55,10 @@ class AlarmWakeUpViewFragment : Fragment() {
         viewModel.eventVibration.observe(viewLifecycleOwner, { vibrationType ->
             val vibrator = requireActivity().getSystemService<Vibrator>()
             vibrator?.let {
-                if (vibrationType != VibrationType.NO_VIBRATION) {
-                    vibrator.vibrate(VibrationEffect.createWaveform(vibrationType.pattern, 1))
-                } else {
+                if (vibrationType == VibrationType.NONE) {
                     vibrator.cancel()
+                } else {
+                    vibrator.vibrate(VibrationEffect.createWaveform(vibrationType.pattern, 1))
                 }
             }
         })
@@ -95,7 +95,7 @@ class AlarmWakeUpViewFragment : Fragment() {
 
         viewModel.alarm.observe(viewLifecycleOwner, { alarm ->
             alarm?.let {
-                if (alarm.vibrate) {
+                if (alarm.vibrationType != VibrationType.NONE) {
                     viewModel.startVibration()
                 }
                 if (Uri.EMPTY != alarm.soundUri) {

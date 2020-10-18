@@ -1,9 +1,12 @@
 package de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor
 
 import android.net.Uri
+import android.widget.PopupMenu
 import androidx.lifecycle.*
+import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
+import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.hoursAndMinutesToTimeMinutes
 import kotlinx.coroutines.*
 import java.time.DayOfWeek
@@ -67,6 +70,26 @@ class AlarmEditorViewModel(
             }
         }
     }
+
+    val alarmPropertyTypeVibrationTypePopupMenuListener =
+        PopupMenu.OnMenuItemClickListener { item ->
+            val vibrationType = when (item.itemId) {
+                R.id.menu_vibration_type_none -> VibrationType.NONE
+                R.id.menu_vibration_type_slow -> VibrationType.SLOW
+                R.id.menu_vibration_type_normal -> VibrationType.NORMAL
+                R.id.menu_vibration_type_fast -> VibrationType.FAST
+                else -> null
+            }
+            if (vibrationType != null) {
+                _alarm.value?.let { alarm ->
+                    alarm.vibrationType = vibrationType
+                    _alarm.postValue(alarm)
+                }
+                true
+            } else {
+                false
+            }
+        }
 
     init {
         val alarmLiveData = Transformations.map(dao.getAlarm(alarmId)) {

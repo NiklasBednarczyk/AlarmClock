@@ -166,14 +166,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alarm_editor_snooze_length" />
 
-        <!--TODO More Vibrations, so Vibration doesn't have to have own view? -->
-        <CheckBox
+        <include
             style="@style/AlarmEditorElementStyle"
-            android:checked="@={alarmEditorViewModel.alarm.vibrate}"
-            android:id="@+id/vibrate"
+            layout="@layout/item_alarm_editor_property"
+            android:id="@+id/alarm_editor_vibration_type"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="@string/vibrate"
+            app:alarm="@{alarmEditorViewModel.alarm}"
+            app:alarmEditorFragment="@{alarmEditorFragment}"
+            app:alarmPropertyType="@{AlarmPropertyType.VIBRATION_TYPE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alarm_editor_sound" />
