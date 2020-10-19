@@ -30,11 +30,11 @@ class AlarmEditorNameDialogFragment(
 
             builder
                 .setView(binding.root)
-                .setTitle(R.string.alarm_name)
-                .setPositiveButton(R.string.confirm) { _, _ ->
+                .setTitle(R.string.alarm_editor_dialog_name_title)
+                .setPositiveButton(R.string.alarm_editor_dialog_name_positive_button) { _, _ ->
                     alarmEditorListener.onNameDialogPositiveButton(binding.alarmNameDialogName.text.toString())
                 }
-                .setNegativeButton(R.string.cancel) { _, _ -> }
+                .setNegativeButton(R.string.alarm_editor_dialog_name_negative_button) { _, _ -> }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

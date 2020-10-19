@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/alarmListFragment"
-        android:label="@string/app_name"
+        android:label="@string/navigation_main_alarm_list_fragment_label"
         android:name="de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist.AlarmListFragment"
         tools:layout="@layout/fragment_alarm_list">
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/alarmEditorFragment"
-        android:label="@string/set_alarm"
+        android:label="@string/navigation_main_alarm_editor_fragment_label"
         android:name="de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorFragment"
         tools:layout="@layout/fragment_alarm_editor">
         <argument
@@ -38,6 +38,6 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:label="@string/settings"
+        android:label="@string/navigation_main_settings_fragment_label"
         android:name="de.niklasbednarczyk.alarmclock.ui.settings.SettingsFragment" />
 </navigation>

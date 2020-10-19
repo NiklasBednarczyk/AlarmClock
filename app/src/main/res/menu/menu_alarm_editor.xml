@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_save"
-        android:title="@string/save"
         android:icon="@drawable/ic_baseline_check_24"
+        android:id="@+id/action_save"
+        android:title="@string/alarm_editor_menu_title_action_save"
         app:showAsAction="always" />
 
 </menu>

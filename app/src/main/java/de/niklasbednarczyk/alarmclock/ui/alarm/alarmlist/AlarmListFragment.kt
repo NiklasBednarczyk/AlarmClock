@@ -100,9 +100,12 @@ class AlarmListFragment : Fragment() {
                     val alarmName =
                         if (!alarm.name.isBlank()) alarm.name else resources.getString(R.string.alarm)
                     val text =
-                        String.format(resources.getString(R.string.snackbar_delete_text), alarmName)
+                        String.format(
+                            resources.getString(R.string.alarm_list_fragment_delete_snackbar_text),
+                            alarmName
+                        )
                     Snackbar.make(view, text, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo) {
+                        .setAction(R.string.alarm_list_fragment_delete_snackbar_action) {
                             viewModel.insertAlarm(alarm)
                         }.show()
                 }

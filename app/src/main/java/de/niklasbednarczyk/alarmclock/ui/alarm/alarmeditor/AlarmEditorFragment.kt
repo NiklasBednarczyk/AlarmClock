@@ -54,7 +54,7 @@ class AlarmEditorFragment : Fragment() {
 
         val dao = AlarmClockDatabase.getInstance(application).alarmDao
 
-        val defaultAlarm = getDefaultAlarm(context)
+        val defaultAlarm = getDefaultAlarm(requireContext())
 
         val args = AlarmEditorFragmentArgs.fromBundle(requireArguments())
         val viewModelFactory = AlarmEditorViewModelFactory(dao, args.alarmId, defaultAlarm)
@@ -132,7 +132,7 @@ class AlarmEditorFragment : Fragment() {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
             putExtra(
                 RingtoneManager.EXTRA_RINGTONE_TITLE,
-                resources.getString(R.string.choose_alarm_sound)
+                resources.getString(R.string.alarm_editor_dialog_sound_title)
             )
             putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
             putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)

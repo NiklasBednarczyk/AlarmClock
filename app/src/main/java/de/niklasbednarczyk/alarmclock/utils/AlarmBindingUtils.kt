@@ -41,7 +41,11 @@ fun TextView.setAlarmTime(alarm: Alarm?) {
     alarm?.let {
         val (hours, minutes) = timeMinutesToHoursAndMinutes(alarm.timeMinutes)
         val timeFormatted =
-            String.format(resources.getString(R.string.time_hours_minutes_format), hours, minutes)
+            String.format(
+                resources.getString(R.string.app_time_hours_minutes_format),
+                hours,
+                minutes
+            )
         val storedDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val date = storedDateFormat.parse(timeFormatted)
         date?.let {
@@ -55,16 +59,16 @@ fun TextView.setAlarmTime(alarm: Alarm?) {
 fun TextView.setAlarmDays(alarm: Alarm?) {
     alarm?.let {
         text = when (alarm.days) {
-            WEEKDAYS -> resources.getString(R.string.weekdays)
-            WEEKEND -> resources.getString(R.string.weekend)
-            EVERY_DAY -> resources.getString(R.string.every_day)
+            WEEKDAYS -> resources.getString(R.string.alarm_list_fragment_days_weekdays)
+            WEEKEND -> resources.getString(R.string.alarm_list_fragment_days_weekend)
+            EVERY_DAY -> resources.getString(R.string.alarm_list_fragment_days_every_day)
             mutableListOf<DayOfWeek>() -> {
                 val calendar = Calendar.getInstance()
                 val calendarTimeMinutes = calendarToCalendarTimeMinutes(calendar)
                 if (calendarTimeMinutes < alarm.timeMinutes) {
-                    resources.getString(R.string.today)
+                    resources.getString(R.string.alarm_list_fragment_days_today)
                 } else {
-                    resources.getString(R.string.tomorrow)
+                    resources.getString(R.string.alarm_list_fragment_days_tomorrow)
                 }
             }
             else -> alarm.days.joinToString(", ") { day ->
@@ -106,7 +110,7 @@ fun TextView.setSnoozeCount(snoozeCount: Int?) {
     snoozeCount?.let {
         text = String.format(
             resources.getQuantityString(
-                R.plurals.snooze_count,
+                R.plurals.alarm_snooze_count,
                 snoozeCount,
                 snoozeCount
             )
@@ -131,10 +135,10 @@ fun ImageView.setPropertyImage(
             setImageDrawable(drawable)
 
             contentDescription = when (alarmPropertyType) {
-                AlarmPropertyType.NAME -> resources.getString(R.string.description_property_name)
-                AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.description_property_snooze_length)
-                AlarmPropertyType.SOUND -> resources.getString(R.string.description_property_sound)
-                AlarmPropertyType.VIBRATION_TYPE -> resources.getString(R.string.description_property_vibration_type)
+                AlarmPropertyType.NAME -> resources.getString(R.string.alarm_editor_fragment_property_name_content_description)
+                AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.alarm_editor_fragment_property_snooze_length_content_description)
+                AlarmPropertyType.SOUND -> resources.getString(R.string.alarm_editor_fragment_property_sound_content_description)
+                AlarmPropertyType.VIBRATION_TYPE -> resources.getString(R.string.alarm_editor_fragment_property_vibration_content_description)
             }
         }
     }
@@ -145,10 +149,10 @@ fun TextView.setPropertyTitle(alarm: Alarm?, alarmPropertyType: AlarmPropertyTyp
     alarm?.let {
         alarmPropertyType?.let {
             text = when (alarmPropertyType) {
-                AlarmPropertyType.NAME -> resources.getString(R.string.alarm_editor_property_title_name)
-                AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.alarm_editor_property_title_snooze_length)
-                AlarmPropertyType.SOUND -> resources.getString(R.string.alarm_editor_property_title_sound)
-                AlarmPropertyType.VIBRATION_TYPE -> resources.getString(R.string.alarm_editor_property_title_vibration_type)
+                AlarmPropertyType.NAME -> resources.getString(R.string.alarm_editor_fragment_property_name_title)
+                AlarmPropertyType.SNOOZE_LENGTH -> resources.getString(R.string.alarm_editor_fragment_property_snooze_length_title)
+                AlarmPropertyType.SOUND -> resources.getString(R.string.alarm_editor_fragment_property_sound_title)
+                AlarmPropertyType.VIBRATION_TYPE -> resources.getString(R.string.alarm_editor_fragment_property_vibration_title)
             }
         }
     }
@@ -174,7 +178,7 @@ private fun getTextForPropertyName(alarm: Alarm): String = alarm.name
 private fun getTextForPropertySnoozeLength(alarm: Alarm, context: Context): String =
     String.format(
         context.resources.getQuantityString(
-            R.plurals.snooze_length_minutes,
+            R.plurals.alarm_snooze_length_minutes,
             alarm.snoozeLengthMinutes,
             alarm.snoozeLengthMinutes
         )
@@ -185,14 +189,14 @@ private fun getTextForPropertySound(alarm: Alarm, context: Context): String {
         val ringtone = RingtoneManager.getRingtone(context, alarm.soundUri)
         ringtone.getTitle(context)
     } else {
-        context.resources.getString(R.string.no_sound)
+        context.resources.getString(R.string.alarm_editor_fragment_property_sound_alternative)
     }
 }
 
 private fun getTextForPropertyVibrationType(alarm: Alarm, context: Context): String =
     when (alarm.vibrationType) {
-        VibrationType.NONE -> context.resources.getString(R.string.vibration_type_none)
-        VibrationType.SLOW -> context.resources.getString(R.string.vibration_type_slow)
-        VibrationType.NORMAL -> context.resources.getString(R.string.vibration_type_normal)
-        VibrationType.FAST -> context.resources.getString(R.string.vibration_type_fast)
+        VibrationType.NONE -> context.resources.getString(R.string.app_vibration_type_none)
+        VibrationType.SLOW -> context.resources.getString(R.string.app_vibration_type_slow)
+        VibrationType.NORMAL -> context.resources.getString(R.string.app_vibration_type_normal)
+        VibrationType.FAST -> context.resources.getString(R.string.app_vibration_type_fast)
     }

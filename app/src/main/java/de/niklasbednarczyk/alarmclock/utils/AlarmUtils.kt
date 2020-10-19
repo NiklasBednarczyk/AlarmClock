@@ -3,6 +3,7 @@ package de.niklasbednarczyk.alarmclock.utils
 import android.content.Context
 import android.media.RingtoneManager
 import androidx.preference.PreferenceManager
+import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import java.time.DayOfWeek
@@ -64,15 +65,32 @@ fun calendarToDayOfWeek(calendar: Calendar): DayOfWeek {
     }
 }
 
-fun getDefaultAlarm(context: Context?): Alarm {
+fun getDefaultAlarm(context: Context): Alarm {
+    val alarmSnoozeLengthKey =
+        context.resources.getString(R.string.preference_key_alarm_snooze_length)
+    val alarmVibrationTypeKey =
+        context.resources.getString(R.string.preference_key_alarm_vibration_type)
+
+    val alarmSnoozeLengthDefaultValue =
+        context.resources.getString(R.string.preference_default_value_alarm_snooze_length)
+    val alarmVibrationTypeDefaultValue =
+        context.resources.getString(R.string.preference_default_value_alarm_vibration_type)
+
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    val defaultSnoozeLengthMinutes =
-        (sharedPreferences.getString("alarm_snooze_length", "5")?.toInt()) ?: 5
+
+    val defaultSnoozeLengthMinutesString =
+        (sharedPreferences.getString(alarmSnoozeLengthKey, alarmSnoozeLengthDefaultValue))
+            ?: alarmSnoozeLengthDefaultValue
     val vibrationTypeString =
-        (sharedPreferences.getString("alarm_vibration_type", "NORMAL") ?: "NORMAL")
+        (sharedPreferences.getString(alarmVibrationTypeKey, alarmVibrationTypeDefaultValue)
+            ?: alarmVibrationTypeDefaultValue)
+
+    val defaultSnoozeLengthMinutes = defaultSnoozeLengthMinutesString.toInt()
     val defaultVibrationType =
         enumValueOf<VibrationType>(vibrationTypeString)
+
     val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+
     return Alarm(
         snoozeLengthMinutes = defaultSnoozeLengthMinutes,
         vibrationType = defaultVibrationType,

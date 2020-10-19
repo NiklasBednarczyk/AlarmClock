@@ -45,18 +45,18 @@ class AlarmEditorSnoozeLengthDialogFragment(
 
             builder
                 .setView(binding.root)
-                .setTitle(R.string.alarm_snooze_length)
-                .setPositiveButton(R.string.confirm) { _, _ ->
+                .setTitle(R.string.alarm_editor_dialog_snooze_length_title)
+                .setPositiveButton(R.string.alarm_editor_dialog_snooze_length_positive_button) { _, _ ->
                     alarmEditorListener.onSnoozeLengthDialogPositiveButton(binding.alarmSnoozeLengthDialogSnoozeLengthMinutes.value)
                 }
-                .setNegativeButton(R.string.cancel) { _, _ -> }
+                .setNegativeButton(R.string.alarm_editor_dialog_snooze_length_negative_button) { _, _ -> }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
     private fun getMinuteText(alarmSnoozeLengthMinutes: Int): String = String.format(
         resources.getQuantityString(
-            R.plurals.minutes,
+            R.plurals.alarm_minutes,
             alarmSnoozeLengthMinutes,
             alarmSnoozeLengthMinutes
         )

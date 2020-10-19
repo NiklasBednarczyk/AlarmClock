@@ -4,22 +4,22 @@
 
     <item
         android:id="@+id/menu_vibration_type_none"
-        android:title="@string/vibration_type_none"
+        android:title="@string/app_vibration_type_none"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_vibration_type_slow"
-        android:title="@string/vibration_type_slow"
+        android:title="@string/app_vibration_type_slow"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_vibration_type_normal"
-        android:title="@string/vibration_type_normal"
+        android:title="@string/app_vibration_type_normal"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_vibration_type_fast"
-        android:title="@string/vibration_type_fast"
+        android:title="@string/app_vibration_type_fast"
         app:showAsAction="never" />
 
 </menu>
