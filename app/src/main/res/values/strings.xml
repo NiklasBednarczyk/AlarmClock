@@ -15,12 +15,15 @@
     <string name="edit">Edit</string>
     <string name="every_day">Every Day</string>
     <string name="fast">Fast</string>
+    <string name="fifteen_minutes">15 Minutes</string>
+    <string name="five_minutes">5 Minutes</string>
     <string name="general">General</string>
     <string name="light_theme">Light Theme</string>
     <string name="name">Name</string>
     <string name="none">None</string>
     <string name="normal">Normal</string>
     <string name="now">Now</string>
+    <string name="one_minute">1 Minute</string>
     <string name="popup_menu_button">Popup Menu Button</string>
     <string name="preview">Preview</string>
     <string name="removed_format">Removed: %s</string>
@@ -31,9 +34,13 @@
     <string name="snooze">Snooze</string>
     <string name="snooze_length">Snooze Length</string>
     <string name="sound">Sound</string>
+    <string name="ten_minutes">10 Minutes</string>
     <string name="theme">Theme</string>
+    <string name="thirty_minutes">30 Minutes</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="twenty_minutes">20 Minutes</string>
+    <string name="twenty_five_minutes">25 Minutes</string>
     <string name="undo">Undo</string>
     <string name="use_system_settings">Use System Setting</string>
     <string name="vibration">Vibration</string>
@@ -42,123 +49,123 @@
 
     <!--App-->
 
-    <string name="app_name">@string/alarm_clock</string>
+    <string name="app_name" translatable="false">@string/alarm_clock</string>
 
-    <string name="app_time_hours_minutes_format">%02d:%02d</string>
+    <string name="app_time_hours_minutes_format" translatable="false">%02d:%02d</string>
 
-    <string name="app_vibration_type_none">@string/none</string>
-    <string name="app_vibration_type_slow">@string/slow</string>
-    <string name="app_vibration_type_normal">@string/normal</string>
-    <string name="app_vibration_type_fast">@string/fast</string>
+    <string name="app_vibration_type_none" translatable="false">@string/none</string>
+    <string name="app_vibration_type_slow" translatable="false">@string/slow</string>
+    <string name="app_vibration_type_normal" translatable="false">@string/normal</string>
+    <string name="app_vibration_type_fast" translatable="false">@string/fast</string>
 
-    <string name="navigation_main_alarm_editor_fragment_label">@string/set_alarm</string>
-    <string name="navigation_main_alarm_list_fragment_label">@string/alarm_clock</string>
-    <string name="navigation_main_settings_fragment_label">@string/settings</string>
+    <string name="navigation_main_alarm_editor_fragment_label" translatable="false">@string/set_alarm</string>
+    <string name="navigation_main_alarm_list_fragment_label" translatable="false">@string/alarm_clock</string>
+    <string name="navigation_main_settings_fragment_label" translatable="false">@string/settings</string>
 
     <!--AlarmEditor-->
 
-    <string name="alarm_editor_dialog_name_negative_button">@string/cancel</string>
-    <string name="alarm_editor_dialog_name_positive_button">@string/confirm</string>
-    <string name="alarm_editor_dialog_name_title">@string/alarm_name</string>
+    <string name="alarm_editor_dialog_name_negative_button" translatable="false">@string/cancel</string>
+    <string name="alarm_editor_dialog_name_positive_button" translatable="false">@string/confirm</string>
+    <string name="alarm_editor_dialog_name_title" translatable="false">@string/alarm_name</string>
 
-    <string name="alarm_editor_dialog_snooze_length_negative_button">@string/cancel</string>
-    <string name="alarm_editor_dialog_snooze_length_positive_button">@string/confirm</string>
-    <string name="alarm_editor_dialog_snooze_length_title">@string/alarm_snooze_length</string>
+    <string name="alarm_editor_dialog_snooze_length_negative_button" translatable="false">@string/cancel</string>
+    <string name="alarm_editor_dialog_snooze_length_positive_button" translatable="false">@string/confirm</string>
+    <string name="alarm_editor_dialog_snooze_length_title" translatable="false">@string/alarm_snooze_length</string>
 
-    <string name="alarm_editor_dialog_sound_title">@string/alarm_sound</string>
+    <string name="alarm_editor_dialog_sound_title" translatable="false">@string/alarm_sound</string>
 
-    <string name="alarm_editor_dialog_time_neutral_button">@string/now</string>
+    <string name="alarm_editor_dialog_time_neutral_button" translatable="false">@string/now</string>
 
-    <string name="alarm_editor_menu_title_action_save">@string/save</string>
+    <string name="alarm_editor_menu_title_action_save" translatable="false">@string/save</string>
 
-    <string name="alarm_editor_fragment_property_name_content_description">@string/name</string>
-    <string name="alarm_editor_fragment_property_name_title">@string/name</string>
+    <string name="alarm_editor_fragment_property_name_content_description" translatable="false">@string/name</string>
+    <string name="alarm_editor_fragment_property_name_title" translatable="false">@string/name</string>
 
-    <string name="alarm_editor_fragment_property_snooze_length_content_description">@string/snooze_length</string>
-    <string name="alarm_editor_fragment_property_snooze_length_title">@string/snooze_length</string>
+    <string name="alarm_editor_fragment_property_snooze_length_content_description" translatable="false">@string/snooze_length</string>
+    <string name="alarm_editor_fragment_property_snooze_length_title" translatable="false">@string/snooze_length</string>
 
-    <string name="alarm_editor_fragment_property_sound_alternative">@string/none</string>
-    <string name="alarm_editor_fragment_property_sound_content_description">@string/sound</string>
-    <string name="alarm_editor_fragment_property_sound_title">@string/sound</string>
+    <string name="alarm_editor_fragment_property_sound_alternative" translatable="false">@string/none</string>
+    <string name="alarm_editor_fragment_property_sound_content_description" translatable="false">@string/sound</string>
+    <string name="alarm_editor_fragment_property_sound_title" translatable="false">@string/sound</string>
 
-    <string name="alarm_editor_fragment_property_vibration_content_description">@string/vibration</string>
-    <string name="alarm_editor_fragment_property_vibration_title">@string/vibration</string>
+    <string name="alarm_editor_fragment_property_vibration_content_description" translatable="false">@string/vibration</string>
+    <string name="alarm_editor_fragment_property_vibration_title" translatable="false">@string/vibration</string>
 
     <!--AlarmList-->
 
-    <string name="alarm_list_item_menu_title_action_edit">@string/edit</string>
-    <string name="alarm_list_item_menu_title_action_duplicate">@string/duplicate</string>
-    <string name="alarm_list_item_menu_title_action_preview">@string/preview</string>
-    <string name="alarm_list_item_menu_title_action_delete">@string/delete</string>
+    <string name="alarm_list_item_menu_title_action_edit" translatable="false">@string/edit</string>
+    <string name="alarm_list_item_menu_title_action_duplicate" translatable="false">@string/duplicate</string>
+    <string name="alarm_list_item_menu_title_action_preview" translatable="false">@string/preview</string>
+    <string name="alarm_list_item_menu_title_action_delete" translatable="false">@string/delete</string>
 
-    <string name="alarm_list_fragment_days_weekdays">@string/weekdays</string>
-    <string name="alarm_list_fragment_days_weekend">@string/weekend</string>
-    <string name="alarm_list_fragment_days_every_day">@string/every_day</string>
-    <string name="alarm_list_fragment_days_today">@string/today</string>
-    <string name="alarm_list_fragment_days_tomorrow">@string/tomorrow</string>
+    <string name="alarm_list_fragment_days_weekdays" translatable="false">@string/weekdays</string>
+    <string name="alarm_list_fragment_days_weekend" translatable="false">@string/weekend</string>
+    <string name="alarm_list_fragment_days_every_day" translatable="false">@string/every_day</string>
+    <string name="alarm_list_fragment_days_today" translatable="false">@string/today</string>
+    <string name="alarm_list_fragment_days_tomorrow" translatable="false">@string/tomorrow</string>
 
-    <string name="alarm_list_fragment_delete_snackbar_action">@string/undo</string>
-    <string name="alarm_list_fragment_delete_snackbar_alarm_name_alternative">@string/alarm</string>
-    <string name="alarm_list_fragment_delete_snackbar_text">@string/removed_format</string>
+    <string name="alarm_list_fragment_delete_snackbar_action" translatable="false">@string/undo</string>
+    <string name="alarm_list_fragment_delete_snackbar_alarm_name_alternative" translatable="false">@string/alarm</string>
+    <string name="alarm_list_fragment_delete_snackbar_text" translatable="false">@string/removed_format</string>
 
-    <string name="alarm_list_fragment_popup_menu_button_content_description">@string/popup_menu_button</string>
+    <string name="alarm_list_fragment_popup_menu_button_content_description" translatable="false">@string/popup_menu_button</string>
 
-    <string name="alarm_list_menu_title_action_settings">@string/settings</string>
+    <string name="alarm_list_menu_title_action_settings" translatable="false">@string/settings</string>
 
     <!--AlarmWakeUpView-->
 
-    <string name="alarm_wake_up_view_fragment_button_snooze">@string/snooze</string>
-    <string name="alarm_wake_up_view_fragment_button_dismiss">@string/dismiss</string>
+    <string name="alarm_wake_up_view_fragment_button_snooze" translatable="false">@string/snooze</string>
+    <string name="alarm_wake_up_view_fragment_button_dismiss" translatable="false">@string/dismiss</string>
 
     <!--Preferences-->
 
-    <string name="preference_category_title_general">@string/general</string>
-    <string name="preference_category_title_alarm_default">@string/alarm_defaults</string>
+    <string name="preference_category_title_general" translatable="false">@string/general</string>
+    <string name="preference_category_title_alarm_default" translatable="false">@string/alarm_defaults</string>
 
-    <string name="preference_title_theme">@string/theme</string>
-    <string name="preference_title_snooze_length">@string/snooze_length</string>
-    <string name="preference_title_vibration_type">@string/vibration</string>
+    <string name="preference_title_theme" translatable="false">@string/theme</string>
+    <string name="preference_title_snooze_length" translatable="false">@string/snooze_length</string>
+    <string name="preference_title_vibration_type" translatable="false">@string/vibration</string>
 
-    <string name="preference_key_theme">theme</string>
-    <string name="preference_key_alarm_snooze_length">alarm_snooze_length</string>
-    <string name="preference_key_alarm_vibration_type">alarm_vibration_type</string>
+    <string name="preference_key_theme" translatable="false">theme</string>
+    <string name="preference_key_alarm_snooze_length" translatable="false">alarm_snooze_length</string>
+    <string name="preference_key_alarm_vibration_type" translatable="false">alarm_vibration_type</string>
 
-    <string name="preference_entry_theme_use_system_setting">@string/use_system_settings</string>
-    <string name="preference_entry_theme_light_theme">@string/light_theme</string>
-    <string name="preference_entry_theme_dark_theme">@string/dark_theme</string>
+    <string name="preference_entry_theme_use_system_setting" translatable="false">@string/use_system_settings</string>
+    <string name="preference_entry_theme_light_theme" translatable="false">@string/light_theme</string>
+    <string name="preference_entry_theme_dark_theme" translatable="false">@string/dark_theme</string>
 
-    <string name="preference_entry_alarm_snooze_length_1_minute">1 minute</string>
-    <string name="preference_entry_alarm_snooze_length_5_minutes">5 minutes</string>
-    <string name="preference_entry_alarm_snooze_length_10_minutes">10 minutes</string>
-    <string name="preference_entry_alarm_snooze_length_15_minutes">15 minutes</string>
-    <string name="preference_entry_alarm_snooze_length_20_minutes">20 minutes</string>
-    <string name="preference_entry_alarm_snooze_length_25_minutes">25 minutes</string>
-    <string name="preference_entry_alarm_snooze_length_30_minutes">30 minutes</string>
+    <string name="preference_entry_alarm_snooze_length_1_minute" translatable="false">@string/one_minute</string>
+    <string name="preference_entry_alarm_snooze_length_5_minutes" translatable="false">@string/five_minutes</string>
+    <string name="preference_entry_alarm_snooze_length_10_minutes" translatable="false">@string/ten_minutes</string>
+    <string name="preference_entry_alarm_snooze_length_15_minutes" translatable="false">@string/fifteen_minutes</string>
+    <string name="preference_entry_alarm_snooze_length_20_minutes" translatable="false">@string/twenty_minutes</string>
+    <string name="preference_entry_alarm_snooze_length_25_minutes" translatable="false">@string/twenty_five_minutes</string>
+    <string name="preference_entry_alarm_snooze_length_30_minutes" translatable="false">@string/thirty_minutes</string>
 
-    <string name="preference_entry_alarm_vibration_type_none">@string/app_vibration_type_none</string>
-    <string name="preference_entry_alarm_vibration_type_slow">@string/app_vibration_type_slow</string>
-    <string name="preference_entry_alarm_vibration_type_normal">@string/app_vibration_type_normal</string>
-    <string name="preference_entry_alarm_vibration_type_fast">@string/app_vibration_type_fast</string>
+    <string name="preference_entry_alarm_vibration_type_none" translatable="false">@string/app_vibration_type_none</string>
+    <string name="preference_entry_alarm_vibration_type_slow" translatable="false">@string/app_vibration_type_slow</string>
+    <string name="preference_entry_alarm_vibration_type_normal" translatable="false">@string/app_vibration_type_normal</string>
+    <string name="preference_entry_alarm_vibration_type_fast" translatable="false">@string/app_vibration_type_fast</string>
 
-    <string name="preference_value_theme_use_system_setting">use_system_setting</string>
-    <string name="preference_value_theme_light_theme">light_theme</string>
-    <string name="preference_value_theme_dark_theme">dark_theme</string>
+    <string name="preference_value_theme_use_system_setting" translatable="false">use_system_setting</string>
+    <string name="preference_value_theme_light_theme" translatable="false">light_theme</string>
+    <string name="preference_value_theme_dark_theme" translatable="false">dark_theme</string>
 
-    <string name="preference_value_alarm_snooze_length_1_minute">1</string>
-    <string name="preference_value_alarm_snooze_length_5_minutes">5</string>
-    <string name="preference_value_alarm_snooze_length_10_minutes">10</string>
-    <string name="preference_value_alarm_snooze_length_15_minutes">15</string>
-    <string name="preference_value_alarm_snooze_length_20_minutes">20</string>
-    <string name="preference_value_alarm_snooze_length_25_minutes">25</string>
-    <string name="preference_value_alarm_snooze_length_30_minutes">30</string>
+    <string name="preference_value_alarm_snooze_length_1_minute" translatable="false">1</string>
+    <string name="preference_value_alarm_snooze_length_5_minutes" translatable="false">5</string>
+    <string name="preference_value_alarm_snooze_length_10_minutes" translatable="false">10</string>
+    <string name="preference_value_alarm_snooze_length_15_minutes" translatable="false">15</string>
+    <string name="preference_value_alarm_snooze_length_20_minutes" translatable="false">20</string>
+    <string name="preference_value_alarm_snooze_length_25_minutes" translatable="false">25</string>
+    <string name="preference_value_alarm_snooze_length_30_minutes" translatable="false">30</string>
 
-    <string name="preference_value_alarm_vibration_type_none">NONE</string>
-    <string name="preference_value_alarm_vibration_type_slow">SLOW</string>
-    <string name="preference_value_alarm_vibration_type_normal">NORMAL</string>
-    <string name="preference_value_alarm_vibration_type_fast">FAST</string>
+    <string name="preference_value_alarm_vibration_type_none" translatable="false">NONE</string>
+    <string name="preference_value_alarm_vibration_type_slow" translatable="false">SLOW</string>
+    <string name="preference_value_alarm_vibration_type_normal" translatable="false">NORMAL</string>
+    <string name="preference_value_alarm_vibration_type_fast" translatable="false">FAST</string>
 
-    <string name="preference_default_value_theme">@string/preference_value_theme_use_system_setting</string>
-    <string name="preference_default_value_alarm_snooze_length">@string/preference_value_alarm_snooze_length_5_minutes</string>
-    <string name="preference_default_value_alarm_vibration_type">@string/preference_value_alarm_vibration_type_normal</string>
+    <string name="preference_default_value_theme" translatable="false">@string/preference_value_theme_use_system_setting</string>
+    <string name="preference_default_value_alarm_snooze_length" translatable="false">@string/preference_value_alarm_snooze_length_5_minutes</string>
+    <string name="preference_default_value_alarm_vibration_type" translatable="false">@string/preference_value_alarm_vibration_type_normal</string>
 
 </resources>
