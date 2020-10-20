@@ -11,15 +11,18 @@ import de.niklasbednarczyk.alarmclock.R
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var sharedPreferences: SharedPreferences
-    lateinit var sharedPreferencesListener: SharedPreferences.OnSharedPreferenceChangeListener
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferencesListener: SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val preferenceKeyTheme =
+            applicationContext.resources.getString(R.string.preference_key_theme)
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferencesListener =
             SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 when (key) {
-                    "theme" -> setTheme(sharedPreferences)
+                    preferenceKeyTheme -> setTheme(sharedPreferences)
                 }
             }
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferencesListener)
@@ -48,16 +51,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setTheme(sharedPreferences: SharedPreferences) {
-        val theme = sharedPreferences.getString("theme", "")
+        val preferenceKeyTheme =
+            applicationContext.resources.getString(R.string.preference_key_theme)
+        val preferenceDefaultValueTheme =
+            applicationContext.resources.getString(R.string.preference_default_value_theme)
+        val theme = sharedPreferences.getString(preferenceKeyTheme, preferenceDefaultValueTheme)
         theme?.let {
+            val useSystemSettingsValue =
+                applicationContext.resources.getString(R.string.preference_value_theme_use_system_setting)
+            val lightThemeValue =
+                applicationContext.resources.getString(R.string.preference_value_theme_light_theme)
+            val darkThemeValue =
+                applicationContext.resources.getString(R.string.preference_value_theme_dark_theme)
+
             when (theme) {
-                "use_system_setting" -> AppCompatDelegate.setDefaultNightMode(
+                useSystemSettingsValue -> AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 )
-                "light_theme" -> AppCompatDelegate.setDefaultNightMode(
+                lightThemeValue -> AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_NO
                 )
-                "dark_theme" -> AppCompatDelegate.setDefaultNightMode(
+                darkThemeValue -> AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_YES
                 )
             }

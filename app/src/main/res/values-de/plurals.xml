@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <plurals name="alarm_snooze_count">
+        <item quantity="one">%d Mal geschlummert</item>
+        <item quantity="other">%d Mal geschlummert</item>
+    </plurals>
+
+    <plurals name="alarm_snooze_length_minutes">
+        <item quantity="one">%d Minute</item>
+        <item quantity="other">%d Minuten</item>
+    </plurals>
+
+    <plurals name="alarm_minutes">
+        <item quantity="one">Minute</item>
+        <item quantity="other">Minuten</item>
+    </plurals>
+
+</resources>

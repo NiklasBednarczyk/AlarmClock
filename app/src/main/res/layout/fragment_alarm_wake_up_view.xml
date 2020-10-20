@@ -44,7 +44,7 @@
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:onClick="@{() -> alarmWakeUpViewViewModel.onActionSnooze()}"
-            android:text="@string/snooze"
+            android:text="@string/alarm_wake_up_view_fragment_button_snooze"
             android:visibility="@{alarmWakeUpViewViewModel.eventSnoozed ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@id/alarm_wake_up_view_dismiss"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:onClick="@{() -> alarmWakeUpViewViewModel.onActionDismiss()}"
-            android:text="@string/dismiss"
+            android:text="@string/alarm_wake_up_view_fragment_button_dismiss"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

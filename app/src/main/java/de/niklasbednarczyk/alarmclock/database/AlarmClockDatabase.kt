@@ -58,16 +58,20 @@ abstract class AlarmClockDatabase : RoomDatabase() {
         }
 
         private fun getInitialAlarms(context: Context?): List<Alarm> {
-            val defaultAlarm = getDefaultAlarm(context)
-            val alarmWeekdays = defaultAlarm.copy().apply {
-                timeMinutes = 6.times(60)
-                days = WEEKDAYS.toMutableList()
+            return if (context != null) {
+                val defaultAlarm = getDefaultAlarm(context)
+                val alarmWeekdays = defaultAlarm.copy().apply {
+                    timeMinutes = 6.times(60)
+                    days = WEEKDAYS.toMutableList()
+                }
+                val alarmWeekend = defaultAlarm.copy().apply {
+                    timeMinutes = 8.times(60)
+                    days = WEEKEND.toMutableList()
+                }
+                listOf(alarmWeekdays, alarmWeekend)
+            } else {
+                return emptyList()
             }
-            val alarmWeekend = defaultAlarm.copy().apply {
-                timeMinutes = 8.times(60)
-                days = WEEKEND.toMutableList()
-            }
-            return listOf(alarmWeekdays, alarmWeekend)
         }
 
     }

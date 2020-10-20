@@ -4,22 +4,22 @@
 
     <item
         android:id="@+id/action_edit"
-        android:title="@string/edit"
+        android:title="@string/alarm_list_item_menu_title_action_edit"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_duplicate"
-        android:title="@string/duplicate"
+        android:title="@string/alarm_list_item_menu_title_action_duplicate"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_preview"
-        android:title="@string/preview"
+        android:title="@string/alarm_list_item_menu_title_action_preview"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_delete"
-        android:title="@string/delete"
+        android:title="@string/alarm_list_item_menu_title_action_delete"
         app:showAsAction="never" />
 
 </menu>

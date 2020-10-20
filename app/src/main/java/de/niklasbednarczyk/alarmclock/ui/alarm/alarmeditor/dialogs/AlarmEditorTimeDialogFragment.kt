@@ -28,7 +28,10 @@ class AlarmEditorTimeDialogFragment(
             alarmMinutes,
             DateFormat.is24HourFormat(activity)
         ).apply {
-            setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.now)) { _, _ -> }
+            setButton(
+                DialogInterface.BUTTON_NEUTRAL,
+                resources.getString(R.string.alarm_editor_dialog_time_neutral_button)
+            ) { _, _ -> }
             setOnShowListener {
                 val button = this.getButton(DialogInterface.BUTTON_NEUTRAL)
                 button.setOnClickListener {
