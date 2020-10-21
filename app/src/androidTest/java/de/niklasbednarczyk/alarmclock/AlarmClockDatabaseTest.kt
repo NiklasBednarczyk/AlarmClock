@@ -10,9 +10,9 @@ import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
+import org.hamcrest.CoreMatchers.*
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,19 +46,23 @@ class AlarmClockDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetAlarm() {
+    fun insertAlarmAndGetAlarm_insertedAlarm_alarmInDb() {
+        // GIVEN
         val alarm = getEmptyAlarm()
 
+        // WHEN
         val alarmId = alarmDao.insertAlarm(alarm)
         val alarmDb = alarmDao.getAlarm(alarmId)
         alarmDb.observeForever {}
 
-        assertEquals(alarmId, alarmDb.value?.alarmId)
+        // THEN
+        assertThat(alarmDb.value?.alarmId, `is`(alarmId))
     }
 
     @Test
     @Throws(Exception::class)
-    fun updateAndGetAlarm() {
+    fun updateAlarmAndGetAlarm_insertAlarmAndUpdateAlarmName_alarmInDbChanged() {
+        // GIVEN
         val alarmOld = getEmptyAlarm()
         val alarmId = alarmDao.insertAlarm(alarmOld)
         val newName = alarmOld.name + "new Name"
@@ -67,48 +71,57 @@ class AlarmClockDatabaseTest {
             this.name = newName
         }
 
+        // WHEN
         alarmDao.updateAlarm(alarmNew)
         val alarmDb = alarmDao.getAlarm(alarmId)
         alarmDb.observeForever {}
 
-        assertEquals(newName, alarmDb.value?.name)
-        assertNotEquals(alarmOld.name, alarmDb.value?.name)
+        // THEN
+        assertThat(alarmDb.value?.name, `is`(newName))
+        assertThat(alarmDb.value?.name, `is`(not(alarmOld.name)))
     }
 
     @Test
     @Throws(Exception::class)
-    fun deleteAndGetAlarm() {
+    fun deleteAlarmAndGetAlarm_insertAndDeleteAlarm_alarmNotInDb() {
+        // GIVEN
         val alarm = getEmptyAlarm()
 
+        // WHEN
         val alarmId = alarmDao.insertAlarm(alarm)
         alarm.apply {
             this.alarmId = alarmId
         }
         alarmDao.deleteAlarm(alarm)
-
         val alarmDb = alarmDao.getAlarm(alarmId)
         alarmDb.observeForever {}
 
-        assertEquals(null, alarmDb.value)
-        assertNotEquals(alarmId, alarmDb.value?.alarmId)
+        // THEN
+        assertThat(alarmDb.value, `is`(nullValue()))
+        assertThat(alarmDb.value?.alarmId, `is`(not(alarmId)))
     }
 
     @Test
     @Throws(Exception::class)
-    fun insertMultipleAndGetAllAlarms() {
+    fun insertAlarmAndGetAllAlarms_insertMultipleAlarmsAndGetAlarms_alarmsInDbAndList() {
+        // GIVEN
         val alarms = listOf(
-            getEmptyAlarm(),
-            getEmptyAlarm(),
-            getEmptyAlarm()
-        )
+            getEmptyAlarm().copy().apply { timeMinutes = 1 },
+            getEmptyAlarm().copy().apply { timeMinutes = 2 },
+            getEmptyAlarm().copy().apply { timeMinutes = 3 }
+        ).sortedBy { alarm -> alarm.timeMinutes }
 
-        alarms.forEach { alarm -> alarmDao.insertAlarm(alarm) }
-
+        // WHEN
+        alarms.forEach { alarm ->
+            val alarmId = alarmDao.insertAlarm(alarm)
+            alarm.alarmId = alarmId
+        }
         val alarmsDb = alarmDao.getAllAlarms()
         alarmsDb.observeForever {}
 
-        assertEquals(alarms.size, alarmsDb.value?.size)
-
+        // THEN
+        assertThat(alarmsDb.value?.size, `is`(alarms.size))
+        assertThat(alarmsDb.value, `is`(alarms))
     }
 
     private fun getEmptyAlarm(): Alarm = Alarm(

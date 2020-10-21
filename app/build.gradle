@@ -66,10 +66,12 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$navigation_version"
 
-    // Testing
+    // Instrumented Testing
     androidTestImplementation "androidx.test.ext:junit:$junit_android_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.arch.core:core-testing:$core_testing_version"
+
+    // Local Unit Testing
     testImplementation "junit:junit:$junit_test_version"
 
 }
