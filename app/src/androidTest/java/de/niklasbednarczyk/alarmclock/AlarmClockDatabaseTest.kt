@@ -52,11 +52,10 @@ class AlarmClockDatabaseTest {
 
         // WHEN
         val alarmId = alarmDao.insertAlarm(alarm)
-        val alarmDb = alarmDao.getAlarm(alarmId)
-        alarmDb.getOrAwaitValue()
+        val alarmDb = alarmDao.getAlarm(alarmId).getOrAwaitValue()
 
         // THEN
-        assertThat(alarmDb.value?.alarmId, `is`(alarmId))
+        assertThat(alarmDb.alarmId, `is`(alarmId))
     }
 
     @Test
@@ -73,12 +72,11 @@ class AlarmClockDatabaseTest {
 
         // WHEN
         alarmDao.updateAlarm(alarmNew)
-        val alarmDb = alarmDao.getAlarm(alarmId)
-        alarmDb.getOrAwaitValue()
+        val alarmDb = alarmDao.getAlarm(alarmId).getOrAwaitValue()
 
         // THEN
-        assertThat(alarmDb.value?.name, `is`(newName))
-        assertThat(alarmDb.value?.name, not(alarmOld.name))
+        assertThat(alarmDb.name, `is`(newName))
+        assertThat(alarmDb.name, not(alarmOld.name))
     }
 
     @Test
@@ -98,7 +96,6 @@ class AlarmClockDatabaseTest {
 
         // THEN
         assertThat(alarmDb.value, `is`(nullValue()))
-        assertThat(alarmDb.value?.alarmId, not(alarmId))
     }
 
     @Test
@@ -116,12 +113,11 @@ class AlarmClockDatabaseTest {
             val alarmId = alarmDao.insertAlarm(alarm)
             alarm.alarmId = alarmId
         }
-        val alarmsDb = alarmDao.getAllAlarms()
-        alarmsDb.getOrAwaitValue()
+        val alarmsDb = alarmDao.getAllAlarms().getOrAwaitValue()
 
         // THEN
-        assertThat(alarmsDb.value?.size, `is`(alarms.size))
-        assertThat(alarmsDb.value, `is`(alarms))
+        assertThat(alarmsDb.size, `is`(alarms.size))
+        assertThat(alarmsDb, `is`(alarms))
     }
 
     private fun getEmptyAlarm(): Alarm = Alarm(
