@@ -53,7 +53,7 @@ class AlarmClockDatabaseTest {
         // WHEN
         val alarmId = alarmDao.insertAlarm(alarm)
         val alarmDb = alarmDao.getAlarm(alarmId)
-        alarmDb.observeForever {}
+        alarmDb.getOrAwaitValue()
 
         // THEN
         assertThat(alarmDb.value?.alarmId, `is`(alarmId))
@@ -74,11 +74,11 @@ class AlarmClockDatabaseTest {
         // WHEN
         alarmDao.updateAlarm(alarmNew)
         val alarmDb = alarmDao.getAlarm(alarmId)
-        alarmDb.observeForever {}
+        alarmDb.getOrAwaitValue()
 
         // THEN
         assertThat(alarmDb.value?.name, `is`(newName))
-        assertThat(alarmDb.value?.name, `is`(not(alarmOld.name)))
+        assertThat(alarmDb.value?.name, not(alarmOld.name))
     }
 
     @Test
@@ -94,11 +94,11 @@ class AlarmClockDatabaseTest {
         }
         alarmDao.deleteAlarm(alarm)
         val alarmDb = alarmDao.getAlarm(alarmId)
-        alarmDb.observeForever {}
+        alarmDb.getOrAwaitValue()
 
         // THEN
         assertThat(alarmDb.value, `is`(nullValue()))
-        assertThat(alarmDb.value?.alarmId, `is`(not(alarmId)))
+        assertThat(alarmDb.value?.alarmId, not(alarmId))
     }
 
     @Test
@@ -117,7 +117,7 @@ class AlarmClockDatabaseTest {
             alarm.alarmId = alarmId
         }
         val alarmsDb = alarmDao.getAllAlarms()
-        alarmsDb.observeForever {}
+        alarmsDb.getOrAwaitValue()
 
         // THEN
         assertThat(alarmsDb.value?.size, `is`(alarms.size))
