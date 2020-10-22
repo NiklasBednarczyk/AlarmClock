@@ -1,4 +1,4 @@
-package de.niklasbednarczyk.alarmclock
+package de.niklasbednarczyk.alarmclock.database
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -6,10 +6,8 @@ import androidx.core.net.toUri
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import de.niklasbednarczyk.alarmclock.database.Alarm
-import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
-import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
+import de.niklasbednarczyk.alarmclock.getOrAwaitValue
 import org.hamcrest.CoreMatchers.*
 import org.junit.After
 import org.junit.Assert.assertThat
