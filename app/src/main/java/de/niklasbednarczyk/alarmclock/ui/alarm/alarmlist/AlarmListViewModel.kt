@@ -2,6 +2,7 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist
 
 import android.view.View
 import android.widget.PopupMenu
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,7 @@ import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import kotlinx.coroutines.*
 
-class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
+class AlarmListViewModel @ViewModelInject constructor(private val dao: AlarmDao) : ViewModel() {
 
     private val viewModelJob = Job()
 

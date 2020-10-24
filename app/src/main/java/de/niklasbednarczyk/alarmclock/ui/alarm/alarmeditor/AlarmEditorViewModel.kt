@@ -2,6 +2,7 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor
 
 import android.net.Uri
 import android.widget.PopupMenu
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
@@ -11,11 +12,7 @@ import de.niklasbednarczyk.alarmclock.utils.hoursAndMinutesToTimeMinutes
 import kotlinx.coroutines.*
 import java.time.DayOfWeek
 
-class AlarmEditorViewModel(
-    private val dao: AlarmDao,
-    alarmId: Long,
-    private val defaultAlarm: Alarm
-) : ViewModel() {
+class AlarmEditorViewModel @ViewModelInject constructor(private val dao: AlarmDao) : ViewModel() {
 
     private val viewModelJob = Job()
 
@@ -91,16 +88,16 @@ class AlarmEditorViewModel(
             }
         }
 
-    init {
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    fun init(alarmId: Long, defaultAlarm: Alarm) {
         val alarmLiveData = Transformations.map(dao.getAlarm(alarmId)) {
             return@map it ?: defaultAlarm
         }
         _alarm.addSource(alarmLiveData, _alarm::setValue)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 
     fun onActionSave() {

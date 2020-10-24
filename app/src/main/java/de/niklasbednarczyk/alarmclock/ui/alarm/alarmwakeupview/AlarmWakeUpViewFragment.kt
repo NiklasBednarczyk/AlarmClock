@@ -12,9 +12,9 @@ import android.view.ViewGroup
 import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
-import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmWakeUpViewBinding
 import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
@@ -22,7 +22,7 @@ import de.niklasbednarczyk.alarmclock.utils.cancelAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 import de.niklasbednarczyk.alarmclock.utils.snoozeAlarm
 
-
+@AndroidEntryPoint
 class AlarmWakeUpViewFragment : Fragment() {
 
     override fun onCreateView(
@@ -45,11 +45,8 @@ class AlarmWakeUpViewFragment : Fragment() {
         val snoozeCount = args.snoozeCount
         val alarmType = args.alarmType
 
-        val application = requireActivity()
-        val dao = AlarmClockDatabase.getInstance(application).alarmDao
-        val viewModelFactory = AlarmWakeUpViewViewModelFactory(dao, alarmId, snoozeCount)
-        val viewModel =
-            ViewModelProvider(this, viewModelFactory).get(AlarmWakeUpViewViewModel::class.java)
+        val viewModel by viewModels<AlarmWakeUpViewViewModel>()
+        viewModel.init(alarmId, snoozeCount)
         binding.alarmWakeUpViewViewModel = viewModel
 
         viewModel.eventVibration.observe(viewLifecycleOwner, { vibrationType ->

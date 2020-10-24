@@ -2,6 +2,7 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview
 
 import android.media.MediaPlayer
 import android.os.CountDownTimer
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,8 @@ import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.snoozeLengthMinutesToTimeMilliseconds
 import kotlinx.coroutines.*
 
-class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: Int) : ViewModel() {
+class AlarmWakeUpViewViewModel @ViewModelInject constructor(private val dao: AlarmDao) :
+    ViewModel() {
 
     companion object {
 
@@ -54,7 +56,7 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
 
     private lateinit var snoozeTimer: CountDownTimer
 
-    init {
+    fun init(alarmId: Long, snoozeCount: Int) {
         _alarm.addSource(dao.getAlarm(alarmId), _alarm::setValue)
 
         _snoozeCount.value = snoozeCount
