@@ -11,6 +11,8 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +23,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDataBase(@ApplicationContext context: Context): AlarmClockDatabase {
+    fun provideDataBase(
+        @ApplicationContext context: Context,
+        ioDispatcher: CoroutineDispatcher
+    ): AlarmClockDatabase {
         database = Room.databaseBuilder(
             context.applicationContext,
             AlarmClockDatabase::class.java,
@@ -29,7 +34,7 @@ object AppModule {
         ).addCallback(object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                AlarmClockDatabase.onCreate(database, context)
+                AlarmClockDatabase.onCreate(database, ioDispatcher, context)
             }
         }).build()
         return database
@@ -40,5 +45,8 @@ object AppModule {
     fun provideAlarmDao(alarmClockDatabase: AlarmClockDatabase): AlarmDao =
         alarmClockDatabase.alarmDao()
 
+    @Singleton
+    @Provides
+    fun provideIoDispatcher() = Dispatchers.IO
 
 }

@@ -3,17 +3,19 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview
 import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.snoozeLengthMinutesToTimeMilliseconds
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AlarmWakeUpViewViewModel @ViewModelInject constructor(private val dao: AlarmDao) :
+class AlarmWakeUpViewViewModel @ViewModelInject constructor(
+    private val dao: AlarmDao,
+    private val ioDispatcher: CoroutineDispatcher
+) :
     ViewModel() {
 
     companion object {
@@ -25,10 +27,6 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(private val dao: Ala
     }
 
     private lateinit var mediaPlayer: MediaPlayer
-
-    private val viewModelJob = Job()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _alarm = MediatorLiveData<Alarm>()
     val alarm: LiveData<Alarm>
@@ -64,8 +62,8 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(private val dao: Ala
 
     fun dismissOneShotAlarm(alarm: Alarm) {
         alarm.isActive = false
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
+        viewModelScope.launch {
+            withContext(ioDispatcher) {
                 dao.updateAlarm(alarm)
             }
         }

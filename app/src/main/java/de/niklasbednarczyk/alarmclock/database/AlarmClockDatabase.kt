@@ -7,12 +7,12 @@ import androidx.room.TypeConverters
 import de.niklasbednarczyk.alarmclock.utils.WEEKDAYS
 import de.niklasbednarczyk.alarmclock.utils.WEEKEND
 import de.niklasbednarczyk.alarmclock.utils.getDefaultAlarm
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Database(entities = [Alarm::class], version = 7, exportSchema = true)
+@Database(entities = [Alarm::class], version = 7, exportSchema = false)
 @TypeConverters(AlarmClockTypeConverter::class)
 abstract class AlarmClockDatabase : RoomDatabase() {
 
@@ -20,10 +20,14 @@ abstract class AlarmClockDatabase : RoomDatabase() {
 
     companion object {
 
-        fun onCreate(database: AlarmClockDatabase, context: Context) {
+        fun onCreate(
+            database: AlarmClockDatabase,
+            ioDispatcher: CoroutineDispatcher,
+            context: Context
+        ) {
             val initialAlarms = getInitialAlarms(context)
             GlobalScope.launch {
-                withContext(Dispatchers.IO) {
+                withContext(ioDispatcher) {
                     initialAlarms.forEach { initialAlarm ->
                         database.alarmDao().insertAlarm(initialAlarm)
                     }
