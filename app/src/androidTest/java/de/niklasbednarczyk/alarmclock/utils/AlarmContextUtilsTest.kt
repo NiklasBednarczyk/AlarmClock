@@ -22,7 +22,7 @@ class AlarmContextUtilsTest {
     lateinit var context: Context
 
     @Before
-    fun setup() {
+    fun setUp() {
         context = ApplicationProvider.getApplicationContext()
     }
 
