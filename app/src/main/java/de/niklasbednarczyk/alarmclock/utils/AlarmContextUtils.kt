@@ -4,10 +4,14 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
+import androidx.preference.PreferenceManager
+import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.activities.MainActivity
 import de.niklasbednarczyk.alarmclock.database.Alarm
-import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver
 import de.niklasbednarczyk.alarmclock.enums.AlarmType
+import de.niklasbednarczyk.alarmclock.enums.VibrationType
+import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver
 import java.util.*
 
 fun setNormalAlarm(context: Context?, alarm: Alarm) {
@@ -107,3 +111,36 @@ private fun createPendingIntentActivity(
 
 private fun getAlarmIdIntFromAlarmType(alarm: Alarm, alarmType: AlarmType): Int =
     if (alarmType == AlarmType.NORMAL) alarm.alarmId.toInt() else 0
+
+fun getDefaultAlarm(context: Context): Alarm {
+    val alarmSnoozeLengthKey =
+        context.resources.getString(R.string.preference_key_alarm_snooze_length)
+    val alarmVibrationTypeKey =
+        context.resources.getString(R.string.preference_key_alarm_vibration_type)
+
+    val alarmSnoozeLengthDefaultValue =
+        context.resources.getString(R.string.preference_default_value_alarm_snooze_length)
+    val alarmVibrationTypeDefaultValue =
+        context.resources.getString(R.string.preference_default_value_alarm_vibration_type)
+
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+    val defaultSnoozeLengthMinutesString =
+        (sharedPreferences.getString(alarmSnoozeLengthKey, alarmSnoozeLengthDefaultValue))
+            ?: alarmSnoozeLengthDefaultValue
+    val vibrationTypeString =
+        (sharedPreferences.getString(alarmVibrationTypeKey, alarmVibrationTypeDefaultValue)
+            ?: alarmVibrationTypeDefaultValue)
+
+    val defaultSnoozeLengthMinutes = defaultSnoozeLengthMinutesString.toInt()
+    val defaultVibrationType =
+        enumValueOf<VibrationType>(vibrationTypeString)
+
+    val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+
+    return Alarm(
+        snoozeLengthMinutes = defaultSnoozeLengthMinutes,
+        vibrationType = defaultVibrationType,
+        soundUri = defaultSoundUri
+    )
+}

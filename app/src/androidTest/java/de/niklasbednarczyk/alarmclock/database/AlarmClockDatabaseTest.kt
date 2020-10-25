@@ -33,7 +33,7 @@ class AlarmClockDatabaseTest {
         db = Room.inMemoryDatabaseBuilder(context, AlarmClockDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        alarmDao = db.alarmDao
+        alarmDao = db.alarmDao()
     }
 
     @After

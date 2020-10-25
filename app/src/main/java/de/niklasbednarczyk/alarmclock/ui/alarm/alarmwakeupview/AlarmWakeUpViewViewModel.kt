@@ -7,7 +7,7 @@ import androidx.lifecycle.*
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
-import de.niklasbednarczyk.alarmclock.utils.snoozeLengthMinutesToTimeMilliseconds
+import de.niklasbednarczyk.alarmclock.utils.timeMinutesToTimeMilliseconds
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -72,7 +72,7 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(
     fun onActionSnooze() {
         alarm.value?.let { alarm ->
             val snoozeLengthMilliseconds =
-                snoozeLengthMinutesToTimeMilliseconds(alarm.snoozeLengthMinutes)
+                timeMinutesToTimeMilliseconds(alarm.snoozeLengthMinutes)
             snoozeTimer = object : CountDownTimer(snoozeLengthMilliseconds, ONE_SECOND) {
                 override fun onTick(millisUntilFinished: Long) {
                     _snoozeTime.value = (millisUntilFinished / ONE_SECOND)
