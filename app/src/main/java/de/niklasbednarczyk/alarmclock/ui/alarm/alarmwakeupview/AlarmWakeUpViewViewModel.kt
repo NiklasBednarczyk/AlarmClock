@@ -60,11 +60,13 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(
         _snoozeCount.value = snoozeCount
     }
 
-    fun dismissOneShotAlarm(alarm: Alarm) {
-        alarm.isActive = false
-        viewModelScope.launch {
-            withContext(ioDispatcher) {
-                dao.updateAlarm(alarm)
+    fun dismissOneShotAlarm() {
+        _alarm.value?.let { alarm ->
+            alarm.isActive = false
+            viewModelScope.launch {
+                withContext(ioDispatcher) {
+                    dao.updateAlarm(alarm)
+                }
             }
         }
     }

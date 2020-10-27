@@ -12,7 +12,9 @@ import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.CoreMatchers
+import org.hamcrest.core.Is.`is`
+import org.hamcrest.core.IsNot.not
+import org.hamcrest.core.IsNull.nullValue
 import org.junit.After
 import org.junit.Assert.assertThat
 import org.junit.Before
@@ -63,7 +65,7 @@ class AlarmDaoTest {
         val alarmDb = alarmDao.getAlarm(alarmId).getOrAwaitValue()
 
         // THEN
-        assertThat(alarmDb.alarmId, CoreMatchers.`is`(alarmId))
+        assertThat(alarmDb.alarmId, `is`(alarmId))
     }
 
     @Test
@@ -84,8 +86,8 @@ class AlarmDaoTest {
             val alarmDb = alarmDao.getAlarm(alarmId).getOrAwaitValue()
 
             // THEN
-            assertThat(alarmDb.name, CoreMatchers.`is`(newName))
-            assertThat(alarmDb.name, CoreMatchers.not(alarmOld.name))
+            assertThat(alarmDb.name, `is`(newName))
+            assertThat(alarmDb.name, not(alarmOld.name))
         }
 
     @Test
@@ -105,7 +107,7 @@ class AlarmDaoTest {
             alarmDb.getOrAwaitValue()
 
             // THEN
-            assertThat(alarmDb.value, CoreMatchers.`is`(CoreMatchers.nullValue()))
+            assertThat(alarmDb.value, `is`(nullValue()))
         }
 
     @Test
@@ -127,8 +129,8 @@ class AlarmDaoTest {
             val alarmsDb = alarmDao.getAllAlarms().getOrAwaitValue()
 
             // THEN
-            assertThat(alarmsDb.size, CoreMatchers.`is`(alarms.size))
-            assertThat(alarmsDb, CoreMatchers.`is`(alarms))
+            assertThat(alarmsDb.size, `is`(alarms.size))
+            assertThat(alarmsDb, `is`(alarms))
         }
 
     private fun getEmptyAlarm(): Alarm = Alarm(

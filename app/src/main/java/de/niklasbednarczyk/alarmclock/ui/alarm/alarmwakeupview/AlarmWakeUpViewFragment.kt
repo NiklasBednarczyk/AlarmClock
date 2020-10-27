@@ -70,7 +70,7 @@ class AlarmWakeUpViewFragment : Fragment() {
                     if (alarm.days.isNotEmpty() && alarmType == AlarmType.NORMAL) {
                         setNormalAlarm(context, alarm)
                     } else if (alarm.days.isEmpty()) {
-                        viewModel.dismissOneShotAlarm(alarm)
+                        viewModel.dismissOneShotAlarm()
                     }
                 }
                 requireActivity().finish()
