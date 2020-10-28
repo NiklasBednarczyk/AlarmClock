@@ -92,7 +92,10 @@ class AlarmEditorFragment : Fragment() {
 
     fun showTimeDialog() {
         viewModel.alarm.value?.let { alarm ->
-            AlarmEditorTimeDialogFragment(viewModel.alarmEditorListener, alarm.timeMinutes).show(
+            AlarmEditorTimeDialogFragment.newInstance(
+                viewModel.alarmEditorListener,
+                alarm.timeMinutes
+            ).show(
                 supportFragmentManager,
                 "timeDialog"
             )
@@ -110,16 +113,17 @@ class AlarmEditorFragment : Fragment() {
 
     private fun showNameDialog() {
         viewModel.alarm.value?.let { alarm ->
-            AlarmEditorNameDialogFragment(viewModel.alarmEditorListener, alarm.name).show(
-                supportFragmentManager,
-                "nameDialog"
-            )
+            AlarmEditorNameDialogFragment.newInstance(viewModel.alarmEditorListener, alarm.name)
+                .show(
+                    supportFragmentManager,
+                    "nameDialog"
+                )
         }
     }
 
     private fun showSnoozeLengthDialog() {
         viewModel.alarm.value?.let { alarm ->
-            AlarmEditorSnoozeLengthDialogFragment(
+            AlarmEditorSnoozeLengthDialogFragment.newInstance(
                 viewModel.alarmEditorListener,
                 alarm.snoozeLengthMinutes
             ).show(supportFragmentManager, "snoozeLengthDialog")

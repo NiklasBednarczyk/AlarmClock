@@ -10,14 +10,31 @@ import de.niklasbednarczyk.alarmclock.databinding.DialogAlarmNameBinding
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorListener
 
 
-class AlarmEditorNameDialogFragment(
-    private val alarmEditorListener: AlarmEditorListener,
-    private val alarmName: String
-) : DialogFragment() {
+class AlarmEditorNameDialogFragment : DialogFragment() {
+
+    companion object {
+
+        const val NAME_DIALOG_ALARM_NAME_KEY = "alarm_name"
+
+        fun newInstance(
+            alarmEditorListener: AlarmEditorListener,
+            alarmName: String
+        ): AlarmEditorNameDialogFragment {
+            val fragment = AlarmEditorNameDialogFragment()
+            val args = Bundle().apply { putString(NAME_DIALOG_ALARM_NAME_KEY, alarmName) }
+            fragment.arguments = args
+            fragment.alarmEditorListener = alarmEditorListener
+            return fragment
+        }
+    }
+
+    private lateinit var alarmEditorListener: AlarmEditorListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
+
+            val alarmName = arguments?.getString(NAME_DIALOG_ALARM_NAME_KEY)
 
             val inflater = requireActivity().layoutInflater
             val binding: DialogAlarmNameBinding = DataBindingUtil.inflate(
@@ -27,6 +44,7 @@ class AlarmEditorNameDialogFragment(
                 false
             )
             binding.alarmNameDialogName.setText(alarmName)
+
 
             builder
                 .setView(binding.root)
@@ -38,4 +56,5 @@ class AlarmEditorNameDialogFragment(
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
 }

@@ -13,13 +13,34 @@ import de.niklasbednarczyk.alarmclock.utils.calendarToCalendarHoursAndMinutes
 import de.niklasbednarczyk.alarmclock.utils.timeMinutesToHoursAndMinutes
 import java.util.*
 
-class AlarmEditorTimeDialogFragment(
-    private val alarmEditorListener: AlarmEditorListener,
-    private val alarmTimeMinutes: Int
-) :
+class AlarmEditorTimeDialogFragment :
     DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
+    companion object {
+
+        const val TIME_DIALOG_ALARM_TIME_MINUTES_KEY = "alarm_time_minutes"
+
+        fun newInstance(
+            alarmEditorListener: AlarmEditorListener,
+            alarmTimeMinutes: Int
+        ): AlarmEditorTimeDialogFragment {
+            val fragment = AlarmEditorTimeDialogFragment()
+            val args =
+                Bundle().apply { putInt(TIME_DIALOG_ALARM_TIME_MINUTES_KEY, alarmTimeMinutes) }
+            fragment.arguments = args
+            fragment.alarmEditorListener = alarmEditorListener
+            return fragment
+        }
+
+    }
+
+
+    private lateinit var alarmEditorListener: AlarmEditorListener
+
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val alarmTimeMinutes = arguments?.getInt(TIME_DIALOG_ALARM_TIME_MINUTES_KEY) ?: 0
+
         val (alarmHours, alarmMinutes) = timeMinutesToHoursAndMinutes(alarmTimeMinutes)
         return TimePickerDialog(
             activity,

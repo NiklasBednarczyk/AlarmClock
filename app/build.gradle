@@ -61,6 +61,10 @@ android {
             java.srcDir sharedTestDir
         }
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {
@@ -101,6 +105,10 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.arch.core:core-testing:$core_testing_version"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    debugImplementation("androidx.fragment:fragment-testing:$fragment_version") {
+        exclude group: 'androidx.test', module: 'monitor'
+    }
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
 
     // Local Unit Testing
     testImplementation "junit:junit:$junit_test_version"
