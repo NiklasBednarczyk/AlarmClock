@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
+import javax.inject.Inject
 
-class FakeAlarmDao() : AlarmDao {
+class FakeAlarmDao @Inject constructor() : AlarmDao {
 
     private val alarms: MutableList<Alarm> = mutableListOf()
     private var alarmIdCounter: Long = 0L

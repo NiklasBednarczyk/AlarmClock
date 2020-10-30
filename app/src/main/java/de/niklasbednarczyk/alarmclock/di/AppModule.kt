@@ -40,13 +40,17 @@ object AppModule {
         return database
     }
 
-    @Singleton
-    @Provides
-    fun provideAlarmDao(alarmClockDatabase: AlarmClockDatabase): AlarmDao =
-        alarmClockDatabase.alarmDao()
 
     @Singleton
     @Provides
     fun provideIoDispatcher() = Dispatchers.IO
+}
 
+@Module
+@InstallIn(ApplicationComponent::class)
+object AlarmDaoModule {
+    @Singleton
+    @Provides
+    fun provideAlarmDao(alarmClockDatabase: AlarmClockDatabase): AlarmDao =
+        alarmClockDatabase.alarmDao()
 }

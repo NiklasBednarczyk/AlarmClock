@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "de.niklasbednarczyk.alarmclock.CustomTestRunner"
     }
 
     buildTypes {
@@ -96,9 +96,9 @@ dependencies {
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_androidX_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_androidX_version"
 
     // Instrumented Testing
     androidTestImplementation "androidx.test.ext:junit:$junit_android_test_version"
@@ -109,6 +109,14 @@ dependencies {
         exclude group: 'androidx.test', module: 'monitor'
     }
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+
+    // Hilt testing
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kaptAndroidTest "androidx.hilt:hilt-compiler:$hilt_androidX_version"
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kaptTest "androidx.hilt:hilt-compiler:$hilt_androidX_version"
 
     // Local Unit Testing
     testImplementation "junit:junit:$junit_test_version"
