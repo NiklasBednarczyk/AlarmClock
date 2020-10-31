@@ -92,7 +92,7 @@ class AlarmListFragment : Fragment() {
 
                 view?.let { view ->
                     val alarmName =
-                        if (!alarm.name.isBlank()) alarm.name else resources.getString(R.string.alarm)
+                        if (!alarm.name.isBlank()) alarm.name else resources.getString(R.string.alarm_list_fragment_delete_snackbar_alarm_name_alternative)
                     val text =
                         String.format(
                             resources.getString(R.string.alarm_list_fragment_delete_snackbar_text),
