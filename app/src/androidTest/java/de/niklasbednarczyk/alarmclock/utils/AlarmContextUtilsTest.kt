@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 @SmallTest
 class AlarmContextUtilsTest {
 
-    lateinit var context: Context
+    private lateinit var context: Context
 
     @Before
     fun setUp() {

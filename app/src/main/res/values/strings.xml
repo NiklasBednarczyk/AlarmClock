@@ -14,6 +14,7 @@
     <string name="duplicate">Duplicate</string>
     <string name="edit">Edit</string>
     <string name="every_day">Every Day</string>
+    <string name="fab_button">Fab Button</string>
     <string name="fast">Fast</string>
     <string name="fifteen_minutes">15 Minutes</string>
     <string name="five_minutes">5 Minutes</string>
@@ -109,6 +110,7 @@
     <string name="alarm_list_fragment_delete_snackbar_text" translatable="false">@string/removed_format</string>
 
     <string name="alarm_list_fragment_popup_menu_button_content_description" translatable="false">@string/popup_menu_button</string>
+    <string name="alarm_list_fragment_fab_button_content_description" translatable="false">@string/fab_button</string>
 
     <string name="alarm_list_menu_title_action_settings" translatable="false">@string/settings</string>
 

@@ -22,6 +22,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:clickable="true"
+            android:contentDescription="@string/alarm_list_fragment_fab_button_content_description"
             android:id="@+id/alarm_list_fab_add_alarm"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
