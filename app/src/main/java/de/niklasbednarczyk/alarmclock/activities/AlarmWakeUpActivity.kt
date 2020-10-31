@@ -5,14 +5,15 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
+import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_ALARM_ID
 import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_ALARM_TYPE
 import de.niklasbednarczyk.alarmclock.receivers.AlarmReceiver.Companion.ALARM_INTENT_KEY_SNOOZE_COUNT
-import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewFragmentArgs
 
-
+@AndroidEntryPoint
 class AlarmWakeUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

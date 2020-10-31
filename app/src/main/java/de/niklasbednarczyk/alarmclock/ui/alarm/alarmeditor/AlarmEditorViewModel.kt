@@ -2,24 +2,22 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor
 
 import android.net.Uri
 import android.widget.PopupMenu
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.hoursAndMinutesToTimeMinutes
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.DayOfWeek
 
-class AlarmEditorViewModel(
+class AlarmEditorViewModel @ViewModelInject constructor(
     private val dao: AlarmDao,
-    alarmId: Long,
-    private val defaultAlarm: Alarm
+    private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
-    private val viewModelJob = Job()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _alarm = MediatorLiveData<Alarm>()
     val alarm: LiveData<Alarm>
@@ -91,21 +89,16 @@ class AlarmEditorViewModel(
             }
         }
 
-    init {
+    fun init(alarmId: Long, defaultAlarm: Alarm) {
         val alarmLiveData = Transformations.map(dao.getAlarm(alarmId)) {
             return@map it ?: defaultAlarm
         }
         _alarm.addSource(alarmLiveData, _alarm::setValue)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
     fun onActionSave() {
         _alarm.value?.let { alarm ->
-            uiScope.launch {
+            viewModelScope.launch {
                 alarm.isActive = true
                 if (alarm.alarmId == 0L) {
                     alarm.alarmId = insertAlarm(alarm)
@@ -127,14 +120,14 @@ class AlarmEditorViewModel(
 
     private suspend fun insertAlarm(alarm: Alarm): Long {
         var alarmId: Long
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             alarmId = dao.insertAlarm(alarm)
         }
         return alarmId
     }
 
     private suspend fun updateAlarm(alarm: Alarm) {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             dao.updateAlarm(alarm)
         }
     }

@@ -2,17 +2,21 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview
 
 import android.media.MediaPlayer
 import android.os.CountDownTimer
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
-import de.niklasbednarczyk.alarmclock.utils.snoozeLengthMinutesToTimeMilliseconds
-import kotlinx.coroutines.*
+import de.niklasbednarczyk.alarmclock.utils.timeMinutesToTimeMilliseconds
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: Int) : ViewModel() {
+class AlarmWakeUpViewViewModel @ViewModelInject constructor(
+    private val dao: AlarmDao,
+    private val ioDispatcher: CoroutineDispatcher
+) :
+    ViewModel() {
 
     companion object {
 
@@ -23,10 +27,6 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
     }
 
     private lateinit var mediaPlayer: MediaPlayer
-
-    private val viewModelJob = Job()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _alarm = MediatorLiveData<Alarm>()
     val alarm: LiveData<Alarm>
@@ -54,17 +54,19 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
 
     private lateinit var snoozeTimer: CountDownTimer
 
-    init {
+    fun init(alarmId: Long, snoozeCount: Int) {
         _alarm.addSource(dao.getAlarm(alarmId), _alarm::setValue)
 
         _snoozeCount.value = snoozeCount
     }
 
-    fun dismissOneShotAlarm(alarm: Alarm) {
-        alarm.isActive = false
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                dao.updateAlarm(alarm)
+    fun dismissOneShotAlarm() {
+        _alarm.value?.let { alarm ->
+            alarm.isActive = false
+            viewModelScope.launch {
+                withContext(ioDispatcher) {
+                    dao.updateAlarm(alarm)
+                }
             }
         }
     }
@@ -72,7 +74,7 @@ class AlarmWakeUpViewViewModel(val dao: AlarmDao, alarmId: Long, snoozeCount: In
     fun onActionSnooze() {
         alarm.value?.let { alarm ->
             val snoozeLengthMilliseconds =
-                snoozeLengthMinutesToTimeMilliseconds(alarm.snoozeLengthMinutes)
+                timeMinutesToTimeMilliseconds(alarm.snoozeLengthMinutes)
             snoozeTimer = object : CountDownTimer(snoozeLengthMilliseconds, ONE_SECOND) {
                 override fun onTick(millisUntilFinished: Long) {
                     _snoozeTime.value = (millisUntilFinished / ONE_SECOND)

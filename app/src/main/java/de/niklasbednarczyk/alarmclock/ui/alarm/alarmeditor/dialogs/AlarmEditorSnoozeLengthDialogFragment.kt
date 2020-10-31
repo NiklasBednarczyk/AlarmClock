@@ -9,19 +9,40 @@ import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.databinding.DialogAlarmSnoozeLengthBinding
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.AlarmEditorListener
 
-class AlarmEditorSnoozeLengthDialogFragment(
-    private val alarmEditorListener: AlarmEditorListener,
-    private val alarmSnoozeLengthMinutes: Int
-) : DialogFragment() {
+class AlarmEditorSnoozeLengthDialogFragment : DialogFragment() {
 
     companion object {
+
+        const val SNOOZE_LENGTH_DIALOG_ALARM_SNOOZE_LENGTH_MINUTES_KEY = "alarm_snooze_length"
+
         const val SNOOZE_LENGTH_MINUTES_MIN_VALUE = 1
         const val SNOOZE_LENGTH_MINUTES_MAX_VALUE = 30
+
+        fun newInstance(
+            alarmEditorListener: AlarmEditorListener,
+            alarmSnoozeLengthMinutes: Int
+        ): AlarmEditorSnoozeLengthDialogFragment {
+            val fragment = AlarmEditorSnoozeLengthDialogFragment()
+            val args = Bundle().apply {
+                putInt(
+                    SNOOZE_LENGTH_DIALOG_ALARM_SNOOZE_LENGTH_MINUTES_KEY, alarmSnoozeLengthMinutes
+                )
+            }
+            fragment.arguments = args
+            fragment.alarmEditorListener = alarmEditorListener
+            return fragment
+        }
     }
+
+    private lateinit var alarmEditorListener: AlarmEditorListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let { it ->
             val builder = AlertDialog.Builder(it)
+
+            val alarmSnoozeLengthMinutes = arguments?.getInt(
+                SNOOZE_LENGTH_DIALOG_ALARM_SNOOZE_LENGTH_MINUTES_KEY
+            ) ?: 5
 
             val inflater = requireActivity().layoutInflater
             val binding: DialogAlarmSnoozeLengthBinding = DataBindingUtil.inflate(

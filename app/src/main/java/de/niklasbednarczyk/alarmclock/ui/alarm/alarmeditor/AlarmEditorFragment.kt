@@ -11,10 +11,10 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
-import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmEditorBinding
 import de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType
 import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorNameDialogFragment
@@ -23,13 +23,14 @@ import de.niklasbednarczyk.alarmclock.ui.alarm.alarmeditor.dialogs.AlarmEditorTi
 import de.niklasbednarczyk.alarmclock.utils.getDefaultAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 
+@AndroidEntryPoint
 class AlarmEditorFragment : Fragment() {
 
     companion object {
         const val INTENT_RINGTONE_PICKER_REQUEST_CODE = 999
     }
 
-    private lateinit var viewModel: AlarmEditorViewModel
+    private val viewModel by viewModels<AlarmEditorViewModel>()
 
     private lateinit var supportFragmentManager: FragmentManager
 
@@ -52,13 +53,10 @@ class AlarmEditorFragment : Fragment() {
 
         val application = requireActivity()
 
-        val dao = AlarmClockDatabase.getInstance(application).alarmDao
-
         val defaultAlarm = getDefaultAlarm(requireContext())
 
         val args = AlarmEditorFragmentArgs.fromBundle(requireArguments())
-        val viewModelFactory = AlarmEditorViewModelFactory(dao, args.alarmId, defaultAlarm)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(AlarmEditorViewModel::class.java)
+        viewModel.init(args.alarmId, defaultAlarm)
         binding.alarmEditorViewModel = viewModel
         binding.alarmEditorFragment = this
 
@@ -94,7 +92,10 @@ class AlarmEditorFragment : Fragment() {
 
     fun showTimeDialog() {
         viewModel.alarm.value?.let { alarm ->
-            AlarmEditorTimeDialogFragment(viewModel.alarmEditorListener, alarm.timeMinutes).show(
+            AlarmEditorTimeDialogFragment.newInstance(
+                viewModel.alarmEditorListener,
+                alarm.timeMinutes
+            ).show(
                 supportFragmentManager,
                 "timeDialog"
             )
@@ -112,16 +113,17 @@ class AlarmEditorFragment : Fragment() {
 
     private fun showNameDialog() {
         viewModel.alarm.value?.let { alarm ->
-            AlarmEditorNameDialogFragment(viewModel.alarmEditorListener, alarm.name).show(
-                supportFragmentManager,
-                "nameDialog"
-            )
+            AlarmEditorNameDialogFragment.newInstance(viewModel.alarmEditorListener, alarm.name)
+                .show(
+                    supportFragmentManager,
+                    "nameDialog"
+                )
         }
     }
 
     private fun showSnoozeLengthDialog() {
         viewModel.alarm.value?.let { alarm ->
-            AlarmEditorSnoozeLengthDialogFragment(
+            AlarmEditorSnoozeLengthDialogFragment.newInstance(
                 viewModel.alarmEditorListener,
                 alarm.snoozeLengthMinutes
             ).show(supportFragmentManager, "snoozeLengthDialog")

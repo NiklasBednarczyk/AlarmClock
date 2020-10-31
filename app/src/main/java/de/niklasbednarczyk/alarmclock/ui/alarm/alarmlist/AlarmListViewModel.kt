@@ -2,21 +2,24 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist
 
 import android.view.View
 import android.widget.PopupMenu
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.database.AlarmDao
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
+class AlarmListViewModel @ViewModelInject constructor(
+    private val alarmDao: AlarmDao,
+    private val ioDispatcher: CoroutineDispatcher
+) : ViewModel() {
 
-    private val viewModelJob = Job()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    val alarms = dao.getAllAlarms()
+    val alarms = alarmDao.getAllAlarms()
 
     private val _navigateToAlarmEditor = MutableLiveData<Long>()
     val navigateToAlarmEditor: LiveData<Long>
@@ -96,15 +99,10 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
     fun insertAlarm(alarm: Alarm) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                alarm.alarmId = dao.insertAlarm(alarm)
+        viewModelScope.launch {
+            withContext(ioDispatcher) {
+                alarm.alarmId = alarmDao.insertAlarm(alarm)
             }
             startSettingNormalAlarm(alarm)
         }
@@ -112,17 +110,17 @@ class AlarmListViewModel(private val dao: AlarmDao) : ViewModel() {
     }
 
     private fun updateAlarm(alarm: Alarm) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                dao.updateAlarm(alarm)
+        viewModelScope.launch {
+            withContext(ioDispatcher) {
+                alarmDao.updateAlarm(alarm)
             }
         }
     }
 
     private fun deleteAlarm(alarm: Alarm) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                dao.deleteAlarm(alarm)
+        viewModelScope.launch {
+            withContext(ioDispatcher) {
+                alarmDao.deleteAlarm(alarm)
             }
         }
         startDeletingAlarm(alarm)

@@ -5,21 +5,22 @@ import android.view.*
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
-import de.niklasbednarczyk.alarmclock.database.AlarmClockDatabase
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmListBinding
 import de.niklasbednarczyk.alarmclock.enums.AlarmType
 import de.niklasbednarczyk.alarmclock.utils.cancelAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 import de.niklasbednarczyk.alarmclock.utils.setPreviewAlarm
 
+@AndroidEntryPoint
 class AlarmListFragment : Fragment() {
 
-    private lateinit var viewModel: AlarmListViewModel
+    private val viewModel by viewModels<AlarmListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +38,6 @@ class AlarmListFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        val application = requireActivity().application
-
-        val dao = AlarmClockDatabase.getInstance(application).alarmDao
-
-        val viewModelFactory = AlarmListViewModelFactory(dao)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(AlarmListViewModel::class.java)
         binding.alarmListViewModel = viewModel
 
         val linearLayoutManager = LinearLayoutManager(this.context)
@@ -53,9 +47,9 @@ class AlarmListFragment : Fragment() {
         val adapter = AlarmListAdapter(onItemClickListener)
         binding.alarmListRecyclerView.adapter = adapter
 
-        val spacesPixels = resources.getDimensionPixelSize(R.dimen.margin_layout_small)
-        val spacesItemDecoration = SpacesItemDecoration(spacesPixels)
-        binding.alarmListRecyclerView.addItemDecoration(spacesItemDecoration)
+        val spacePixels = resources.getDimensionPixelSize(R.dimen.margin_layout_small)
+        val alarmListItemDecoration = AlarmListItemDecoration(spacePixels)
+        binding.alarmListRecyclerView.addItemDecoration(alarmListItemDecoration)
 
         viewModel.alarms.observe(viewLifecycleOwner, {
             it?.let {
