@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_alarm_wake_up"
+    app:startDestination="@id/alarmWakeUpViewFragment">
+
+    <fragment
+        android:id="@+id/alarmWakeUpViewFragment"
+        android:label="AlarmWakeUpViewFragment"
+        android:name="de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview.AlarmWakeUpViewFragment"
+        tools:layout="@layout/fragment_alarm_wake_up_view">
+        <argument
+            android:name="alarmId"
+            app:argType="long" />
+        <argument
+            android:name="snoozeCount"
+            app:argType="integer" />
+        <argument
+            android:name="alarmType"
+            app:argType="de.niklasbednarczyk.alarmclock.enums.AlarmType" />
+    </fragment>
+</navigation>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/TextInputEditTextStyle"
+            android:id="@+id/alarm_name_dialog_name"
+            android:inputType="text"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+</layout>

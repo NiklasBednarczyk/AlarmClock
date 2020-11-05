@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <NumberPicker
+            android:id="@+id/alarm_snooze_length_dialog_snooze_length_minutes"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/alarm_snooze_length_dialog_minute_text"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/alarm_snooze_length_dialog_snooze_length_minutes"
+            app:layout_constraintStart_toEndOf="@id/alarm_snooze_length_dialog_snooze_length_minutes"
+            app:layout_constraintTop_toTopOf="@id/alarm_snooze_length_dialog_snooze_length_minutes" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

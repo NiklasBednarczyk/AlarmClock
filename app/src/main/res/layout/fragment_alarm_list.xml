@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="alarmListViewModel"
+            type="de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist.AlarmListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        tools:context=".activities.MainActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/alarm_list_recycler_view"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:clickable="true"
+            android:contentDescription="@string/alarm_list_fragment_fab_button_content_description"
+            android:id="@+id/alarm_list_fab_add_alarm"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:onClick="@{() -> alarmListViewModel.startNavigatingToAlarmEditor(0L)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_24"
+            app:useCompatPadding="true" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

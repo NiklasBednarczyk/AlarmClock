@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_baseline_check_24"
+        android:id="@+id/action_save"
+        android:title="@string/alarm_editor_menu_title_action_save"
+        app:showAsAction="always" />
+
+</menu>
