@@ -1,0 +1,9 @@
+An ad-free, open-source alarm clock app
+
+Made by Niklas Bednarczyk
+
+GitHub: https://github.com/NiklasBednarczyk/AlarmClock
+
+App Icon made by https://www.flaticon.com/authors/freepik from https://www.flaticon.com/
+
+Feature Graphic made with https://www.norio.be/graphic-generator/
