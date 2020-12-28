@@ -7,14 +7,14 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "de.niklasbednarczyk.alarmclock"
         minSdkVersion 27
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
 
         testInstrumentationRunner "de.niklasbednarczyk.alarmclock.CustomTestRunner"
     }
