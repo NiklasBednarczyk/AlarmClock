@@ -16,9 +16,11 @@
         tools:context=".activities.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:clipToPadding="false"
             android:id="@+id/alarm_list_recycler_view"
             android:layout_height="match_parent"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            android:paddingTop="@dimen/margin_layout_small" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:clickable="true"

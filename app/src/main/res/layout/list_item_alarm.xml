@@ -17,6 +17,9 @@
         style="@style/CardViewStyle"
         android:id="@+id/alarm_list_item_card_view"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_layout_small"
+        android:layout_marginEnd="@dimen/margin_layout_small"
+        android:layout_marginStart="@dimen/margin_layout_small"
         android:layout_width="match_parent"
         android:onClick="@{() -> alarmOnItemClickListener.onCardViewClick(alarm.alarmId)}">
 
