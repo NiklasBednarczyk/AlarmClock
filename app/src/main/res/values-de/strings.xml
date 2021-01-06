@@ -19,12 +19,14 @@
     <string name="fifteen_minutes">15 Minuten</string>
     <string name="five_minutes">5 Minuten</string>
     <string name="general">Allgemein</string>
+    <string name="go_to_settings">Zu den Einstellungen</string>
     <string name="light_theme">Helles Design</string>
     <string name="name">Name</string>
     <string name="none">Aus</string>
     <string name="normal">Normal</string>
     <string name="now">Jetzt</string>
     <string name="one_minute">1 Minute</string>
+    <string name="permission_needed">Berechtigung benötigt</string>
     <string name="popup_menu_button">Popup Menu Button</string>
     <string name="preview">Vorschau</string>
     <string name="removed_format">Entfernt: %s</string>
@@ -48,4 +50,5 @@
     <string name="weekdays">Wochentage</string>
     <string name="weekend">Wochenende</string>
 
+    <string name="display_over_other_apps_permission_dialog_message">Damit das Anzeigen des Alarms normal funktioniert, benötigt die App die Berechtigung \"Über anderen Apps einblenden\".</string>
 </resources>
