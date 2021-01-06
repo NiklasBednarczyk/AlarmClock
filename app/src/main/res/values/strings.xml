@@ -19,12 +19,14 @@
     <string name="fifteen_minutes">15 Minutes</string>
     <string name="five_minutes">5 Minutes</string>
     <string name="general">General</string>
+    <string name="go_to_settings">Go to settings</string>
     <string name="light_theme">Light Theme</string>
     <string name="name">Name</string>
     <string name="none">None</string>
     <string name="normal">Normal</string>
     <string name="now">Now</string>
     <string name="one_minute">1 Minute</string>
+    <string name="permission_needed">Permission Needed</string>
     <string name="popup_menu_button">Popup Menu Button</string>
     <string name="preview">Preview</string>
     <string name="removed_format">Removed: %s</string>
@@ -169,5 +171,11 @@
     <string name="preference_default_value_theme" translatable="false">@string/preference_value_theme_use_system_setting</string>
     <string name="preference_default_value_alarm_snooze_length" translatable="false">@string/preference_value_alarm_snooze_length_5_minutes</string>
     <string name="preference_default_value_alarm_vibration_type" translatable="false">@string/preference_value_alarm_vibration_type_normal</string>
+
+    <!--DisplayOverOtherAppsPermissionDialog-->
+
+    <string name="display_over_other_apps_permission_dialog_title" translatable="false">@string/permission_needed</string>
+    <string name="display_over_other_apps_permission_dialog_message">In order to display an alarm normally, you need to give this app the \"Display over other apps\" permission.</string>
+    <string name="display_over_other_apps_permission_dialog_positive_button" translatable="false">@string/go_to_settings</string>
 
 </resources>
