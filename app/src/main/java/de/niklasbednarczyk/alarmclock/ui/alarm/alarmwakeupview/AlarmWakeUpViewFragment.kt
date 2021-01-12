@@ -4,7 +4,6 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
-import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
@@ -13,18 +12,18 @@ import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmWakeUpViewBinding
 import de.niklasbednarczyk.alarmclock.enums.AlarmType
-import de.niklasbednarczyk.alarmclock.enums.VibrationType
 import de.niklasbednarczyk.alarmclock.utils.cancelAlarm
 import de.niklasbednarczyk.alarmclock.utils.setNormalAlarm
 import de.niklasbednarczyk.alarmclock.utils.snoozeAlarm
 
 @AndroidEntryPoint
 class AlarmWakeUpViewFragment : Fragment() {
+
+    private lateinit var viewModel: AlarmWakeUpViewViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,19 +46,9 @@ class AlarmWakeUpViewFragment : Fragment() {
         val alarmType = args.alarmType
 
         val viewModel by viewModels<AlarmWakeUpViewViewModel>()
+        this.viewModel = viewModel
         viewModel.init(alarmId, snoozeCount)
         binding.alarmWakeUpViewViewModel = viewModel
-
-        viewModel.eventVibration.observe(viewLifecycleOwner, { vibrationType ->
-            val vibrator = requireActivity().getSystemService<Vibrator>()
-            vibrator?.let {
-                if (vibrationType == VibrationType.NONE) {
-                    vibrator.cancel()
-                } else {
-                    vibrator.vibrate(VibrationEffect.createWaveform(vibrationType.pattern, 1))
-                }
-            }
-        })
 
         viewModel.eventDismissed.observe(viewLifecycleOwner, { dismissed ->
             dismissed?.let {
@@ -74,6 +63,8 @@ class AlarmWakeUpViewFragment : Fragment() {
                         viewModel.dismissOneShotAlarm()
                     }
                 }
+                viewModel.stopSound()
+                viewModel.stopVibration()
                 requireActivity().finishAndRemoveTask()
             }
         })
@@ -88,26 +79,33 @@ class AlarmWakeUpViewFragment : Fragment() {
                         snoozeAlarm(context, alarm, snoozeCount, alarmType)
                     }
                 }
+                viewModel.stopSound()
+                viewModel.stopVibration()
             }
         })
 
         viewModel.alarm.observe(viewLifecycleOwner, { alarm ->
             alarm?.let {
-                if (alarm.vibrationType != VibrationType.NONE) {
-                    viewModel.startVibration()
-                }
+                val vibrator = requireActivity().getSystemService<Vibrator>()
+                viewModel.startVibration(vibrator)
                 if (Uri.EMPTY != alarm.soundUri) {
-                    val player = createMediaPlayer(alarm.soundUri)
-                    viewModel.startSound(player)
+                    val mediaPlayer = createMediaPlayer(alarm.soundUri)
+                    viewModel.startSound(mediaPlayer)
                 }
-                viewModel.alarm.removeObservers(viewLifecycleOwner)
             }
+            viewModel.alarm.removeObservers(viewLifecycleOwner)
         })
 
         return binding.root
     }
 
-    private fun createMediaPlayer(uri: Uri): MediaPlayer = MediaPlayer().apply {
+    override fun onDestroy() {
+        viewModel.stopSound()
+        viewModel.stopVibration()
+        super.onDestroy()
+    }
+
+    private fun createMediaPlayer(uri: Uri) = MediaPlayer().apply {
         val audioAttributes =
             AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
         setAudioAttributes(audioAttributes)

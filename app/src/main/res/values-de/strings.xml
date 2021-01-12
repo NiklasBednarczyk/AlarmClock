@@ -11,6 +11,7 @@
     <string name="dark_theme">Dunkles Design</string>
     <string name="delete">Löschen</string>
     <string name="dismiss">Ausschalten</string>
+    <string name="dismiss_your_alarm_to_leave_this_screen">Schalte deinen Alarm aus, um den Bildschirm zu verlassen</string>
     <string name="duplicate">Duplizieren</string>
     <string name="edit">Bearbeiten</string>
     <string name="every_day">Jeden Tag</string>
@@ -29,6 +30,7 @@
     <string name="permission_needed">Berechtigung benötigt</string>
     <string name="popup_menu_button">Popup Menu Button</string>
     <string name="preview">Vorschau</string>
+    <string name="preview_of_alarm_cancelled">Vorschau von dem Alarm abgebrochen</string>
     <string name="removed_format">Entfernt: %s</string>
     <string name="save">Speichern</string>
     <string name="set_alarm">Alarm stellen</string>
