@@ -11,6 +11,7 @@
     <string name="dark_theme">Dark Theme</string>
     <string name="delete">Delete</string>
     <string name="dismiss">Dismiss</string>
+    <string name="dismiss_your_alarm_to_leave_this_screen">Dismiss your alarm to leave this screen</string>
     <string name="duplicate">Duplicate</string>
     <string name="edit">Edit</string>
     <string name="every_day">Every Day</string>
@@ -29,6 +30,7 @@
     <string name="permission_needed">Permission Needed</string>
     <string name="popup_menu_button">Popup Menu Button</string>
     <string name="preview">Preview</string>
+    <string name="preview_of_alarm_cancelled">Preview of alarm cancelled</string>
     <string name="removed_format">Removed: %s</string>
     <string name="save">Save</string>
     <string name="set_alarm">Set Alarm</string>
@@ -120,6 +122,9 @@
 
     <string name="alarm_wake_up_view_fragment_button_snooze" translatable="false">@string/snooze</string>
     <string name="alarm_wake_up_view_fragment_button_dismiss" translatable="false">@string/dismiss</string>
+
+    <string name="alarm_wake_up_view_fragment_toast_dismiss_normal_alarm" translatable="false">@string/dismiss_your_alarm_to_leave_this_screen</string>
+    <string name="alarm_wake_up_view_fragment_toast_dismiss_preview_alarm" translatable="false">@string/preview_of_alarm_cancelled</string>
 
     <!--Preferences-->
 

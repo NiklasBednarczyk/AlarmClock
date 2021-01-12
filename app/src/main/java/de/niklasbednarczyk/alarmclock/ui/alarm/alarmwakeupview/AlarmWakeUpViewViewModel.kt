@@ -2,6 +2,8 @@ package de.niklasbednarczyk.alarmclock.ui.alarm.alarmwakeupview
 
 import android.media.MediaPlayer
 import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import de.niklasbednarczyk.alarmclock.database.Alarm
@@ -26,7 +28,8 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(
 
     }
 
-    private lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer: MediaPlayer? = null
+    private var vibrator: Vibrator? = null
 
     private val _alarm = MediatorLiveData<Alarm>()
     val alarm: LiveData<Alarm>
@@ -43,10 +46,6 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(
     private val _eventSnoozed = MutableLiveData<Boolean>()
     val eventSnoozed: LiveData<Boolean>
         get() = _eventSnoozed
-
-    private val _eventVibration = MutableLiveData<VibrationType>()
-    val eventVibration: LiveData<VibrationType>
-        get() = _eventVibration
 
     private val _eventDismissed = MutableLiveData<Boolean>()
     val eventDismissed: LiveData<Boolean>
@@ -97,21 +96,33 @@ class AlarmWakeUpViewViewModel @ViewModelInject constructor(
         _eventDismissed.value = true
     }
 
-    fun startVibration() {
-        _eventVibration.value = _alarm.value?.vibrationType
+    fun startVibration(vibrator: Vibrator?) {
+        this.vibrator = vibrator
+        _alarm.value?.let { alarm ->
+            if (alarm.vibrationType != VibrationType.NONE) {
+                vibrator?.vibrate(VibrationEffect.createWaveform(alarm.vibrationType.pattern, 1))
+            }
+        }
     }
 
-    private fun stopVibration() {
-        _eventVibration.value = VibrationType.NONE
+    fun stopVibration() {
+        vibrator?.cancel()
     }
 
-    fun startSound(player: MediaPlayer) {
-        mediaPlayer = player
+    fun startSound(mediaPlayer: MediaPlayer) {
+        this.mediaPlayer = mediaPlayer
         mediaPlayer.start()
     }
 
     fun stopSound() {
-        mediaPlayer.stop()
+        mediaPlayer?.let { mp ->
+            if (mp.isPlaying) {
+                mp.stop()
+            }
+            mp.release()
+            mediaPlayer = null
+        }
+
     }
 }
 
