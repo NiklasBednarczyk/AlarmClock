@@ -13,6 +13,7 @@ import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.databinding.FragmentAlarmWakeUpViewBinding
@@ -61,7 +62,7 @@ class AlarmWakeUpViewFragment : Fragment() {
         })
 
         viewModel.eventDismissed.observe(viewLifecycleOwner, { dismissed ->
-            if (dismissed) {
+            dismissed?.let {
                 viewModel.alarm.value?.let { alarm ->
                     cancelAlarm(context, alarm, alarmType)
                     if (Uri.EMPTY != alarm.soundUri) {
@@ -73,12 +74,12 @@ class AlarmWakeUpViewFragment : Fragment() {
                         viewModel.dismissOneShotAlarm()
                     }
                 }
-                requireActivity().finish()
+                requireActivity().finishAndRemoveTask()
             }
         })
 
         viewModel.eventSnoozed.observe(viewLifecycleOwner, { snoozed ->
-            if (snoozed) {
+            snoozed?.let {
                 viewModel.alarm.value?.let { alarm ->
                     viewModel.snoozeCount.value?.let { snoozeCount ->
                         if (Uri.EMPTY != alarm.soundUri) {
