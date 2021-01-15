@@ -1,7 +1,9 @@
 package de.niklasbednarczyk.alarmclock.activities
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
@@ -9,6 +11,8 @@ import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.niklasbednarczyk.alarmclock.R
+import de.niklasbednarczyk.alarmclock.ui.DisplayOverOtherAppsPermissionDialog
+import de.niklasbednarczyk.alarmclock.ui.DisplayOverOtherAppsPermissionDialog.Companion.DISPLAY_OVER_OTHER_APPS_INTENT_REQUEST_CODE
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,6 +39,16 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.main_nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        showDisplayOverOtherAppsPermissionDialog()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == DISPLAY_OVER_OTHER_APPS_INTENT_REQUEST_CODE) {
+            showDisplayOverOtherAppsPermissionDialog()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -77,6 +91,16 @@ class MainActivity : AppCompatActivity() {
                     AppCompatDelegate.MODE_NIGHT_YES
                 )
             }
+        }
+    }
+
+    private fun showDisplayOverOtherAppsPermissionDialog() {
+        if (!Settings.canDrawOverlays(applicationContext)) {
+            val dialog = DisplayOverOtherAppsPermissionDialog()
+            dialog.show(
+                supportFragmentManager,
+                "displayOverOtherAppsPermissionDialog"
+            )
         }
     }
 }

@@ -47,10 +47,6 @@ class AlarmListFragment : Fragment() {
         val adapter = AlarmListAdapter(onItemClickListener)
         binding.alarmListRecyclerView.adapter = adapter
 
-        val spacePixels = resources.getDimensionPixelSize(R.dimen.margin_layout_small)
-        val alarmListItemDecoration = AlarmListItemDecoration(spacePixels)
-        binding.alarmListRecyclerView.addItemDecoration(alarmListItemDecoration)
-
         viewModel.alarms.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
