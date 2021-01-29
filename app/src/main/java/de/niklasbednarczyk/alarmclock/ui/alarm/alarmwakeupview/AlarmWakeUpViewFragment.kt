@@ -29,7 +29,7 @@ class AlarmWakeUpViewFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentAlarmWakeUpViewBinding = DataBindingUtil.inflate(
             inflater,
