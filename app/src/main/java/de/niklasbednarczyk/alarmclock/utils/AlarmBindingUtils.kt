@@ -10,10 +10,12 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import de.niklasbednarczyk.alarmclock.R
 import de.niklasbednarczyk.alarmclock.database.Alarm
 import de.niklasbednarczyk.alarmclock.enums.AlarmPropertyType
 import de.niklasbednarczyk.alarmclock.enums.VibrationType
+import de.niklasbednarczyk.alarmclock.ui.alarm.alarmlist.AlarmListAdapter
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.format.TextStyle
@@ -172,6 +174,11 @@ fun TextView.setPropertyValue(alarm: Alarm?, alarmPropertyType: AlarmPropertyTyp
     }
 }
 
+@BindingAdapter("bind_alarmList")
+fun RecyclerView.setAlarmList(alarmList: List<Alarm>?) {
+    val adapter = adapter as AlarmListAdapter
+    adapter.submitList(alarmList)
+}
 
 private fun getTextForPropertyName(alarm: Alarm): String = alarm.name
 

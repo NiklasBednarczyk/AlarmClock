@@ -25,7 +25,7 @@ class AlarmListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentAlarmListBinding = DataBindingUtil.inflate(
             inflater,
@@ -46,12 +46,6 @@ class AlarmListFragment : Fragment() {
         val onItemClickListener = viewModel.alarmOnItemClickListener
         val adapter = AlarmListAdapter(onItemClickListener)
         binding.alarmListRecyclerView.adapter = adapter
-
-        viewModel.alarms.observe(viewLifecycleOwner, {
-            it?.let {
-                adapter.submitList(it)
-            }
-        })
 
         viewModel.navigateToAlarmEditor.observe(viewLifecycleOwner, { alarmId ->
             alarmId?.let {
@@ -88,7 +82,7 @@ class AlarmListFragment : Fragment() {
 
                 view?.let { view ->
                     val alarmName =
-                        if (!alarm.name.isBlank()) alarm.name else resources.getString(R.string.alarm_list_fragment_delete_snackbar_alarm_name_alternative)
+                        if (alarm.name.isNotBlank()) alarm.name else resources.getString(R.string.alarm_list_fragment_delete_snackbar_alarm_name_alternative)
                     val text =
                         String.format(
                             resources.getString(R.string.alarm_list_fragment_delete_snackbar_text),

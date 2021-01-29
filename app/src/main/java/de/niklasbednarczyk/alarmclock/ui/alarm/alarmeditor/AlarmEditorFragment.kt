@@ -38,7 +38,7 @@ class AlarmEditorFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentAlarmEditorBinding = DataBindingUtil.inflate(
             inflater,
